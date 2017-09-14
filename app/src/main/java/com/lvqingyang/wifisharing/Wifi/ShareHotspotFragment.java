@@ -17,6 +17,26 @@ import com.lvqingyang.wifisharing.base.BaseFragment;
  */
 public class ShareHotspotFragment extends BaseFragment {
 
+    /**
+     * view
+     */
+
+
+     /**
+     * fragment
+     */
+
+
+     /**
+     * data
+     */
+
+
+     /**
+     * tag
+     */
+
+
     public static ShareHotspotFragment newInstance() {
         
         Bundle args = new Bundle();
