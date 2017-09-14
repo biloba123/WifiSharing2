@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arr_indicator">
+        <item>BallPulseIndicator</item>
+        <item>BallGridPulseIndicator</item>
+        <item>BallClipRotateIndicator</item>
+        <item>BallClipRotatePulseIndicator</item>
+        <item>SquareSpinIndicator</item>
+        <item>BallClipRotateMultipleIndicator</item>
+        <item>BallPulseRiseIndicator</item>
+        <item>BallRotateIndicator</item>
+        <item>CubeTransitionIndicator</item>
+        <item>BallZigZagIndicator</item>
+        <item>BallZigZagDeflectIndicator</item>
+        <item>BallTrianglePathIndicator</item>
+        <item>BallScaleIndicator</item>
+        <item>LineScaleIndicator</item>
+        <item>LineScalePartyIndicator</item>
+        <item>BallScaleMultipleIndicator</item>
+        <item>BallPulseSyncIndicator</item>
+        <item>BallBeatIndicator</item>
+        <item>LineScalePulseOutIndicator</item>
+        <item>LineScalePulseOutRapidIndicator</item>
+        <item>BallScaleRippleIndicator</item>
+        <item>BallScaleRippleMultipleIndicator</item>
+        <item>BallSpinFadeLoaderIndicator</item>
+        <item>LineSpinFadeLoaderIndicator</item>
+        <item>TriangleSkewSpinIndicator</item>
+        <item>PacmanIndicator</item>
+        <item>BallGridBeatIndicator</item>
+        <item>SemiCircleSpinIndicator</item>
+    </string-array>
+
+    <string-array name="wifi_tabs">
+        <item>连接</item>
+        <item>分享</item>
+    </string-array>
+</resources>

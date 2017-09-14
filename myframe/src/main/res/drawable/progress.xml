@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:pivotX="50%"
+    android:pivotY="50%">
+    <shape android:shape="ring"
+           android:innerRadiusRatio="3"
+           android:thicknessRatio="12"
+           android:useLevel="false"
+           xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:startColor="@color/toast_text"
+                  android:endColor="@color/toast_bg"/>
+    </shape>
+</animated-rotate>

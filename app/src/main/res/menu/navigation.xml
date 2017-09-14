@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_wifi"
+        android:title="@string/title_wifi"
+        android:icon="@drawable/ic_wifi"/>
+
+    <item
+        android:id="@+id/navigation_map"
+        android:title="@string/title_map"
+        android:icon="@drawable/ic_map"/>
+
+    <item
+        android:id="@+id/navigation_my"
+        android:title="@string/title_my"
+        android:icon="@drawable/ic_person"/>
+
+</menu>

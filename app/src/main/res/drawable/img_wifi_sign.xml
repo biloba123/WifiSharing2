@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:duration="500" android:drawable="@android:color/transparent"/>
+    <item android:duration="500">
+        <bitmap android:src="@drawable/img_wifi_sign_0"
+                android:tint="@color/icon"/>
+    </item>
+    <item android:duration="500">
+        <bitmap android:src="@drawable/img_wifi_sign_1"
+                android:tint="@color/icon"/>
+    </item>
+</animation-list>

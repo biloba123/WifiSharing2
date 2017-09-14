@@ -1,0 +1,12 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="icon_size_small">56dp</dimen>
+    <dimen name="switch_icon_size">36dp</dimen>
+    <dimen name="tans_status_toolbar">81dp</dimen>
+    <dimen name="head_size">68dp</dimen>
+    <dimen name="arrow_size">14dp</dimen>
+    <dimen name="bottom_nav_size">56dp</dimen>
+    <dimen name="tag_size">24dp</dimen>
+</resources>

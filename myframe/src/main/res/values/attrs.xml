@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SettingItem">
+        <attr name="showSw" format="boolean"/>
+        <attr name="type" format="string"/>
+        <attr name="title" format="string"/>
+        <attr name="info" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleTextView">
+        <attr name="radius" format="dimension"/>
+        <attr name="bgColor" format="color"/>
+        <attr name="randColor" format="boolean"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="text" format="string"/>
+        <attr name="boldText" format="boolean"/>
+        <attr name="borderWidth" format="dimension"/>
+        <attr name="borderColor" format="color"/>
+    </declare-styleable>
+</resources>

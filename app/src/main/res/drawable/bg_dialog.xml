@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <padding android:top="@dimen/small_spacing"
+             android:bottom="@dimen/small_spacing"
+             android:right="@dimen/big_spacing"
+             android:left="@dimen/big_spacing"/>
+</shape>

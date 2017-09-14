@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_state"
+        android:layout_width="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_big"
+        android:src="@drawable/home_default_icon"
+        android:layout_marginTop="120dp"/>
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_marginTop="@dimen/medium_spacing"
+        android:textSize="@dimen/sub_big_text"
+        android:textColor="@color/sub_text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wifi_close_"/>
+    <Button
+        android:id="@+id/btn_open_wifi"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:layout_marginTop="@dimen/big_spacing"
+        android:text="@string/open_soon"
+        android:textSize="@dimen/medium_text"
+        android:textColor="@color/accent_white"/>
+</LinearLayout>

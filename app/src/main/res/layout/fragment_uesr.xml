@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:windowActionBarOverlay="true">
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/bottom_nav_size"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_user_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="@dimen/big_spacing">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_head"
+                    android:layout_width="@dimen/head_size"
+                    android:layout_height="@dimen/head_size"
+                    android:src="@drawable/head_default"/>
+                <LinearLayout
+                    android:layout_toRightOf="@id/civ_head"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/medium_spacing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/medium_text"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent_white"
+                        android:text="@string/unlogin"/>
+                    <LinearLayout
+                        android:id="@+id/ll_email"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="@dimen/s_small_spacing"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            app:srcCompat="@drawable/ic_credit"/>
+                        <TextView
+                            android:id="@+id/tv_credit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/sub_text_color_light"
+                            android:layout_marginLeft="@dimen/s_small_spacing"
+                            android:textSize="@dimen/small_text"
+                            android:text="信用分"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/arrow_size"
+                    android:layout_height="@dimen/arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_edit"/>
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation"
+                android:layout_marginBottom="@dimen/small_spacing">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_wallet"
+                        app:name="@string/point_center"
+                        app:showInfo="true"
+                        app:info="@string/point_center_info"/>
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_message"
+                        app:name="@string/message"
+                        app:showInfo="true"
+                        app:info="@string/message_info"/>
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_share"
+                        app:name="@string/my_share"
+                        app:showInfo="true"
+                        app:info="@string/my_share_"/>
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_credit_"
+                        app:name="@string/my_credit"
+                        app:showInfo="true"
+                        app:info="@string/my_credit_"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            android:layout_marginBottom="@dimen/small_spacing">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.lvqingyang.wifisharing.view.CardItem
+                android:id="@+id/ci_service_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_service"
+                app:name="@string/service_center"/>
+            <com.lvqingyang.wifisharing.view.CardItem
+                android:id="@+id/ci_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_feedback"
+                app:name="@string/feedback"/>
+
+        </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation"
+                android:layout_marginBottom="@dimen/small_spacing">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_update"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_update"
+                        app:name="@string/check_update"
+                        app:showHint="true"
+                        />
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_thumb_up"
+                        app:name="@string/score"/>
+
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/si_share_friend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_share_firend"
+                        app:name="@string/share_firend"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/img_wifi_footer"/>
+                <ImageView
+                    android:id="@+id/iv_wifi_sign"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="46dp"
+                    android:src="@drawable/img_wifi_sign"/>
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sub_text_color"
+                    android:textSize="@dimen/sub_medium_text"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/company"
+                    android:layout_marginTop="@dimen/sub_big_spacing"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/tv">
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent_green"
+                        android:textSize="@dimen/sub_big_text"
+                        android:text="11"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sub_medium_text"
+                        android:textColor="@color/sub_text_color"
+                        android:text="天"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

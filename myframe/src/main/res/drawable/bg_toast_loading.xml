@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/toast_bg_loading"/>
+    <corners android:radius="@dimen/toast_corner"/>
+    <padding android:top="@dimen/sub_big_spacing"
+             android:bottom="@dimen/sub_big_spacing"
+             android:right="@dimen/sub_big_spacing"
+             android:left="@dimen/sub_big_spacing"/>
+</shape>

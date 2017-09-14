@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Frame</string>
+    <string name="notifyTitle">提示</string>
+    <string name="notifyMsg" >当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting" >设置</string>
+    <string name="cancel">取消</string>
+    <string name="permission_deny">未获得必要权限，无法使用</string>
+    <string name="load_fail">加载失败，请检查网络后重试~</string>
+    <string name="retry">重试</string>
+    <string name="empty">很酷，什么都没有</string>
+    <string name="no_internet">无网络</string>
+    <string name="request_permission">亲爱的上帝，为了能够正常使用，APP需要得到以下权限，我们尊重用户隐私，不会滥用权限。</string>
+</resources>

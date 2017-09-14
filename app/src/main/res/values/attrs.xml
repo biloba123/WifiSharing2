@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CardItem">
+        <attr name="showInfo" format="boolean" />
+        <attr name="showHint" format="boolean"/>
+        <attr name="showArrow" format="boolean"/>
+        <attr name="name" format="string"/>
+        <attr name="info" format="string"/>
+        <attr name="hint" format="string"/>
+        <attr name="icon" format="reference"/>
+    </declare-styleable>
+</resources>

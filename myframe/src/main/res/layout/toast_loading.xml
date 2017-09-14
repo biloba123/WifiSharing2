@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_toast_loading">
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avl"
+        app:indicatorColor="@color/toast_text"
+        app:indicatorName="LineScaleIndicator"
+        android:layout_width="@dimen/toast_icon_size"
+        android:layout_height="@dimen/toast_icon_size"/>
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/toast_text"
+        android:maxEms="12"
+        android:layout_marginTop="@dimen/s_small_spacing"
+        android:textSize="@dimen/sub_medium_text"/>
+</LinearLayout>
