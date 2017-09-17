@@ -97,4 +97,15 @@
     <string name="wifi_close">WiFi已关闭</string>
     <string name="wifi_close_">WiFi暂未开启</string>
     <string name="open_soon">立即开启</string>
+    <string name="wifi_opening">WiFi开启中...</string>
+    <string name="edit_password">输入WiFi密码</string>
+    <string name="connect">连接</string>
+    <string name="connect_error">连接出错</string>
+    <string name="do_security_check">请进行安全检查</string>
+    <string name="safety">安全</string>
+    <string name="sign">信号</string>
+    <string name="speed">速度</string>
+    <string name="connect_count">已连接设备：</string>
+    <string name="check_security">安全检查</string>
+    <string name="enhance_sign">信号增强</string>
 </resources>

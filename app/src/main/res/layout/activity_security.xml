@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary"
+    tools:context="com.lvqingyang.wifisharing.Wifi.connect.funication.SecurityActivity">
+
+    <ImageView
+        android:id="@+id/iv_anim"
+        android:layout_width="270dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/big_spacing"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitEnd"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/activity_signal_enhance_bg"/>
+</RelativeLayout>

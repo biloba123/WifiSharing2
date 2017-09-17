@@ -108,7 +108,7 @@ public class SettingActivity extends BaseActivity {
                     }
                 })
                 .setNegBtn(android.R.string.cancel,null)
-                .show(getSupportFragmentManager(),null);
+                .show(getSupportFragmentManager());
 
     }
 }

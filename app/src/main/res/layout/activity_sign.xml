@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary"
+    tools:context="com.lvqingyang.wifisharing.Wifi.connect.funication.SecurityActivity">
+
+    <com.skyfishjy.library.RippleBackground
+        android:id="@+id/rb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rb_color="#c8ffffff"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="3"
+        app:rb_duration="3000"
+        app:rb_scale="6"
+        app:rb_type="strokeRipple"
+        app:rb_strokeWidth="8dp">
+        <ImageView
+            android:layout_width="283.5dp"
+            android:layout_height="210dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/huge_spacing"
+            android:src="@drawable/activity_signal_enhance_logo"/>
+
+        </com.skyfishjy.library.RippleBackground>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitEnd"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/activity_signal_enhance_bg"/>
+</RelativeLayout>

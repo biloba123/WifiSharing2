@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
@@ -97,7 +98,7 @@ public class WiFiConnectService extends Service {
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-//        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(mReceiver, filter);
         super.onCreate();
     }
@@ -128,23 +129,33 @@ public class WiFiConnectService extends Service {
     private BroadcastReceiver mReceiver=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: "+intent.getAction());
+//            if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: "+intent.getAction());
             String action=intent.getAction();
+
+            if (action.equals(WifiManager.RSSI_CHANGED_ACTION)) {
+                Log.i(TAG, "wifi信号强度变化");
+                for (WifiConnectListener wifiConnectListener : sWifiConnectListener) {
+                    wifiConnectListener.onWifiSignChange();
+                }
+            }
+
             //监听wifi打开关闭
             if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
-                switch (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0)) {
-                    case WifiManager.WIFI_STATE_DISABLED:
+                switch (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED)) {
+                    case WifiManager.WIFI_STATE_DISABLED: {
                         if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: Wifi关闭");
                         for (WifiConnectListener wifiConnectListener : sWifiConnectListener) {
                             wifiConnectListener.onWifiDisable();
                         }
                         break;
-                    case WifiManager.WIFI_STATE_ENABLED:
+                    }
+                    case WifiManager.WIFI_STATE_ENABLED: {
                         if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: Wifi打开");
                         for (WifiConnectListener wifiConnectListener : sWifiConnectListener) {
                             wifiConnectListener.onWifiEnable();
                         }
                         break;
+                    }
                 }
             }
 
@@ -164,10 +175,12 @@ public class WiFiConnectService extends Service {
                     NetworkInfo networkInfo= (NetworkInfo) parcelable;
                     NetworkInfo.State state=networkInfo.getState();
                     if (state== NetworkInfo.State.CONNECTED) {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: wifi连接上");
                         for (WifiConnectListener wifiConnectListener : sWifiConnectListener) {
                             wifiConnectListener.onWifiConnected();
                         }
-                    }else{
+                    }else if (state.equals(NetworkInfo.State.DISCONNECTED)) {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: wifi断开");
                         for (WifiConnectListener wifiConnectListener : sWifiConnectListener) {
                             wifiConnectListener.onWifiDisconnected();
                         }

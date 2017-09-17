@@ -13,4 +13,5 @@ public interface WifiConnectListener {
     void onScanResultAvailable();
     void onWifiConnected();
     void onWifiDisconnected();
+    void onWifiSignChange();
 }

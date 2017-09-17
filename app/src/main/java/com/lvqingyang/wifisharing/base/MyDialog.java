@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +26,25 @@ import com.lvqingyang.wifisharing.R;
 public class MyDialog extends DialogFragment {
     private Context mContext;
     private String mTitle;
+    private View mRootView;
     private View mView;
     private String mPosBtnName,mNegBtnName;
     private View.OnClickListener mPosLis,mNegLis;
+    private int mDialogWidth=920;
+    private TextView tvpos,tvneg;
+    private TextView tvtitle;
+    private FrameLayout container;
+    private LinearLayout llbtn;
 
     public MyDialog(Context context) {
         mContext = context;
+        mRootView= LayoutInflater.from(mContext).inflate(R.layout.dialog_base,null);
+        this.llbtn = (LinearLayout) mRootView.findViewById(R.id.ll_btn);
+        this.tvpos = (TextView) mRootView.findViewById(R.id.tv_pos);
+        this.tvneg = (TextView) mRootView.findViewById(R.id.tv_neg);
+        this.container = (FrameLayout) mRootView.findViewById(R.id.container);
+        this.tvtitle = (TextView) mRootView.findViewById(R.id.tv_title);
+
     }
 
     public MyDialog setTitle(int titleId){
@@ -80,33 +94,41 @@ public class MyDialog extends DialogFragment {
     }
 
 
+    public MyDialog setDialogWidth(int dialogWidth) {
+        mDialogWidth = dialogWidth;
+        return this;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         Dialog dialog=getDialog();
         if (dialog != null) {
             dialog.getWindow()
-                    .setLayout(920,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    .setLayout(mDialogWidth,ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.getWindow().setBackgroundDrawable(null);
         }
     }
 
+    public void show(FragmentManager fragmentManager){
+        show(fragmentManager,null);
+    }
 
+    public TextView getTvpos() {
+        return tvpos;
+    }
+
+    public TextView getTvneg() {
+        return tvneg;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final View v= LayoutInflater.from(mContext).inflate(R.layout.dialog_base,null);
-        LinearLayout llbtn = (LinearLayout) v.findViewById(R.id.ll_btn);
-        TextView tvpos = (TextView) v.findViewById(R.id.tv_pos);
-        TextView tvneg = (TextView) v.findViewById(R.id.tv_neg);
-        FrameLayout container = (FrameLayout) v.findViewById(R.id.container);
-        TextView tvtitle = (TextView) v.findViewById(R.id.tv_title);
-
         tvtitle.setText(mTitle);
         if (mView != null) {
             FrameLayout.LayoutParams layoutParams=
-                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             mView.setLayoutParams(layoutParams);
             container.addView(mView);
         }
@@ -120,7 +142,7 @@ public class MyDialog extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         if (mPosLis != null) {
-                            mPosLis.onClick(v);
+                            mPosLis.onClick(view);
                         }
                         dismiss();
                     }
@@ -135,7 +157,7 @@ public class MyDialog extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         if (mNegLis != null) {
-                            mNegLis.onClick(v);
+                            mNegLis.onClick(view);
                         }
                         dismiss();
                     }
@@ -148,6 +170,6 @@ public class MyDialog extends DialogFragment {
 
 
         return new AlertDialog.Builder(mContext)
-                .setView(v).create();
+                .setView(mRootView).create();
     }
 }

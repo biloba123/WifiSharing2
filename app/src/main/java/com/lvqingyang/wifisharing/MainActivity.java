@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity {
                     }
                 });
         dialog.setCancelable(false);
-        dialog.show(getSupportFragmentManager(),null);
+        dialog.show(getSupportFragmentManager());
 
     }
 

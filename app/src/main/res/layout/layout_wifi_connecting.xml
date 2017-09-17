@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.skyfishjy.library.RippleBackground
+    android:id="@+id/rb"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="240dp"
+    app:rb_color="@color/colorPrimary"
+    app:rb_radius="32dp"
+    app:rb_rippleAmount="3"
+    app:rb_duration="3000"
+    app:rb_scale="6"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/big_text"
+        android:text="@string/app_name"
+        android:layout_marginTop="@dimen/medium_spacing"/>
+    <TextView
+        android:layout_below="@id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#e7212121"
+        android:layout_marginTop="@dimen/small_spacing"
+        android:textSize="@dimen/sub_medium_text"
+        android:text="连接中..."/>
+    <ImageView
+        android:id="@+id/iv_center"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:padding="@dimen/medium_spacing"
+        android:layout_centerInParent="true"
+        android:src="@drawable/wifi_breath"
+        android:background="@drawable/bg_connecting_wifi"/>
+</com.skyfishjy.library.RippleBackground>

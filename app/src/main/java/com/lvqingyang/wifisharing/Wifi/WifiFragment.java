@@ -25,8 +25,6 @@ import com.lvqingyang.wifisharing.tool.WifiHotUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import frame.tool.MyToast;
-
 import static com.lvqingyang.wifisharing.tool.WifiHotUtil.WIFI_AP_STATE_ENABLED;
 
 /**
@@ -59,13 +57,13 @@ public class WifiFragment extends BaseFragment {
     private WifiConnectListener mWifiConnectListener=new WifiConnectListener() {
         @Override
         public void onWifiEnable() {
-            MyToast.info(getActivity(), R.string.wifi_open);
+//            MyToast.info(getActivity(), R.string.wifi_open);
             wifiswitch.setIconEnabled(true);
         }
 
         @Override
         public void onWifiDisable() {
-            MyToast.info(getActivity(), R.string.wifi_close);
+//            MyToast.info(getActivity(), R.string.wifi_close);
             wifiswitch.setIconEnabled(false);
         }
 
@@ -83,8 +81,14 @@ public class WifiFragment extends BaseFragment {
         public void onWifiDisconnected() {
 
         }
+
+        @Override
+        public void onWifiSignChange() {
+
+        }
     };
     private WifiHotUtil mWifiHotUtil;
+    private  List<Fragment> mFragmentList=new ArrayList<>();
 //    //定位需要的声明
 //    private LocationListener mLocationListener;
 //
@@ -156,7 +160,7 @@ public class WifiFragment extends BaseFragment {
         });
 
         WiFiConnectService.startService(getActivity());
-
+        WiFiConnectService.addWiFiConnectListener(mWifiConnectListener);
 
         //WiFi开关
         wifiswitch.setOnClickListener(new View.OnClickListener() {
@@ -164,8 +168,10 @@ public class WifiFragment extends BaseFragment {
             public void onClick(View v) {
                 if (wifiswitch.isIconEnabled()) {
                     mWifiManager.setWifiEnabled(false);
+                    ((ConnectHotspotFragment)mFragmentList.get(0)).wifiDisable();
                 }else {
                     mWifiManager.setWifiEnabled(true);
+                    ((ConnectHotspotFragment)mFragmentList.get(0)).wifiOpening();
                 }
                 wifiswitch.setIconEnabled(!wifiswitch.isIconEnabled());
             }
@@ -247,7 +253,6 @@ public class WifiFragment extends BaseFragment {
 
     //ViewPager适配器
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) {
@@ -282,7 +287,13 @@ public class WifiFragment extends BaseFragment {
         titles.add(stringArray[1]);
     }
 
-//    //创建热点
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        WiFiConnectService.removeWiFiConnectListener(mWifiConnectListener);
+    }
+
+    //    //创建热点
 //    private void showCreateApDialog(){
 //        mIsPostHotspot=false;
 //

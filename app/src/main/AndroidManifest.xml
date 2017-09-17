@@ -63,6 +63,10 @@
             android:enabled="true"
             android:exported="true"/>
 
+        <activity android:name=".Wifi.connect.funication.SecurityActivity">
+        </activity>
+        <activity android:name=".Wifi.connect.funication.SignActivity">
+        </activity>
     </application>
 
 </manifest>

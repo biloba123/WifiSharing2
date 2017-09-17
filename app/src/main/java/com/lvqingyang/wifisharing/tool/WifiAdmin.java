@@ -405,8 +405,8 @@ public class WifiAdmin {
     }
 
     //得到wifiinfo所有信息
-    public String getWifiInfo(){
-        return (mWifiInfo==null)?"NULL":mWifiInfo.toString();
+    public WifiInfo getWifiInfo(){
+        return mWifiInfo;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
