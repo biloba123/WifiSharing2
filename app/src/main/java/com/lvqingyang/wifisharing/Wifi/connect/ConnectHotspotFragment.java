@@ -3,6 +3,7 @@ package com.lvqingyang.wifisharing.Wifi.connect;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.TrafficStats;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -28,15 +29,19 @@ import android.widget.TextView;
 
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
-import com.lvqingyang.wifisharing.Wifi.connect.funication.SecurityActivity;
-import com.lvqingyang.wifisharing.Wifi.connect.funication.SignActivity;
+import com.lvqingyang.wifisharing.Wifi.connect.funcation.SecurityActivity;
+import com.lvqingyang.wifisharing.Wifi.connect.funcation.SignActivity;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.base.MyDialog;
-import com.lvqingyang.wifisharing.tool.WifiAdmin;
 import com.skyfishjy.library.RippleBackground;
 
 import frame.tool.MyToast;
 import frame.tool.SolidRVBaseAdapter;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import top.wefor.circularanim.CircularAnim;
 
 
@@ -86,6 +91,9 @@ public class ConnectHotspotFragment extends BaseFragment {
     private TextView tvspeed;
     private LinearLayout llconnected;
 
+    //是否开启测速
+    private boolean mIsOnSpeeding;
+
     /**
      * 对wifi进行管理
      */
@@ -126,6 +134,8 @@ public class ConnectHotspotFragment extends BaseFragment {
             if (mAdapter.getItemCount()==0) {
                 rvwifi.setVisibility(View.GONE);
                 llnowifi.setVisibility(View.VISIBLE);
+                //再进行一次扫描
+                mWifiAdmin.scan();
             }else {
                 llnowifi.setVisibility(View.GONE);
                 rvwifi.setVisibility(View.VISIBLE);
@@ -180,6 +190,7 @@ public class ConnectHotspotFragment extends BaseFragment {
         mBtnOpenWifi.setVisibility(View.VISIBLE);
         mIvState.setImageResource(R.drawable.home_default_icon);
         mTvState.setText(R.string.wifi_close_);
+        mIsOnSpeeding=false;
     }
 
     public void wifiOpening(){
@@ -235,6 +246,10 @@ public class ConnectHotspotFragment extends BaseFragment {
         }
 
         tvconnectcount.setText(getString(R.string.connect_count)+1);
+
+        //开启测速
+        runSpeedThred();
+        mIsOnSpeeding=true;
     }
 
     public void wifiDisConnected(){
@@ -242,8 +257,22 @@ public class ConnectHotspotFragment extends BaseFragment {
         mRippleBackground.stopRippleAnimation();
         AnimationDrawable ad= (AnimationDrawable) mIvCenter.getDrawable();
         ad.stop();
+        mIsOnSpeeding=false;
     }
-     
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mWifiAdmin.isNetCardFriendly()) {
+            mWifiAdmin.scan();
+            if (mWifiAdmin.isConnected()) {
+                wifiConnected(false);
+            }
+        }
+
+    }
+
+
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_connect_hotspot,container,false);
@@ -309,6 +338,14 @@ public class ConnectHotspotFragment extends BaseFragment {
                 startActivityWithCircularAnim(view, SignActivity.class);
             }
         });
+
+        mBtnOpenWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mWifiAdmin.openNetCard();
+                wifiOpening();
+            }
+        });
     }
 
     @Override
@@ -317,7 +354,7 @@ public class ConnectHotspotFragment extends BaseFragment {
 
         mAdapter=new SolidRVBaseAdapter<android.net.wifi.ScanResult>(getActivity(), mWifiAdmin.getScanResultList()) {
             @Override
-            protected void onBindDataToView(SolidCommonViewHolder holder, android.net.wifi.ScanResult scanResult) {
+            protected void onBindDataToView(SolidCommonViewHolder holder, final android.net.wifi.ScanResult scanResult) {
                 holder.setText(R.id.tv_name,scanResult.SSID);
                 //信号强度
                 final boolean isLocked=scanResult.capabilities.contains("WEP")||scanResult.capabilities.contains("PSK")||
@@ -330,6 +367,13 @@ public class ConnectHotspotFragment extends BaseFragment {
                 }
                 ivLevel.setImageLevel(WifiManager.calculateSignalLevel(scanResult.level,5));
 
+                holder.getView(R.id.iv_tag).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ScanResultInfoActivity.start(getActivity(), scanResult);
+
+                    }
+                });
 
             }
 
@@ -386,6 +430,12 @@ public class ConnectHotspotFragment extends BaseFragment {
             }
         });
         rvwifi.setAdapter(mAdapter);
+
+        if (mWifiAdmin.isNetCardFriendly()) {
+            wifiEnable();
+        }else {
+            wifiDisable();
+        }
     }
 
     @Override
@@ -397,6 +447,7 @@ public class ConnectHotspotFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         WiFiConnectService.removeWiFiConnectListener(mWifiConnectListener);
+        mIsOnSpeeding=false;
     }
 
     private void showEditPassDialog(final ScanResult result){
@@ -480,11 +531,63 @@ public class ConnectHotspotFragment extends BaseFragment {
 
     private void startActivityWithCircularAnim(View startView, final Class c){
         CircularAnim.fullActivity(getActivity(), startView)
-                .colorOrImageRes(R.color.colorPrimary)
+                .colorOrImageRes(R.color.bg_funcation)
                 .go(new CircularAnim.OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
                         startActivity(new Intent(getActivity(),c));
+                    }
+                });
+    }
+
+    //测速线程
+    public void runSpeedThred(){
+        final int count = 2;
+        Observable.create(new Observable.OnSubscribe<int[]>() {
+            @Override
+            public void call(Subscriber<? super int[]> subscriber) {
+                try {
+                    int[] speeds=new int[2];
+                    long total_get_data = TrafficStats.getTotalRxBytes();
+                    long total_post_data=TrafficStats.getTotalTxBytes();
+                    while (mIsOnSpeeding){
+                        long traffic_data =TrafficStats.getTotalRxBytes() - total_get_data;
+                        total_get_data = TrafficStats.getTotalRxBytes();
+                        speeds[0]=(int)traffic_data /count;
+
+                        traffic_data =TrafficStats.getTotalTxBytes() - total_post_data;
+                        total_post_data = TrafficStats.getTotalTxBytes();
+                        speeds[1]=(int)traffic_data /count;
+                        subscriber.onNext(speeds);
+                        Thread.sleep(count*1000);
+                    }
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Observer<int[]>() {
+                    @Override
+                    public void onNext(int[] responce) {
+//                        Log.d(TAG, "onNext: "+responce[0]+"  "+responce[1]);
+                        tvupload.setText(responce[1]>1024?String.format("%.1fkb/s",responce[1]/1024f)
+                                :responce[1]+"b/s");
+                        tvdownload.setText(responce[0]>1024?String.format("%.1fkb/s",responce[0]/1024f)
+                                :responce[0]+"b/s");
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "onCompleted: 网速停测");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
                 });
     }

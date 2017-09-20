@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.tool;
+package com.lvqingyang.wifisharing.Wifi.share;
 
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
@@ -231,6 +231,7 @@ public class WifiHotUtil {
             return null;
         }
     }
+
     //获取热点密码
     public String getValidPassword(){
         try {
@@ -243,6 +244,7 @@ public class WifiHotUtil {
         }
 
     }
+
     //获取热点安全类型
     public int getValidSecurity(){
         WifiConfiguration configuration;

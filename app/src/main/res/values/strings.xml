@@ -108,4 +108,12 @@
     <string name="connect_count">已连接设备：</string>
     <string name="check_security">安全检查</string>
     <string name="enhance_sign">信号增强</string>
+    <string name="hotspot_name">热点名称</string>
+    <string name="set_pwd">设置密码？</string>
+    <string name="hotspot_pwd">热点密码</string>
+    <string name="post_hotspot">共享热点</string>
+    <string name="personal_hotspot">个人热点</string>
+    <string name="create">创建</string>
+    <string name="hotspot_closed">个人热点暂未开启</string>
+    <string name="hotspot_opening">开启中...</string>
 </resources>

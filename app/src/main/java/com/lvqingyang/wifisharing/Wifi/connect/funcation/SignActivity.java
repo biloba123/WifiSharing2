@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.Wifi.connect.funication;
+package com.lvqingyang.wifisharing.Wifi.connect.funcation;
 
 import android.content.Context;
 import android.content.Intent;

@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS"/> -->
     <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -55,7 +56,7 @@
         </activity>
 
         <service
-            android:name=".service.WiFiAPService"
+            android:name=".Wifi.share.WiFiAPService"
             android:enabled="true"
             android:exported="true"/>
         <service
@@ -63,9 +64,15 @@
             android:enabled="true"
             android:exported="true"/>
 
-        <activity android:name=".Wifi.connect.funication.SecurityActivity">
+        <activity
+            android:name=".Wifi.connect.funcation.SecurityActivity"
+            android:theme="@style/FuncationTheme">
         </activity>
-        <activity android:name=".Wifi.connect.funication.SignActivity">
+        <activity
+            android:name=".Wifi.connect.funcation.SignActivity"
+            android:theme="@style/FuncationTheme">
+        </activity>
+        <activity android:name=".Wifi.connect.ScanResultInfoActivity">
         </activity>
     </application>
 

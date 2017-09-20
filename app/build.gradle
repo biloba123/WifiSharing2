@@ -40,5 +40,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.XunMengWinter:CircularAnim:0.3.4'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+    compile 'com.white:progressview:1.0.1'
     testCompile 'junit:junit:4.12'
 }

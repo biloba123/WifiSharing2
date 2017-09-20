@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:id="@+id/ll_closed"
+              android:visibility="gone"
               android:gravity="center_horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <ImageView
         android:id="@+id/iv_state"
-        android:layout_width="@dimen/icon_size_big"
+        android:layout_width="180dp"
         android:layout_height="@dimen/icon_size_big"
-        android:src="@drawable/home_default_icon"
+        android:src="@drawable/connect_hotspot_close_settings"
         android:layout_marginTop="120dp"/>
     <TextView
         android:id="@+id/tv_state"
@@ -17,9 +19,9 @@
         android:textColor="@color/sub_text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/wifi_close_"/>
+        android:text="@string/hotspot_closed"/>
     <Button
-        android:id="@+id/btn_open_wifi"
+        android:id="@+id/btn_open_hotspot"
         android:layout_width="180dp"
         android:layout_height="38dp"
         android:background="?colorPrimary"

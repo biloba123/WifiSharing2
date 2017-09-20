@@ -34,8 +34,10 @@
         android:textColor="@color/text_color"/>
     <ImageView
         android:id="@+id/iv_tag"
-        android:layout_width="@dimen/tag_size"
-        android:layout_height="@dimen/tag_size"
+        android:layout_width="36dp"
+        android:layout_height="24dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:srcCompat="@drawable/ic_info_"/>
 </LinearLayout>
     <View

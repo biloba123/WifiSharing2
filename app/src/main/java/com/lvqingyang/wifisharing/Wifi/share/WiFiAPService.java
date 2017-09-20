@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.service;
+package com.lvqingyang.wifisharing.Wifi.share;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -8,9 +8,6 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-
-import com.lvqingyang.wifisharing.i.WiFiAPListener;
-import com.lvqingyang.wifisharing.tool.WiFiAPObserver;
 
 
 /**

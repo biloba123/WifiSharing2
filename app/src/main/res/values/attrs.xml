@@ -9,4 +9,11 @@
         <attr name="hint" format="string"/>
         <attr name="icon" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="SignView">
+        <attr name="radius" format="dimension"/>
+        <attr name="dotRadius" format="dimension"/>
+        <attr name="dashWidth" format="dimension"/>
+        <attr name="textSize" format="dimension"/>
+    </declare-styleable>
 </resources>

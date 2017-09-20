@@ -1,7 +1,5 @@
-package com.lvqingyang.wifisharing.tool;
+package com.lvqingyang.wifisharing.Wifi.share;
 
-
-import com.lvqingyang.wifisharing.i.WiFiAPListener;
 
 import java.util.HashSet;
 

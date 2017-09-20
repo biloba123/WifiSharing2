@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.tool;
+package com.lvqingyang.wifisharing.Wifi.connect;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,6 +8,8 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+
+import com.lvqingyang.wifisharing.Wifi.share.WifiHotUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -218,6 +220,10 @@ public class WifiAdmin {
 
     //打开Wifi网卡
     public void openNetCard(){
+        WifiHotUtil wifiHotUtil=WifiHotUtil.getInstance(mContext);
+        if (wifiHotUtil.getWifiAPState()==WifiHotUtil.WIFI_AP_STATE_ENABLED) {
+            wifiHotUtil.closeWifiAp();
+        }
         if (!mWifiManager.isWifiEnabled()) {
             mWifiManager.setWifiEnabled(true);
         }

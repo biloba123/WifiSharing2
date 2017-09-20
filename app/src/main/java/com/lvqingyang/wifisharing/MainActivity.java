@@ -14,6 +14,8 @@ import android.view.View;
 import com.lvqingyang.wifisharing.Map.MapFragment;
 import com.lvqingyang.wifisharing.User.UserFragment;
 import com.lvqingyang.wifisharing.Wifi.WifiFragment;
+import com.lvqingyang.wifisharing.Wifi.connect.WiFiConnectService;
+import com.lvqingyang.wifisharing.Wifi.share.WiFiAPService;
 import com.lvqingyang.wifisharing.base.MyDialog;
 
 import frame.base.BaseActivity;
@@ -192,5 +194,12 @@ public class MainActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(paramMenuItem);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        WiFiConnectService.stopService(this);
+        WiFiAPService.stopService(this);
     }
 }

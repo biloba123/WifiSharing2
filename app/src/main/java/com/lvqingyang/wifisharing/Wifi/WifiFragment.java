@@ -19,13 +19,16 @@ import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.Wifi.connect.ConnectHotspotFragment;
 import com.lvqingyang.wifisharing.Wifi.connect.WiFiConnectService;
 import com.lvqingyang.wifisharing.Wifi.connect.WifiConnectListener;
+import com.lvqingyang.wifisharing.Wifi.share.ShareHotspotFragment;
+import com.lvqingyang.wifisharing.Wifi.share.WiFiAPListener;
+import com.lvqingyang.wifisharing.Wifi.share.WiFiAPService;
+import com.lvqingyang.wifisharing.Wifi.share.WifiHotUtil;
 import com.lvqingyang.wifisharing.base.BaseFragment;
-import com.lvqingyang.wifisharing.tool.WifiHotUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.lvqingyang.wifisharing.tool.WifiHotUtil.WIFI_AP_STATE_ENABLED;
+import static com.lvqingyang.wifisharing.Wifi.share.WifiHotUtil.WIFI_AP_STATE_ENABLED;
 
 /**
  * Author：LvQingYang
@@ -177,42 +180,45 @@ public class WifiFragment extends BaseFragment {
             }
         });
 
-//        //Hotspot开关
-//        hotspotswitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (hotspotswitch.isIconEnabled()) {
-//                    mWifiHotUtil.closeWifiAp();
-//                    hotspotswitch.setIconEnabled(false);
-//                }else {
-//                    showCreateApDialog();
-//                }
-//            }
-//        });
-//
+        //Hotspot开关
+        hotspotswitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((ShareHotspotFragment) mFragmentList.get(1)).checkSystemWritePermission()) {
+                    if (hotspotswitch.isIconEnabled()) {
+                        mWifiHotUtil.closeWifiAp();
+                        hotspotswitch.setIconEnabled(false);
+                    } else {
+                        ((ShareHotspotFragment) mFragmentList.get(1)).showConfigHotspotDialog();
+                    }
+                }
+            }
+        });
+
 //        //热点监听
-//        WiFiAPService.addWiFiAPListener(new WiFiAPListener() {
-//            @Override
-//            public void stateChanged(int state) {
-//                switch (state) {
-//                    case WiFiAPListener.WIFI_AP_CLOSE_SUCCESS:
-//                        hotspotswitch.setIconEnabled(false);
+        WiFiAPService.startService(getActivity());
+        WiFiAPService.addWiFiAPListener(new WiFiAPListener() {
+            @Override
+            public void stateChanged(int state) {
+                switch (state) {
+                    case WiFiAPListener.WIFI_AP_CLOSE_SUCCESS:
+                        hotspotswitch.setIconEnabled(false);
 //                        if (mIsPostHotspot) {
 //                            //删除信息
 //                            deleteHotspot();
 //                        }
-//                        break;
-//                    case WiFiAPListener.WIFI_AP_OPEN_SUCCESS:
-//                        hotspotswitch.setIconEnabled(true);
+                        break;
+                    case WiFiAPListener.WIFI_AP_OPEN_SUCCESS:
+                        hotspotswitch.setIconEnabled(true);
 //                        if (mIsPostHotspot) {
 //                            Log.d(TAG, "stateChanged: 开始定位");
 //                            //定位发布
 //                            mLocationListener.startLoc();
 //                        }
-//                        break;
-//                }
-//            }
-//        });
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -226,6 +232,8 @@ public class WifiFragment extends BaseFragment {
     @Override
     protected void setData() {
         wifiswitch.setIconEnabled(mWifiManager.isWifiEnabled());
+        hotspotswitch.setIconEnabled(mWifiHotUtil.getWifiAPState()== WIFI_AP_STATE_ENABLED);
+
 
         viewpager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager()));
 //        viewpager.setOffscreenPageLimit(viewpager.getAdapter().getCount());
@@ -234,7 +242,6 @@ public class WifiFragment extends BaseFragment {
         //tab均分,适合少的tab
         tablayout.setTabMode(TabLayout.MODE_FIXED);
 
-        hotspotswitch.setIconEnabled(mWifiHotUtil.getWifiAPState()== WIFI_AP_STATE_ENABLED);
     }
 
     @Override
