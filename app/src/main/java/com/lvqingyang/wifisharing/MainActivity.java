@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity {
     private void showRequestPermissionDialog(){
         View view=getLayoutInflater().inflate(R.layout.dialog_request_permission,null);
         MyDialog dialog=new MyDialog(this)
-                .setTitle(R.string.request_permission)
+                .setTitle(R.string.request_permission_)
                 .setView(view)
                 .setPosBtn(android.R.string.ok, new View.OnClickListener() {
                     @Override

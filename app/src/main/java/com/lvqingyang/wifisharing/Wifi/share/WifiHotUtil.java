@@ -227,7 +227,7 @@ public class WifiHotUtil {
             WifiConfiguration configuration = (WifiConfiguration)method.invoke(mWifiManager);
             return configuration.SSID;
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG, e.toString());
             return null;
         }
     }

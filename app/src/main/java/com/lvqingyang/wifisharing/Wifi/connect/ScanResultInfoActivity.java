@@ -2,8 +2,10 @@ package com.lvqingyang.wifisharing.Wifi.connect;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.lvqingyang.wifisharing.R;
@@ -22,6 +24,7 @@ public class ScanResultInfoActivity extends BaseActivity {
     private static final int SIGN_GOOD = 50;
     private static final String TAG = "ScanResultInfoActivity";
     private TextView mTvMac;
+    private TextView mTvEncrypt;
 
     public static void start(Context context, android.net.wifi.ScanResult s) {
         Intent starter = new Intent(context, ScanResultInfoActivity.class);
@@ -41,6 +44,7 @@ public class ScanResultInfoActivity extends BaseActivity {
         this.tvsign = (TextView) findViewById(R.id.tv_sign);
         this.circleprogressview = (CircleProgressView) findViewById(R.id.circle_progress_view);
         mTvMac = (TextView) findViewById(R.id.tv_mac);
+        mTvEncrypt = (TextView) findViewById(R.id.tv_encrypt);
     }
 
     @Override
@@ -58,13 +62,13 @@ public class ScanResultInfoActivity extends BaseActivity {
         int sign= WifiManager.calculateSignalLevel(mScanResult.level,100);
         int color;
         if (sign>=SIGN_GREAT) {
-            color=getResources().getColor(android.R.color.holo_green_light);
+            color= Color.parseColor("#46bf16");
             tvsign.setText("信号：极佳");
         }else if (sign>=SIGN_GOOD) {
-            color=getResources().getColor(android.R.color.holo_blue_light);
+            color=Color.parseColor("#2272eb");
             tvsign.setText("信号：优");
         }else {
-            color=getResources().getColor(android.R.color.holo_red_light);
+            color=Color.parseColor("#fb5c50");
             tvsign.setText("信号：一般");
         }
         circleprogressview.setReachBarColor(color);
@@ -72,6 +76,10 @@ public class ScanResultInfoActivity extends BaseActivity {
         tvsign.setTextColor(color);
         circleprogressview.setProgressInTime(0,sign,2000*sign/100);
         mTvMac.setText(mScanResult.BSSID);
+
+        String capabilities=mScanResult.capabilities
+                .replace("[WPS]","").replace("[ESS]","").replace("[P2P]","");
+        mTvEncrypt.setText(TextUtils.isEmpty(capabilities)?"NONE":capabilities);
     }
 
     @Override

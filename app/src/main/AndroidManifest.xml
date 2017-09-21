@@ -33,7 +33,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionbar">
+            android:theme="@style/AppTheme.NoActionbar.TranStatus">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -83,6 +83,39 @@
                 android:background="@color/div"/>
         </LinearLayout>
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/medium_spacing"
+                android:paddingRight="@dimen/medium_spacing"
+                android:paddingTop="@dimen/small_spacing">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="加密方式"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/medium_text"/>
+                    <TextView
+                        android:id="@+id/tv_encrypt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:layout_marginLeft="@dimen/medium_spacing"
+                        android:textColor="@color/sub_text_color"
+                        android:textSize="@dimen/medium_text"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:background="@color/div"/>
+            </LinearLayout>
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

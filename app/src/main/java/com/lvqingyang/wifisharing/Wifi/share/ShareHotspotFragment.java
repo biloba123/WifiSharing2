@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,7 +27,13 @@ import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.bean.ConnectDevice;
 import com.skyfishjy.library.RippleBackground;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import frame.tool.SolidRVBaseAdapter;
 
 /**
  * Author：LvQingYang
@@ -60,7 +68,12 @@ public class ShareHotspotFragment extends BaseFragment {
     private RelativeLayout mLlOpening;
     private RippleBackground mRbLeft;
     private RippleBackground mRbRight;
-    private NestedScrollView mNestedScrollView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private TextView mTvName;
+    private LinearLayout mLlNoDevice;
+    private RecyclerView mRvDevice;
+    private List<ConnectDevice> mConnectDeviceList=new ArrayList<ConnectDevice>();
+    private SolidRVBaseAdapter mAdapter;
 
 
     public static ShareHotspotFragment newInstance() {
@@ -184,7 +197,10 @@ public class ShareHotspotFragment extends BaseFragment {
         mLlOpening = (RelativeLayout) view.findViewById(R.id.ll_opening);
         mRbLeft = (RippleBackground) view.findViewById(R.id.rb_left);
         mRbRight = (RippleBackground) view.findViewById(R.id.rb_right);
-        mNestedScrollView = (NestedScrollView) view.findViewById(R.id.nsv);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+        mTvName=view.findViewById(R.id.tv_name);
+        mLlNoDevice = (LinearLayout) view.findViewById(R.id.ll_no_device);
+        mRvDevice = (RecyclerView) view.findViewById(R.id.rv_device);
     }
 
     @Override
@@ -205,16 +221,52 @@ public class ShareHotspotFragment extends BaseFragment {
                 }
             }
         });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showConnectDevice();
+            }
+        });
+
     }
 
     @Override
     protected void initData() {
         mWifiHotUtil=WifiHotUtil.getInstance(getActivity());
+
+        mAdapter=new SolidRVBaseAdapter<ConnectDevice>(getActivity(), mConnectDeviceList) {
+            @Override
+            protected void onBindDataToView(SolidCommonViewHolder holder, ConnectDevice bean) {
+                holder.setText(R.id.tv_ip,bean.getIp());
+            }
+
+            @Override
+            public int getItemLayoutID(int viewType) {
+                return R.layout.item_device;
+            }
+
+            @Override
+            protected void onItemClick(int position, ConnectDevice bean) {
+                super.onItemClick(position, bean);
+                new MyDialog(getActivity())
+                        .setTitle(getString(R.string.device_info))
+                        .setMessage("IP: "+bean.getIp()+"\n\n"
+                            +"Mac: "+bean.getMac())
+                        .setPosBtn(android.R.string.ok,null)
+                        .show(getFragmentManager());
+            }
+        };
+
+
     }
 
     @Override
     protected void setData() {
         switchState(mWifiHotUtil.getWifiAPState());
+
+        mRvDevice.setAdapter(mAdapter);
+        mRvDevice.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
@@ -239,7 +291,7 @@ public class ShareHotspotFragment extends BaseFragment {
     }
 
     private void hotspotClosed(){
-        mNestedScrollView.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setVisibility(View.GONE);
         mLlOpening.setVisibility(View.GONE);
         mRbLeft.stopRippleAnimation();
         mRbRight.stopRippleAnimation();
@@ -248,7 +300,7 @@ public class ShareHotspotFragment extends BaseFragment {
     }
 
     private void hotspotOpening(){
-        mNestedScrollView.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setVisibility(View.GONE);
         mLlClosed.setVisibility(View.GONE);
 
         mLlOpening.setVisibility(View.VISIBLE);
@@ -262,7 +314,10 @@ public class ShareHotspotFragment extends BaseFragment {
         mRbLeft.stopRippleAnimation();
         mRbRight.stopRippleAnimation();
 
-        mNestedScrollView.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        mTvName.setText(mWifiHotUtil.getValidApSsid());
+
+        showConnectDevice();
     }
 
     private void switchState(int state){
@@ -287,5 +342,19 @@ public class ShareHotspotFragment extends BaseFragment {
                 break;
             }
         }
+    }
+
+    private void showConnectDevice(){
+        mAdapter.clearAllItems();
+        mAdapter.addItems(mWifiHotUtil.getConnectedDevices());
+        if (mConnectDeviceList.size()>0) {
+            mLlNoDevice.setVisibility(View.GONE);
+            mRvDevice.setVisibility(View.VISIBLE);
+        }else {
+            mRvDevice.setVisibility(View.GONE);
+            mLlNoDevice.setVisibility(View.VISIBLE);
+        }
+
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }

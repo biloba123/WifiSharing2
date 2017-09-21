@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WifiSharing</string>
+    <string name="app_name">iWiFi</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -73,7 +73,7 @@
     <string name="logout_sure">是否确认退出登录？</string>
     <string name="logouted">已退出登录</string>
     <string name="service_center">服务中心</string>
-    <string name="company">WifiSharing已陪伴您</string>
+    <string name="company">iWiFi已陪伴您</string>
     <string name="head">头像</string>
     <string name="account">账号</string>
     <string name="sex">性别</string>
@@ -116,4 +116,9 @@
     <string name="create">创建</string>
     <string name="hotspot_closed">个人热点暂未开启</string>
     <string name="hotspot_opening">开启中...</string>
+    <string name="connect_device">连接设备</string>
+    <string name="traffic_statistics">流量统计</string>
+    <string name="earn">分享收益</string>
+    <string name="no_device">暂无设备连接</string>
+    <string name="device_info">设备信息</string>
 </resources>
