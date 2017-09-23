@@ -188,7 +188,7 @@ public class ConnectHotspotFragment extends BaseFragment {
         srl.setVisibility(View.GONE);
         mLayNoWifi.setVisibility(View.VISIBLE);
         mBtnOpenWifi.setVisibility(View.VISIBLE);
-        mIvState.setImageResource(R.drawable.home_default_icon);
+        mIvState.setImageResource(R.drawable.wifi_open);
         mTvState.setText(R.string.wifi_close_);
         mIsOnSpeeding=false;
     }

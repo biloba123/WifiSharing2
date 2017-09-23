@@ -21,6 +21,10 @@ public class User extends BmobUser {
     private Integer credit;
     private static final String TAG = "User";
 
+    public User() {
+        credit=100;
+    }
+
     public Boolean getSex() {
         return sex;
     }

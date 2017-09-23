@@ -23,17 +23,28 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.base.MyDialog;
 import com.lvqingyang.wifisharing.bean.ConnectDevice;
+import com.lvqingyang.wifisharing.bean.Hotspot;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import frame.tool.MyToast;
+import frame.tool.NetWorkUtils;
 import frame.tool.SolidRVBaseAdapter;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
  * Author：LvQingYang
@@ -47,7 +58,16 @@ public class ShareHotspotFragment extends BaseFragment {
     /**
      * view
      */
-
+    private Button mBtnOpenHotspot;
+    private LinearLayout mLlClosed;
+    private RelativeLayout mLlOpening;
+    private RippleBackground mRbLeft;
+    private RippleBackground mRbRight;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private TextView mTvName;
+    private LinearLayout mLlNoDevice;
+    private RecyclerView mRvDevice;
+    private RelativeLayout mLlShare;
 
      /**
      * fragment
@@ -58,22 +78,62 @@ public class ShareHotspotFragment extends BaseFragment {
      * data
      */
      private WifiHotUtil mWifiHotUtil;
+    private List<ConnectDevice> mConnectDeviceList=new ArrayList<ConnectDevice>();
+    private SolidRVBaseAdapter mAdapter;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //是否上传热点
+    private boolean mIsPost=false;
+    private boolean mIsReadyPost=false;
+    private String mHotspotId;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: ");
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    if (mIsPost) {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: update");
+                        if (mHotspotId != null) {
+                            Hotspot.updateHotspot(amapLocation,mHotspotId);
+                        }
+                    }else {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: post");
+                        Hotspot.postHotspot(mWifiHotUtil.getValidApSsid(), mWifiHotUtil.getValidPassword(),
+                                amapLocation, new SaveListener<String>() {
+                                    @Override
+                                    public void done(String s, BmobException e) {
+                                        if (e == null) {
+                                            if (BuildConfig.DEBUG) Log.d("ShareHotspotFragment", "done: save succ "+s);
+                                            mHotspotId=s;
+                                            mIsPost=true;
+                                            Hotspot.saveIdToPrefence(getActivity(), s);
+                                            mLlShare.setVisibility(View.VISIBLE);
+                                            MyToast.success(getActivity(), R.string.share_succ);
+                                        }else{
+                                            if (BuildConfig.DEBUG) Log.d("ShareHotspotFragment", "done: "+e.toString());
+                                        }
+                                    }
+                                });
+                    }
+                }else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError","location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
 
     /**
      * tag
      */
     private static final String TAG = "ShareHotspotFragment";
-    private Button mBtnOpenHotspot;
-    private LinearLayout mLlClosed;
-    private RelativeLayout mLlOpening;
-    private RippleBackground mRbLeft;
-    private RippleBackground mRbRight;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private TextView mTvName;
-    private LinearLayout mLlNoDevice;
-    private RecyclerView mRvDevice;
-    private List<ConnectDevice> mConnectDeviceList=new ArrayList<ConnectDevice>();
-    private SolidRVBaseAdapter mAdapter;
+
 
 
     public static ShareHotspotFragment newInstance() {
@@ -106,13 +166,20 @@ public class ShareHotspotFragment extends BaseFragment {
                 .setPosBtn(R.string.create, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String psd = etpwd.getText().toString();
+                        String pwd = etpwd.getText().toString();
                         String name = etname.getText().toString();
                         if (swpwd.isChecked()) {
                             //有密码
-                            mWifiHotUtil.turnOnWifiAp(name, psd, WifiHotUtil.WifiSecurityType.WIFICIPHER_WPA2);
                             if (swshare.isChecked()) {
-
+                                if (NetWorkUtils.isNetworkConnected(getActivity())) {
+                                    //发布
+                                    mWifiHotUtil.turnOnWifiAp(name, pwd, WifiHotUtil.WifiSecurityType.WIFICIPHER_WPA2);
+                                    mIsReadyPost=true;
+                                }else {
+                                    MyToast.error(getActivity(), R.string.not_open_net);
+                                }
+                            }else {
+                                mWifiHotUtil.turnOnWifiAp(name, pwd, WifiHotUtil.WifiSecurityType.WIFICIPHER_WPA2);
                             }
                         } else {
                             mWifiHotUtil.turnOnWifiAp(name, null, WifiHotUtil.WifiSecurityType.WIFICIPHER_NOPASS);
@@ -201,6 +268,7 @@ public class ShareHotspotFragment extends BaseFragment {
         mTvName=view.findViewById(R.id.tv_name);
         mLlNoDevice = (LinearLayout) view.findViewById(R.id.ll_no_device);
         mRvDevice = (RecyclerView) view.findViewById(R.id.rv_device);
+        mLlShare=view.findViewById(R.id.ll_share);
     }
 
     @Override
@@ -258,6 +326,24 @@ public class ShareHotspotFragment extends BaseFragment {
             }
         };
 
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+        mLocationOption.setInterval(10000);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否允许模拟位置,默认为true，允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(30000);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
 
     }
 
@@ -324,6 +410,12 @@ public class ShareHotspotFragment extends BaseFragment {
         switch (state) {
             case WiFiAPListener.WIFI_AP_CLOSE_SUCCESS:{
                 if (BuildConfig.DEBUG) Log.d(TAG, "stateChanged: close-------------------------");
+                if (mIsPost&&mHotspotId!=null) {
+                    Hotspot.deleteHotspot(getActivity());
+                    mIsPost=false;
+                    mHotspotId=null;
+                }
+                mLocationClient.stopLocation();
                 hotspotClosed();
                 break;
             }
@@ -333,6 +425,10 @@ public class ShareHotspotFragment extends BaseFragment {
             }
             case WiFiAPListener.WIFI_AP_OPEN_SUCCESS:{
                 if (BuildConfig.DEBUG) Log.d(TAG, "stateChanged: open-------------------------");
+                if (mIsReadyPost) {
+                    mLocationClient.startLocation();
+                    mIsReadyPost=false;
+                }
                 hotspotOpened();
                 break;
             }
@@ -356,5 +452,11 @@ public class ShareHotspotFragment extends BaseFragment {
         }
 
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mLocationClient.onDestroy();
     }
 }

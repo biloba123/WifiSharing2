@@ -69,7 +69,6 @@ public abstract class BaseFragment extends Fragment {
         View view = initContentView(inflater, container, savedInstanceState);
         initView(view);
         setListener();
-        initData();
 
         return view;
     }
@@ -77,6 +76,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initData();
         setData();
     }
 

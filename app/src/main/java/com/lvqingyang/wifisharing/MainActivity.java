@@ -17,8 +17,10 @@ import com.lvqingyang.wifisharing.Wifi.WifiFragment;
 import com.lvqingyang.wifisharing.Wifi.connect.WiFiConnectService;
 import com.lvqingyang.wifisharing.Wifi.share.WiFiAPService;
 import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.bean.Hotspot;
 
 import frame.base.BaseActivity;
+import frame.tool.NetWorkUtils;
 
 public class MainActivity extends BaseActivity {
 
@@ -64,6 +66,11 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (NetWorkUtils.isNetworkConnected(this)) {
+            Hotspot.deleteHotspot(this);
+        }
+
 
         mFragmentManager=getSupportFragmentManager();
         if (savedInstanceState!=null) {
@@ -156,9 +163,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected String[] getNeedPermissions() {
         return new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
         };
     }
 

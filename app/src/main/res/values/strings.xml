@@ -121,4 +121,6 @@
     <string name="earn">分享收益</string>
     <string name="no_device">暂无设备连接</string>
     <string name="device_info">设备信息</string>
+    <string name="not_open_net">未开启移动数据，无法分享</string>
+    <string name="share_succ">分享成功</string>
 </resources>

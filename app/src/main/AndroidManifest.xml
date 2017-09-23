@@ -2,12 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.lvqingyang.wifisharing">
 
+
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <!-- 以下是使用wifi访问网络所需的权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS"/> -->
@@ -30,6 +37,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="8dcdebf4b9ddb8b932a236a9fb8592ad"/>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -74,6 +85,7 @@
         </activity>
         <activity android:name=".Wifi.connect.ScanResultInfoActivity">
         </activity>
+        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>

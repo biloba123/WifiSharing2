@@ -92,6 +92,11 @@ public class MyPrefence {
         return (T)mGson.fromJson(getString(tag),classOfT);
     }
 
+    public void clearData(String key){
+        mEditor.remove(key)
+                .apply();
+    }
+
 
     //登录成功后保存用户信息
     public void saveUser(Object user){

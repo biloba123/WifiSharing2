@@ -22,9 +22,9 @@
         android:text="@string/hotspot_closed"/>
     <Button
         android:id="@+id/btn_open_hotspot"
-        android:layout_width="180dp"
+        android:layout_width="160dp"
         android:layout_height="38dp"
-        android:background="?colorPrimary"
+        android:background="@drawable/btn_blue_oval"
         android:layout_marginTop="@dimen/big_spacing"
         android:text="@string/open_soon"
         android:textSize="@dimen/medium_text"
