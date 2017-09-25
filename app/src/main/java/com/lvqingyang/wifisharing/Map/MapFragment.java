@@ -291,7 +291,7 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally {
