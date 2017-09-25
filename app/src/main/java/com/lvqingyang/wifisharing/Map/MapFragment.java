@@ -475,6 +475,7 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
     @Override
     public void onWalkRoute(Marker marker) {
         MyToast.loading(getActivity(), R.string.searching);
+        marker.hideInfoWindow();
         MarkerBean bean=mGson.fromJson(marker.getSnippet(),MarkerBean.class);
         LatLonPoint startPoint=new LatLonPoint(mLastLocation.getLatitude(),mLastLocation.getLongitude()),
                 endPoint=new LatLonPoint(bean.getLatitude(),bean.getLongitude());
