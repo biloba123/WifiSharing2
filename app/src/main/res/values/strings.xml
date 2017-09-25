@@ -123,4 +123,9 @@
     <string name="device_info">设备信息</string>
     <string name="not_open_net">未开启移动数据，无法分享</string>
     <string name="share_succ">分享成功</string>
+    <string name="no_result">没有搜索到相关数据</string>
+    <string name="error_network">搜索失败,请检查网络连接</string>
+    <string name="error_key">key验证无效</string>
+    <string name="error_other">未知错误</string>
+    <string name="searching">路线规划中...</string>
 </resources>

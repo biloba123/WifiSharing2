@@ -104,17 +104,6 @@ public class Hotspot extends BmobObject{
 
         hotspot.save(listener);
 
-        FixedHotspot.postHotspot("这是一个神秘的WiFi", "123456", amapLocation, new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e == null) {
-                    if (BuildConfig.DEBUG) Log.d(TAG, "done: succ");
-                }else{
-                    if (BuildConfig.DEBUG) Log.d(TAG, "done: fail");
-                }
-            }
-        });
-
     }
 
     public static void updateHotspot(AMapLocation amapLocation,String hotspotId){

@@ -20,12 +20,21 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.RideRouteResult;
+import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.route.WalkPath;
+import com.amap.api.services.route.WalkRouteResult;
 import com.google.gson.Gson;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.FixedHotspot;
 import com.lvqingyang.wifisharing.bean.Hotspot;
+import com.lvqingyang.wifisharing.bean.MarkerBean;
+import com.lvqingyang.wifisharing.overlay.WalkRouteOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +42,7 @@ import java.util.List;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import frame.tool.MyToast;
 
 /**
  * Author：LvQingYang
@@ -41,7 +51,7 @@ import cn.bmob.v3.listener.FindListener;
  * Github：https://github.com/biloba123
  * Info：
  */
-public class MapFragment extends BaseFragment implements LocationSource, AMap.OnMyLocationChangeListener, AMap.OnInfoWindowClickListener {
+public class MapFragment extends BaseFragment implements LocationSource, AMap.OnMyLocationChangeListener, AMap.OnInfoWindowClickListener, AMap.OnMarkerClickListener, RouteSearch.OnRouteSearchListener, MyInfoWindowAdapter.OnGoListener {
 
     private Toolbar mToolbar;
     private MapView mMapView;
@@ -57,6 +67,9 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
     private List<FixedHotspot> mNearFixedHotspots;
     private List<Marker> mMarkers=new ArrayList<>();
     private FloatingActionButton mFabReload;
+
+    private RouteSearch mRouteSearch;
+    private WalkRouteOverlay mWalkRouteOverlay;
 
 
     public static MapFragment newInstance() {
@@ -146,8 +159,9 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         mAMap.setMyLocationEnabled(true);
 
         //绑定信息窗点击事件
-//        mAMap.setOnInfoWindowClickListener(this);
-        mAMap.setInfoWindowAdapter(new MyInfoWindowAdapter(getActivity()));
+        mAMap.setOnInfoWindowClickListener(this);
+        mAMap.setOnMarkerClickListener(this);
+        mAMap.setInfoWindowAdapter(new MyInfoWindowAdapter(getActivity(),this));
     }
 
     @Override
@@ -188,6 +202,10 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
     }
 
 
+    /**
+     * 定位按钮被按下时调用
+     * @param onLocationChangedListener
+     */
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         if (BuildConfig.DEBUG) Log.d(TAG, "activate: ");
@@ -199,6 +217,10 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         if (BuildConfig.DEBUG) Log.d(TAG, "deactivate: ");
     }
 
+    /**
+     * 自己位置回调
+     * @param location
+     */
     @Override
     public void onMyLocationChange(Location location) {
 //        if (BuildConfig.DEBUG) Log.d(TAG, "onMyLocationChange: ");
@@ -215,6 +237,10 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         }
     }
 
+    /**
+     *将中心移到我的位置
+     * @param location
+     */
     private void moveTo(Location location){
         //设置缩放级别
         mAMap.moveCamera(CameraUpdateFactory.zoomTo(17));
@@ -224,16 +250,20 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
 
     }
 
+    /**
+     * marker 的窗口点击回调
+     * @param marker
+     */
     @Override
     public void onInfoWindowClick(Marker marker) {
+        if (BuildConfig.DEBUG) Log.d(TAG, "onInfoWindowClick: ");
+        showOrHideInfoWindow(marker);
     }
 
+    /**
+     *显示周围分享热点
+     */
     public void showNearbyHotspot(){
-        //clear old marker
-        for (Marker marker : mMarkers) {
-            marker.remove();
-        }
-        mMarkers.clear();
 
         //user location
         BmobGeoPoint point=new BmobGeoPoint(mLastLocation.getLongitude(),mLastLocation.getLatitude());
@@ -256,36 +286,12 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
                 (mNearHotspots!=null?mNearHotspots.size():0)
                 +", fixed"+(mNearFixedHotspots!=null?mNearFixedHotspots.size():0));
 
-        LatLng latLng;
-        String title, content;
-
-        if (mNearHotspots != null) {
-            for (Hotspot nearHotspot : mNearHotspots) {
-                latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
-                        nearHotspot.getPoint().getLongitude());
-                title=nearHotspot.getSsid();
-                content='1'+mGson.toJson(nearHotspot);
-                mMarkers.add(makeMarker(latLng, title, content));
-            }
-        }
-
-
-        if (mNearFixedHotspots != null) {
-            for (FixedHotspot nearHotspot : mNearFixedHotspots) {
-                latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
-                        nearHotspot.getPoint().getLongitude());
-                title=nearHotspot.getSsid();
-                content='2'+mGson.toJson(nearHotspot);
-                mMarkers.add(makeMarker(latLng, title, content));
-            }
-        }
-
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally {
@@ -295,6 +301,40 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
                             //stop anim
                             mFabReload.setImageResource(R.drawable.ic_autorenew);
                             mFabReload.setTag(R.drawable.ic_autorenew);
+
+                            //clear old marker
+                            for (Marker marker : mMarkers) {
+                                marker.remove();
+                            }
+                            mMarkers.clear();
+
+                            if (mWalkRouteOverlay != null) {
+                                mWalkRouteOverlay.removeFromMap();
+                            }
+
+                            LatLng latLng;
+                            String title, content;
+
+                            if (mNearHotspots != null) {
+                                for (Hotspot nearHotspot : mNearHotspots) {
+                                    latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
+                                            nearHotspot.getPoint().getLongitude());
+                                    title=nearHotspot.getSsid();
+                                    content=mGson.toJson(MarkerBean.getMarker(nearHotspot, mLastLocation));
+                                    mMarkers.add(makeMarker(latLng, title, content, false));
+                                }
+                            }
+
+
+                            if (mNearFixedHotspots != null) {
+                                for (FixedHotspot nearHotspot : mNearFixedHotspots) {
+                                    latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
+                                            nearHotspot.getPoint().getLongitude());
+                                    title=nearHotspot.getSsid();
+                                    content=mGson.toJson(MarkerBean.getMarker(nearHotspot, mLastLocation));
+                                    mMarkers.add(makeMarker(latLng, title, content, true));
+                                }
+                            }
                         }
                     });
                 }
@@ -302,11 +342,19 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         }).start();
     }
 
-    private Marker makeMarker(LatLng latLng, String title,String content){
+    /**
+     * 制作marker
+     * @param latLng marker位置
+     * @param title
+     * @param content
+     * @param isFixed 是否为固定热点
+     * @return
+     */
+    private Marker makeMarker(LatLng latLng, String title, String content, boolean isFixed){
         MarkerOptions options = new MarkerOptions();
-        if (content.charAt(0)=='1') {//hotspot
+        if (!isFixed) {//hotspot
             options.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_mobile));
-        }else if(content.charAt(0)=='2'){
+        }else{
             options.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_fixed));
         }
         //位置
@@ -318,4 +366,118 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         return mAMap.addMarker(options);
     }
 
+    /**
+     * marker自身被点击
+     * @param marker
+     * @return
+     */
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if (BuildConfig.DEBUG) Log.d(TAG, "onMarkerClick: "+marker.getTitle());
+        showOrHideInfoWindow(marker);
+        return true;
+    }
+
+    /**
+     * 是否显示iw
+     * @param marker
+     */
+    private void showOrHideInfoWindow(Marker marker){
+        MarkerBean b=mGson.fromJson(marker.getSnippet(),MarkerBean.class);
+        if (marker.getTitle() != null) {
+            if (marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+                if (!b.isFixed()) {//hotspot
+                    marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_mobile));
+                }else{
+                    marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_fixed));
+                }
+            }else {
+                marker.showInfoWindow();
+                if (!b.isFixed()) {//hotspot
+                    marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_mobile_touch));
+                }else{
+                    marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_fixed_touch));
+                }
+            }
+        }
+    }
+
+    /**
+     * 步行路线规划
+     * @param startPoint
+     * @param endPoint
+     */
+    private void walkRoute(LatLonPoint startPoint,LatLonPoint endPoint){
+        if (mRouteSearch == null) {
+            mRouteSearch=new RouteSearch(getActivity());
+            mRouteSearch.setRouteSearchListener(this);
+        }
+        RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(
+                startPoint, endPoint);
+        //初始化query对象，fromAndTo是包含起终点信息，walkMode是步行路径规划的模式
+        RouteSearch.WalkRouteQuery query =
+                new RouteSearch.WalkRouteQuery(fromAndTo, RouteSearch.WALK_DEFAULT);
+        mRouteSearch.calculateWalkRouteAsyn(query);//开始算路
+    }
+
+    @Override
+    public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
+
+    }
+
+    @Override
+    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+
+    }
+
+    /**
+     * 步行规划路线查询结果
+     * @param walkRouteResult
+     * @param rCode
+     */
+    @Override
+    public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int rCode) {
+        if (BuildConfig.DEBUG) Log.d(TAG, "onWalkRouteSearched: "+rCode);
+        MyToast.cancel();
+        if (rCode == 1000) {
+            if (walkRouteResult != null && walkRouteResult.getPaths() != null
+                    && walkRouteResult.getPaths().size() > 0) {
+                WalkPath walkPath = walkRouteResult.getPaths().get(0);
+//                mAMap.clear();// 清理地图上的所有覆盖物
+                mWalkRouteOverlay = new WalkRouteOverlay(getActivity(),
+                        mAMap, walkPath, walkRouteResult.getStartPos(),
+                        walkRouteResult.getTargetPos());
+                mWalkRouteOverlay.removeFromMap();
+                mWalkRouteOverlay.addToMap();
+                mWalkRouteOverlay.zoomToSpan();
+            } else {
+                MyToast.warning(getActivity(), R.string.no_result);
+            }
+        } else if (rCode == 27) {
+            MyToast.error(getActivity(), R.string.error_network);
+        } else if (rCode == 32) {
+            MyToast.error(getActivity(), R.string.error_key);
+        } else {
+            MyToast.error(getActivity(), R.string.error_other);
+        }
+    }
+
+    @Override
+    public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
+
+    }
+
+    /**
+     * go 被点击
+     * @param marker
+     */
+    @Override
+    public void onWalkRoute(Marker marker) {
+        MyToast.loading(getActivity(), R.string.searching);
+        MarkerBean bean=mGson.fromJson(marker.getSnippet(),MarkerBean.class);
+        LatLonPoint startPoint=new LatLonPoint(mLastLocation.getLatitude(),mLastLocation.getLongitude()),
+                endPoint=new LatLonPoint(bean.getLatitude(),bean.getLongitude());
+        walkRoute(startPoint, endPoint);
+    }
 }
