@@ -1,10 +1,11 @@
-package frame.base;
+package com.lvqingyang.wifisharing.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myframe.R;
+import com.instabug.library.InstabugTrackingDelegate;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.Random;
@@ -175,5 +177,11 @@ public abstract class BaseActivity extends CheckPermissionsActivity
         String[] arrayOfString = getResources().getStringArray(R.array.arr_indicator);
         int i = new Random().nextInt(arrayOfString.length);
         this.mLoadingIndicatorView.setIndicator(arrayOfString[i]);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        InstabugTrackingDelegate.notifyActivityGotTouchEvent(ev,this);
+        return super.dispatchTouchEvent(ev);
     }
 }

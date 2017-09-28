@@ -22,7 +22,7 @@ import com.lvqingyang.wifisharing.bean.User;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.MyPrefence;
 import frame.tool.MyToast;
 
@@ -256,7 +256,7 @@ public class LoginActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_REGISTER) {
-            if (resultCode==RESULT_OK) {
+            if (resultCode==RESULT_OK) {//获取注册成功信息直接填入
                 etusername.setText(data.getStringExtra(RegisterActivity.KEY_TEL));
                 etpassword.setText(data.getStringExtra(RegisterActivity.KEY_PASSWORD));
             }

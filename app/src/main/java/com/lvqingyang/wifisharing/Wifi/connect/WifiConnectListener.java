@@ -5,7 +5,7 @@ package com.lvqingyang.wifisharing.Wifi.connect;
  * Date：2017/9/12
  * Email：biloba12345@gamil.com
  * Github：https://github.com/biloba123
- * Info：
+ * Info：wifi各状态
  */
 public interface WifiConnectListener {
     void onWifiEnable();

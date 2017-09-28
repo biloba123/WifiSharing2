@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.lvqingyang.wifisharing.R;
 
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 
 public class SecurityActivity extends BaseActivity {
 

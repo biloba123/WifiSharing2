@@ -58,16 +58,16 @@
                         android:layout_marginLeft="@dimen/card_spacing"
                         android:textSize="@dimen/sub_medium_text"
                         android:text="@string/near_wifi"/>
-                    <Switch
-                        android:id="@+id/sw_share_wifi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="@dimen/card_spacing"
-                        android:textSize="@dimen/sub_medium_spacing"
-                        android:text="@string/sharing_wifi"
-                        android:textColor="@color/sub_text_color"
-                        android:switchPadding="@dimen/sub_small_spacing"/>
+                    <!--<Switch-->
+                        <!--android:id="@+id/sw_share_wifi"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_marginRight="@dimen/card_spacing"-->
+                        <!--android:textSize="@dimen/sub_medium_spacing"-->
+                        <!--android:text="@string/sharing_wifi"-->
+                        <!--android:textColor="@color/sub_text_color"-->
+                        <!--android:switchPadding="@dimen/sub_small_spacing"/>-->
                 </RelativeLayout>
                 <!--无wifi-->
                 <LinearLayout

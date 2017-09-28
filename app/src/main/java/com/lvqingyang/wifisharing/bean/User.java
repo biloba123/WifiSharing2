@@ -18,7 +18,7 @@ public class User extends BmobUser {
     private Boolean sex; //性别（未设置：null ; 男：true）
     private BmobFile avater;//头像
     private BmobDate birthday;
-    private Integer credit;
+    private Integer credit;//信用分
     private static final String TAG = "User";
 
     public User() {

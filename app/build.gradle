@@ -25,6 +25,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dexOptions {
+        jumboMode true
+    }
 }
 
 dependencies {
@@ -51,4 +55,9 @@ dependencies {
     compile 'com.amap.api:search:latest.integration'
     //定位功能
     compile 'com.amap.api:location:latest.integration'
+    compile ('com.instabug.library:instabug:4.3.0'){
+        exclude  module: 'rxandroid'
+        exclude  module: 'rxjava'
+        exclude  module: 'support-v4'
+    }
 }

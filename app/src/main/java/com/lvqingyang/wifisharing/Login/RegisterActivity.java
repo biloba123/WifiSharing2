@@ -33,7 +33,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.MyToast;
 
 /**

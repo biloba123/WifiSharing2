@@ -38,13 +38,12 @@ import com.skyfishjy.library.RippleBackground;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import frame.tool.MyToast;
 import frame.tool.NetWorkUtils;
 import frame.tool.SolidRVBaseAdapter;
-
-import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
  * Author：LvQingYang
@@ -93,14 +92,15 @@ public class ShareHotspotFragment extends BaseFragment {
             if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: ");
             if (amapLocation != null) {
                 if (amapLocation.getErrorCode() == 0) {
-                    if (mIsPost) {
+                    if (mIsPost) {//已上传则更新热点主人位置
                         if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: update");
                         if (mHotspotId != null) {
                             Hotspot.updateHotspot(amapLocation,mHotspotId);
                         }
-                    }else {
+                    }else {//未上传
                         if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: post");
-                        Hotspot.postHotspot(mWifiHotUtil.getValidApSsid(), mWifiHotUtil.getValidPassword(),
+                        Hotspot.postHotspot(false, mWifiHotUtil.getValidApBssid(),
+                                mWifiHotUtil.getValidApSsid(), mWifiHotUtil.getValidPassword(),
                                 amapLocation, new SaveListener<String>() {
                                     @Override
                                     public void done(String s, BmobException e) {
@@ -145,7 +145,11 @@ public class ShareHotspotFragment extends BaseFragment {
         return fragment;
     }
 
+    /**
+     * 显示配置热点对话框
+     */
     public void showConfigHotspotDialog(){
+        BmobUser bmobUser = BmobUser.getCurrentUser();
         View view = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_config_hotspot, null);
         final LinearLayout llpwd = (LinearLayout) view.findViewById(R.id.ll_pwd);
@@ -155,7 +159,13 @@ public class ShareHotspotFragment extends BaseFragment {
         final EditText etname = (EditText) view.findViewById(R.id.et_name);
         llpwd.setVisibility(View.GONE);
 
-        swshare.setChecked(true);
+        if(bmobUser == null){
+            MyToast.info(getActivity(), R.string.unlogin_can_not_share);
+            swshare.setChecked(false);
+            swshare.setEnabled(false);
+        }else {
+            swshare.setChecked(true);
+        }
 
         etname.setText(mWifiHotUtil.getValidApSsid());
         etpwd.setText(mWifiHotUtil.getValidPassword());
@@ -239,6 +249,10 @@ public class ShareHotspotFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 检查是否有写设置权限
+     * @return
+     */
     public boolean checkSystemWritePermission() {
         boolean retVal = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -327,7 +341,7 @@ public class ShareHotspotFragment extends BaseFragment {
         };
 
         //初始化定位
-        mLocationClient = new AMapLocationClient(getApplicationContext());
+        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
         //初始化AMapLocationClientOption对象
@@ -376,6 +390,9 @@ public class ShareHotspotFragment extends BaseFragment {
         startActivity(intent);
     }
 
+    /**
+     * 热点关闭
+     */
     private void hotspotClosed(){
         mSwipeRefreshLayout.setVisibility(View.GONE);
         mLlOpening.setVisibility(View.GONE);
@@ -385,6 +402,9 @@ public class ShareHotspotFragment extends BaseFragment {
         mLlClosed.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 热点正在打开
+     */
     private void hotspotOpening(){
         mSwipeRefreshLayout.setVisibility(View.GONE);
         mLlClosed.setVisibility(View.GONE);
@@ -394,6 +414,9 @@ public class ShareHotspotFragment extends BaseFragment {
         mRbRight.startRippleAnimation();
     }
 
+    /**
+     * 已打开
+     */
     private void hotspotOpened(){
         mLlClosed.setVisibility(View.GONE);
         mLlOpening.setVisibility(View.GONE);
@@ -406,6 +429,9 @@ public class ShareHotspotFragment extends BaseFragment {
         showConnectDevice();
     }
 
+    /**
+     * 在热点不同状态下做相应操作
+     */
     private void switchState(int state){
         switch (state) {
             case WiFiAPListener.WIFI_AP_CLOSE_SUCCESS:{
@@ -440,6 +466,9 @@ public class ShareHotspotFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 显示连接设备
+     */
     private void showConnectDevice(){
         mAdapter.clearAllItems();
         mAdapter.addItems(mWifiHotUtil.getConnectedDevices());
@@ -457,6 +486,8 @@ public class ShareHotspotFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mLocationClient.onDestroy();
+        if (mLocationClient != null) {
+            mLocationClient.onDestroy();
+        }
     }
 }

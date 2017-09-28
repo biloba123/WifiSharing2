@@ -26,7 +26,7 @@ package com.lvqingyang.wifisharing.bean;
  * Author：LvQingYang
  * Date：2017/4/17
  * Email：biloba12345@gamil.com
- * Info：
+ * Info：热点连接设备
  */
 
 public class ConnectDevice {

@@ -7,16 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lvqingyang.wifisharing.R;
-import com.lvqingyang.wifisharing.bean.MarkerBean;
+import com.lvqingyang.wifisharing.bean.Hotspot;
 
 /**
- * 一句话功能描述
- * 功能详细描述
- *
+ * marker弹窗
  * @author Lv Qingyang
  * @date 2017/9/23
  * @email biloba12345@gamil.com
@@ -79,24 +79,27 @@ public class MyInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
 
         mTvName.setText(marker.getTitle());
-        MarkerBean bean=mGson.fromJson(marker.getSnippet(),MarkerBean.class);
-        if (bean.isFixed()) {//hotspot
+        Hotspot hotspot= (Hotspot) marker.getObject();
+        if (hotspot.isFixed()) {//hotspot
             Glide.with(mContext)
                     .load(R.drawable.ic_route_map)
                     .into(mIvType);
             mTvUpdateTime.setVisibility(View.GONE);
             mTvUseCount.setVisibility(View.VISIBLE);
-            mTvUseCount.setText("使用人次："+bean.getUseCount());
+            mTvUseCount.setText("使用人次："+hotspot.getUseCount());
         }else{
             Glide.with(mContext)
                     .load(R.drawable.ic_wifi_map)
                     .into(mIvType);
             mTvUseCount.setVisibility(View.GONE);
             mTvUpdateTime.setVisibility(View.VISIBLE);
-            mTvUpdateTime.setText("更新时间："+bean.getUpdateTime().substring(5,16));
+            mTvUpdateTime.setText("更新时间："+hotspot.getLastUpdate().substring(5,16));
         }
-        mTvLocation.setText(bean.getLocation());
-        mTvDirection.setText(bean.getDirection()+"m");
+        mTvLocation.setText(hotspot.getLocation());
+        mTvDirection.setText(
+                (int) AMapUtils.calculateLineDistance(
+                        new LatLng(hotspot.getPoint().getLatitude(),hotspot.getPoint().getLongitude()),
+                        mGson.fromJson(marker.getSnippet(),LatLng.class))+"m");
 
         if (mOnGoListener != null) {
             mTvGo.setOnClickListener(new View.OnClickListener() {

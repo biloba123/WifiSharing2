@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.lvqingyang.wifisharing.R;
 import com.white.progressview.CircleProgressView;
 
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 
 public class ScanResultInfoActivity extends BaseActivity {
 

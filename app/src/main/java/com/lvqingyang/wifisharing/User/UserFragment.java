@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.instabug.library.Instabug;
+import com.instabug.library.invocation.InstabugInvocationMode;
 import com.lvqingyang.wifisharing.Login.LoginActivity;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseFragment;
@@ -49,6 +51,10 @@ public class UserFragment extends BaseFragment {
     private com.lvqingyang.wifisharing.view.CardItem ciscore;
     private com.lvqingyang.wifisharing.view.CardItem sisharefriend;
 
+    private Toolbar toolbar;
+    private CardItem ciservicecenter;
+    private ImageView mIvWifiSign;
+    private TextView mTvDay;
      /**
      * fragment
      */
@@ -65,10 +71,7 @@ public class UserFragment extends BaseFragment {
      private static final int REQUEST_LOGIN = 0;
     private static final int REQUEST_SETTING = 578;
     private static final int REQUEST_EDIT_INFO = 62;
-    private Toolbar toolbar;
-    private CardItem ciservicecenter;
-    private ImageView mIvWifiSign;
-    private TextView mTvDay;
+    private static final String TAG = "UserFragment";
 
     public static UserFragment newInstance() {
 
@@ -122,6 +125,20 @@ public class UserFragment extends BaseFragment {
                 }
             }
         });
+
+        ciservicecenter.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Instabug.invoke(InstabugInvocationMode.CHATS_LIST);
+            }
+        });
+
+        cifeedback.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Instabug.invoke(InstabugInvocationMode.NEW_CHAT);
+            }
+        });
     }
 
     @Override
@@ -156,6 +173,9 @@ public class UserFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 显示用户信息
+     */
     private void showUserInfo(){
         if (mUser != null) {
             tvusername.setText(mUser.getUsername());
@@ -171,13 +191,13 @@ public class UserFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_LOGIN:
+            case REQUEST_LOGIN://登录成功
                 if (resultCode== Activity.RESULT_OK) {
                     mUser=BmobUser.getCurrentUser(User.class);
                     showUserInfo();
                 }
                 break;
-            case REQUEST_SETTING:
+            case REQUEST_SETTING://退出登录
                 if (resultCode== Activity.RESULT_OK) {
                     mUser=BmobUser.getCurrentUser(User.class);
                     showUserInfo();

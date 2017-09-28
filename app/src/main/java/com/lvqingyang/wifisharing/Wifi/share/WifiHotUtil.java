@@ -221,6 +221,18 @@ public class WifiHotUtil {
     }
 
     //获取热点ssid
+    public String getValidApBssid() {
+        try {
+            Method method = mWifiManager.getClass().getMethod("getWifiApConfiguration");
+            WifiConfiguration configuration = (WifiConfiguration)method.invoke(mWifiManager);
+            return configuration.BSSID;
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+            return null;
+        }
+    }
+
+    //获取热点ssid
     public String getValidApSsid() {
         try {
             Method method = mWifiManager.getClass().getMethod("getWifiApConfiguration");

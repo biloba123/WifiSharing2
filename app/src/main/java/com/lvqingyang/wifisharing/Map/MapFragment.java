@@ -31,9 +31,7 @@ import com.google.gson.Gson;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseFragment;
-import com.lvqingyang.wifisharing.bean.FixedHotspot;
 import com.lvqingyang.wifisharing.bean.Hotspot;
-import com.lvqingyang.wifisharing.bean.MarkerBean;
 import com.lvqingyang.wifisharing.overlay.WalkRouteOverlay;
 
 import java.util.ArrayList;
@@ -64,7 +62,6 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
     private Gson mGson=new Gson();
 
     private List<Hotspot> mNearHotspots;
-    private List<FixedHotspot> mNearFixedHotspots;
     private List<Marker> mMarkers=new ArrayList<>();
     private FloatingActionButton mFabReload;
 
@@ -274,24 +271,16 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
                 mNearHotspots=list;
             }
         });
-        //get nearby fixed hotspots
-        FixedHotspot.getNearFixedHotspot(point, new FindListener<FixedHotspot>() {
-            @Override
-            public void done(List<FixedHotspot> list, BmobException e) {
-                mNearFixedHotspots=list;
-            }
-        });
 
         if (BuildConfig.DEBUG) Log.d(TAG, "showNearbyHotspot: hotspot"+
-                (mNearHotspots!=null?mNearHotspots.size():0)
-                +", fixed"+(mNearFixedHotspots!=null?mNearFixedHotspots.size():0));
+                (mNearHotspots!=null?mNearHotspots.size():0));
 
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(800);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally {
@@ -317,24 +306,10 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
 
                             if (mNearHotspots != null) {
                                 for (Hotspot nearHotspot : mNearHotspots) {
-                                    latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
-                                            nearHotspot.getPoint().getLongitude());
-                                    title=nearHotspot.getSsid();
-                                    content=mGson.toJson(MarkerBean.getMarker(nearHotspot, mLastLocation));
-                                    mMarkers.add(makeMarker(latLng, title, content, false));
+                                    mMarkers.add(makeMarker(nearHotspot));
                                 }
                             }
 
-
-                            if (mNearFixedHotspots != null) {
-                                for (FixedHotspot nearHotspot : mNearFixedHotspots) {
-                                    latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
-                                            nearHotspot.getPoint().getLongitude());
-                                    title=nearHotspot.getSsid();
-                                    content=mGson.toJson(MarkerBean.getMarker(nearHotspot, mLastLocation));
-                                    mMarkers.add(makeMarker(latLng, title, content, true));
-                                }
-                            }
                         }
                     });
                 }
@@ -344,15 +319,12 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
 
     /**
      * 制作marker
-     * @param latLng marker位置
-     * @param title
-     * @param content
-     * @param isFixed 是否为固定热点
-     * @return
      */
-    private Marker makeMarker(LatLng latLng, String title, String content, boolean isFixed){
+    private Marker makeMarker(Hotspot nearHotspot){
+        LatLng latLng=new LatLng(nearHotspot.getPoint().getLatitude(),
+                nearHotspot.getPoint().getLongitude());
         MarkerOptions options = new MarkerOptions();
-        if (!isFixed) {//hotspot
+        if (!nearHotspot.isFixed()) {//hotspot
             options.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_mobile));
         }else{
             options.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_fixed));
@@ -360,10 +332,11 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         //位置
         options.position(latLng);
         //标题
-        options.title(title);
-        //子标题
-        options.snippet(content);
-        return mAMap.addMarker(options);
+        options.title(nearHotspot.getSsid());
+        options.snippet(mGson.toJson(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())));
+        Marker marker=mAMap.addMarker(options);
+        marker.setObject(nearHotspot);
+        return marker;
     }
 
     /**
@@ -383,18 +356,18 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
      * @param marker
      */
     private void showOrHideInfoWindow(Marker marker){
-        MarkerBean b=mGson.fromJson(marker.getSnippet(),MarkerBean.class);
+        Hotspot hotspot= (Hotspot) marker.getObject();
         if (marker.getTitle() != null) {
             if (marker.isInfoWindowShown()) {
                 marker.hideInfoWindow();
-                if (!b.isFixed()) {//hotspot
+                if (!hotspot.isFixed()) {//hotspot
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_mobile));
                 }else{
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_fixed));
                 }
             }else {
                 marker.showInfoWindow();
-                if (!b.isFixed()) {//hotspot
+                if (!hotspot.isFixed()) {//hotspot
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_mobile_touch));
                 }else{
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_wifi_fixed_touch));
@@ -476,9 +449,9 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
     public void onWalkRoute(Marker marker) {
         MyToast.loading(getActivity(), R.string.searching);
         marker.hideInfoWindow();
-        MarkerBean bean=mGson.fromJson(marker.getSnippet(),MarkerBean.class);
+        Hotspot hotspot= (Hotspot) marker.getObject();
         LatLonPoint startPoint=new LatLonPoint(mLastLocation.getLatitude(),mLastLocation.getLongitude()),
-                endPoint=new LatLonPoint(bean.getLatitude(),bean.getLongitude());
+                endPoint=new LatLonPoint(hotspot.getPoint().getLatitude(),hotspot.getPoint().getLongitude());
         walkRoute(startPoint, endPoint);
     }
 }

@@ -12,34 +12,44 @@
               android:paddingLeft="@dimen/card_spacing"
               xmlns:tools="http://schemas.android.com/tools">
 
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/small_spacing"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:paddingBottom="@dimen/small_spacing">
     <ImageView
         android:id="@+id/iv_level"
         android:layout_width="26dp"
         android:layout_height="26dp"
+        android:layout_centerVertical="true"
         app:srcCompat="@drawable/ic_signal_wifi_4_lock"/>
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_toRightOf="@id/iv_level"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/medium_text"
         android:layout_marginLeft="@dimen/small_spacing"
         tools:text="@string/app_name"
+        android:layout_centerVertical="true"
         android:textColor="@color/text_color"/>
     <ImageView
-        android:id="@+id/iv_tag"
+        android:id="@+id/iv_share"
+        android:visibility="invisible"
         android:layout_width="36dp"
+        android:layout_height="28dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tv_name"
+        app:srcCompat="@drawable/tag_share"/>
+    <ImageView
+        android:id="@+id/iv_tag"
+        android:layout_width="40dp"
         android:layout_height="24dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
         app:srcCompat="@drawable/ic_info_"/>
-</LinearLayout>
+</RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

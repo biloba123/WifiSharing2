@@ -44,7 +44,7 @@ import java.util.List;
  * Author：LvQingYang
  * Date：2017/3/20
  * Email：biloba12345@gamil.com
- * Info：
+ * Info：wifi状态监听service
  */
 
 public class WiFiConnectService extends Service {

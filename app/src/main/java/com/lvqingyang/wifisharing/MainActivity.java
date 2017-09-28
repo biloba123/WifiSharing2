@@ -19,7 +19,7 @@ import com.lvqingyang.wifisharing.Wifi.share.WiFiAPService;
 import com.lvqingyang.wifisharing.base.MyDialog;
 import com.lvqingyang.wifisharing.bean.Hotspot;
 
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.NetWorkUtils;
 
 public class MainActivity extends BaseActivity {

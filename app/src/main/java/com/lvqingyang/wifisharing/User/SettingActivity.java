@@ -10,7 +10,7 @@ import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.MyDialog;
 
 import cn.bmob.v3.BmobUser;
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.MyToast;
 import frame.view.SettingItem;
 

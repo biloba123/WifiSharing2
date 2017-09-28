@@ -15,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,18 +25,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SecurityActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SignActivity;
+import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.bean.Hotspot;
+import com.lvqingyang.wifisharing.bean.MyScanResult;
+import com.lvqingyang.wifisharing.bean.Record;
 import com.skyfishjy.library.RippleBackground;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import frame.tool.MyToast;
+import frame.tool.NetWorkUtils;
 import frame.tool.SolidRVBaseAdapter;
 import rx.Observable;
 import rx.Observer;
@@ -62,7 +79,7 @@ public class ConnectHotspotFragment extends BaseFragment {
     /**
      * View
      */
-    private android.widget.Switch swsharewifi;
+//    private android.widget.Switch swsharewifi;
     private android.widget.LinearLayout llnowifi;
     private android.support.v7.widget.RecyclerView rvwifi;
     private android.support.v4.widget.SwipeRefreshLayout srl;
@@ -94,6 +111,8 @@ public class ConnectHotspotFragment extends BaseFragment {
     //是否开启测速
     private boolean mIsOnSpeeding;
 
+    private List<MyScanResult> mMyScanResults=new ArrayList<>();
+
     /**
      * 对wifi进行管理
      */
@@ -102,6 +121,30 @@ public class ConnectHotspotFragment extends BaseFragment {
     private boolean mIsConnectingWifi=false;
     //忽略重连第一次接受到的已连接
     private boolean mIsFirstReceiveConnected=false;
+    //保存用户位置
+    private AMapLocation mLastLocation;
+
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (BuildConfig.DEBUG) Log.d(TAG, "onLocationChanged: ");
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    mLastLocation=amapLocation;
+                }else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError","location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
 
     /**
      * wifi状态回调
@@ -130,6 +173,8 @@ public class ConnectHotspotFragment extends BaseFragment {
         public void onScanResultAvailable() {
             if (BuildConfig.DEBUG) Log.d(TAG, "onScanResultAvailable: ");
             srl.setRefreshing(false);
+            mAdapter.clearAllItems();
+            mAdapter.addItems(MyScanResult.transToMyScanResults(mWifiAdmin.getScanResultList()));
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getItemCount()==0) {
                 rvwifi.setVisibility(View.GONE);
@@ -137,6 +182,7 @@ public class ConnectHotspotFragment extends BaseFragment {
                 //再进行一次扫描
                 mWifiAdmin.scan();
             }else {
+                findShareWifi();
                 llnowifi.setVisibility(View.GONE);
                 rvwifi.setVisibility(View.VISIBLE);
             }
@@ -184,6 +230,9 @@ public class ConnectHotspotFragment extends BaseFragment {
          return fragment;
      }
 
+    /**
+     * wifi关闭
+     */
     public void wifiDisable(){
         srl.setVisibility(View.GONE);
         mLayNoWifi.setVisibility(View.VISIBLE);
@@ -193,6 +242,9 @@ public class ConnectHotspotFragment extends BaseFragment {
         mIsOnSpeeding=false;
     }
 
+    /**
+     * 正在开启
+     */
     public void wifiOpening(){
         srl.setVisibility(View.GONE);
         mBtnOpenWifi.setVisibility(View.GONE);
@@ -203,6 +255,9 @@ public class ConnectHotspotFragment extends BaseFragment {
         mTvState.setText(R.string.wifi_opening);
     }
 
+    /**
+     * 打开状态
+     */
     public void wifiEnable(){
         mLayNoWifi.setVisibility(View.GONE);
         Drawable d= mIvState.getDrawable();
@@ -214,6 +269,10 @@ public class ConnectHotspotFragment extends BaseFragment {
         llnowifi.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 正在连接
+     * @param ssid
+     */
     public void wifiConnecting(String ssid){
         llconnected.setVisibility(View.GONE);
 
@@ -225,6 +284,10 @@ public class ConnectHotspotFragment extends BaseFragment {
         ad.start();
     }
 
+    /**
+     * 连接上
+     * @param showAnim 是否显示circle anim
+     */
     public void wifiConnected(boolean showAnim){
         WifiInfo wifiInfo=mWifiAdmin.getWifiInfo();
 
@@ -252,6 +315,9 @@ public class ConnectHotspotFragment extends BaseFragment {
         mIsOnSpeeding=true;
     }
 
+    /**
+     * wifi断开连接
+     */
     public void wifiDisConnected(){
         mCvSate.setVisibility(View.GONE);
         mRippleBackground.stopRippleAnimation();
@@ -284,7 +350,7 @@ public class ConnectHotspotFragment extends BaseFragment {
         this.srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
         this.rvwifi = (RecyclerView) view.findViewById(R.id.rv_wifi);
         this.llnowifi = (LinearLayout) view.findViewById(R.id.ll_no_wifi);
-        this.swsharewifi = (Switch) view.findViewById(R.id.sw_share_wifi);
+//        this.swsharewifi = (Switch) view.findViewById(R.id.sw_share_wifi);
 
         //Wifi close
         mLayNoWifi = view.findViewById(R.id.layout_wifi_disable);
@@ -352,9 +418,10 @@ public class ConnectHotspotFragment extends BaseFragment {
     protected void initData() {
         mWifiAdmin=new WifiAdmin(getActivity());
 
-        mAdapter=new SolidRVBaseAdapter<android.net.wifi.ScanResult>(getActivity(), mWifiAdmin.getScanResultList()) {
+        mAdapter=new SolidRVBaseAdapter<MyScanResult>(getActivity(), mMyScanResults) {
             @Override
-            protected void onBindDataToView(SolidCommonViewHolder holder, final android.net.wifi.ScanResult scanResult) {
+            protected void onBindDataToView(SolidCommonViewHolder holder, final MyScanResult myScanResult) {
+                final ScanResult scanResult=myScanResult.getScanResult();
                 holder.setText(R.id.tv_name,scanResult.SSID);
                 //信号强度
                 final boolean isLocked=scanResult.capabilities.contains("WEP")||scanResult.capabilities.contains("PSK")||
@@ -375,6 +442,13 @@ public class ConnectHotspotFragment extends BaseFragment {
                     }
                 });
 
+                ImageView ivShare=holder.getView(R.id.iv_share);
+                if (myScanResult.getHotspot()!=null) {
+                    ivShare.setVisibility(View.VISIBLE);
+                }else {
+                    ivShare.setVisibility(View.INVISIBLE);
+                }
+
             }
 
             @Override
@@ -383,42 +457,117 @@ public class ConnectHotspotFragment extends BaseFragment {
             }
 
             @Override
-            protected void onItemClick(int position, ScanResult scanResult) {
-                super.onItemClick(position, scanResult);
-                final boolean isLocked=scanResult.capabilities.contains("WEP")||scanResult.capabilities.contains("PSK")||
-                        scanResult.capabilities.contains("WEP");
-                if (BuildConfig.DEBUG) Log.d(TAG, "onItemClick: ");
-                
-                if (!(scanResult.SSID.equals(mWifiAdmin.getSSID())
-                        &&scanResult.BSSID.equals(mWifiAdmin.getBSSID()))) {
-                    Log.d(TAG, "onItemClick: 不是当前连接wifi");
-                    //未开启网卡则开启
+            protected void onItemClick(int position, final MyScanResult myScanResult) {
+                super.onItemClick(position, myScanResult);
+                if (myScanResult.getHotspot()!=null) {//分享热点
+                    BmobUser bmobUser = BmobUser.getCurrentUser();
+                    if(bmobUser != null){//已登录
+                        View view=LayoutInflater.from(getActivity())
+                                .inflate(R.layout.dialog_connect_shared_wifi, null);
+                        TextView tvprice = (TextView) view.findViewById(R.id.tv_price);
+                        TextView tvhotspottype = (TextView) view.findViewById(R.id.tv_hotspot_type);
+                        if (myScanResult.getHotspot().isFixed()) {
+                            tvprice.setText(AppContact.HOTSPOT_FIXED_PRICE+"/M");
+                            tvhotspottype.setText(R.string.fixed_hotspot);
+                        }else {
+                            tvprice.setText(AppContact.HOTSPOT_PRICE+"/M");
+                            tvhotspottype.setText(R.string.hotspot);
+                        }
+
+                        new MyDialog(getActivity())
+                                .setTitle(myScanResult.getScanResult().SSID)
+                                .setView(view)
+                                .setPosBtn(R.string.connect, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (NetWorkUtils.isNetworkConnected(getActivity())) {
+                                            //先判断用户是否有未支付记录
+                                            Record.getUserRecord(new FindListener<Record>() {
+                                                @Override
+                                                public void done(List<Record> list, BmobException e) {
+                                                    if (e == null) {
+                                                        if (list.size()>0) {//有未支付记录
+
+                                                        }else {
+                                                            ScanResult result = myScanResult.getScanResult();
+                                                            String pwd=myScanResult.getHotspot().getPassword();
+                                                            boolean isConnectSucc=false;
+                                                            if (result.capabilities.contains("WEP")) {
+                                                                isConnectSucc=connecting(result, pwd, 2);
+                                                            }else {
+                                                                isConnectSucc=connecting(result, pwd, 3);
+                                                            }
+
+                                                            if (isConnectSucc) {
+                                                                //连接成功则创建记录
+                                                                Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
+                                                                    @Override
+                                                                    public void done(String s, BmobException e) {
+                                                                        if (e == null) {
+
+                                                                        }else {
+                                                                            MyToast.error(getActivity(), R.string.load_error);
+                                                                            //忘记网络...
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+
+                                                        }
+                                                    }else {
+                                                        MyToast.error(getActivity(), R.string.load_error);
+                                                    }
+                                                }
+                                            });
+                                        }else {
+                                            MyToast.error(getActivity(), R.string.network_disable);
+                                        }
+                                    }
+                                })
+                                .setNegBtn(android.R.string.cancel, null)
+                                .show(getFragmentManager());
+                    }else {
+                        MyToast.info(getActivity(), R.string.unlogin_can_not_use);
+                    }
+                }else {
+                    final ScanResult scanResult = myScanResult.getScanResult();
+                    final boolean isLocked = scanResult.capabilities.contains("WEP") || scanResult.capabilities.contains("PSK") ||
+                            scanResult.capabilities.contains("WEP");
+                    if (BuildConfig.DEBUG) Log.d(TAG, "onItemClick: ");
+
+                    if (!(scanResult.SSID.equals(mWifiAdmin.getSSID())
+                            && scanResult.BSSID.equals(mWifiAdmin.getBSSID()))) {
+                        Log.d(TAG, "onItemClick: 不是当前连接wifi");
+                        //未开启网卡则开启
 //                    if (!mWifiAdmin.isNetCardFriendly()) {
 //                        mWifiAdmin.openNetCard();
 //                    }
-                    WifiConfiguration configuration=mWifiAdmin.isExsits(scanResult.SSID);
-                    if (configuration == null) {
-                        Log.d(TAG, "onClick: 未配置");
-                        //如果是用户分享的Wifi还未处理
-                        if (isLocked) {
-                            showEditPassDialog(scanResult);
-                        }else {
-                            if (BuildConfig.DEBUG) Log.d(TAG, "onItemClick: 无密码");
-                            connecting(scanResult,null,1);
-                        }
-                    }else {
-                        Log.d(TAG, "onClick: 已配置");
-                        mIsConnectingWifi=true;
-                        mIsFirstReceiveConnected=true;
-                        wifiConnecting(scanResult.SSID);
-                        //有配置直接连接
-                        if (!mWifiAdmin.connectConfiguration(configuration)) {
-                            MyToast.error(getActivity(), R.string.connect_error);
+                        WifiConfiguration configuration = mWifiAdmin.isExsits(scanResult.SSID);
+                        if (configuration == null) {
+                            Log.d(TAG, "onClick: 未配置");
+                            //如果是用户分享的Wifi还未处理
+                            if (isLocked) {
+                                showEditPassDialog(scanResult);
+                            } else {
+                                if (BuildConfig.DEBUG) Log.d(TAG, "onItemClick: 无密码");
+                                connecting(scanResult, null, 1);
+                            }
+                        } else {
+                            Log.d(TAG, "onClick: 已配置");
+                            mIsConnectingWifi = true;
+                            mIsFirstReceiveConnected = true;
+                            wifiConnecting(scanResult.SSID);
+                            //有配置直接连接
+                            if (!mWifiAdmin.connectConfiguration(configuration)) {
+                                MyToast.error(getActivity(), R.string.connect_error);
+                            }
                         }
                     }
                 }
             }
         };
+
+        initLocationClient();
     }
 
     @Override
@@ -450,6 +599,10 @@ public class ConnectHotspotFragment extends BaseFragment {
         mIsOnSpeeding=false;
     }
 
+    /**
+     * 连接有密码wifi
+     * @param result
+     */
     private void showEditPassDialog(final ScanResult result){
         View v=LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_edit_eifi_pwd,null);
@@ -502,7 +655,14 @@ public class ConnectHotspotFragment extends BaseFragment {
 
     }
 
+    /**
+     * 更新当前连接wifi状态
+     */
     private void updateConnectedWifi(){
+        if (NetWorkUtils.isNetworkConnected(getActivity())) {
+            mLocationClient.startLocation();
+        }
+
         mWifiAdmin.againGetWifiInfo();
         tvwifiname.setText(mWifiAdmin.getSSID());
         //信号强度
@@ -516,7 +676,7 @@ public class ConnectHotspotFragment extends BaseFragment {
      * @param pass wifi密码
      * @param type wifi加密类型：0-无密码，1-WEP，2-WPA
      */
-    private void connecting(ScanResult result,String pass,int type){
+    private boolean connecting(ScanResult result,String pass,int type){
         if (BuildConfig.DEBUG) Log.d(TAG, "connecting: ***********************************************************************");
         mIsConnectingWifi=true;
         mIsFirstReceiveConnected=true;
@@ -526,9 +686,16 @@ public class ConnectHotspotFragment extends BaseFragment {
         Log.d(TAG, "connecting: "+wcgID);
         if (wcgID==-1) {
             MyToast.error(getActivity(), R.string.connect_error);
+            return false;
         }
+        return true;
     }
 
+    /**
+     * 有动画的跳转
+     * @param startView
+     * @param c
+     */
     private void startActivityWithCircularAnim(View startView, final Class c){
         CircularAnim.fullActivity(getActivity(), startView)
                 .colorOrImageRes(R.color.bg_funcation)
@@ -590,5 +757,64 @@ public class ConnectHotspotFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mLocationClient != null) {
+            mLocationClient.onDestroy();
+        }
+    }
+
+    /**
+     * 检查显示周围分享热点
+     */
+    private void findShareWifi(){
+        if (mLastLocation != null) {
+            BmobGeoPoint point=new BmobGeoPoint(mLastLocation.getLongitude(), mLastLocation.getLatitude());
+
+            Hotspot.getNearHotspot(
+                    point,
+                    new FindListener<Hotspot>() {
+                        @Override
+                        public void done(List<Hotspot> list, BmobException e) {
+                            for (MyScanResult myScanResult : mMyScanResults) {
+                                for (Hotspot hotspot : list) {
+                                    if (TextUtils.equals(myScanResult.getScanResult().BSSID,
+                                            hotspot.getBssid())) {
+                                        myScanResult.setHotspot(hotspot);
+                                        if (BuildConfig.DEBUG) Log.d(TAG, "done: "+myScanResult.getScanResult().SSID);
+                                    }
+                                }
+                            }
+
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+            );
+        }
+    }
+
+    private void initLocationClient(){
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+//        mLocationOption.setInterval(10000);
+        mLocationOption.setOnceLocation(true);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否允许模拟位置,默认为true，允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(30000);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
     }
 }

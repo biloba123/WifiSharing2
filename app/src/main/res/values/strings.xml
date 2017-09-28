@@ -128,4 +128,13 @@
     <string name="error_key">key验证无效</string>
     <string name="error_other">未知错误</string>
     <string name="searching">路线规划中...</string>
+    <string name="unlogin_can_not_share">未登录，无法分享热点</string>
+    <string name="unlogin_can_not_use">未登录，无法使用共享WiFi</string>
+    <string name="shared_wifi_info">该WiFi是其他用户分享的，是否连接，享受低价流量资费？</string>
+    <string name="hotspot_type">热点类型：</string>
+    <string name="pice">资费标准：</string>
+    <string name="fixed_hotspot">固定宽带热点</string>
+    <string name="hotspot">手机便携热点</string>
+    <string name="network_disable">请连接网络获取数据</string>
+    <string name="load_error">加载出错</string>
 </resources>

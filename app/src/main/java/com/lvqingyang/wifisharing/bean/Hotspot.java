@@ -20,9 +20,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import frame.tool.MyPrefence;
 
 /**
- * 一句话功能描述
- * 功能详细描述
- *
+ * 手机便携热点
  * @author Lv Qingyang
  * @date 2017/9/23
  * @email biloba12345@gamil.com
@@ -30,12 +28,15 @@ import frame.tool.MyPrefence;
  * @blog https://biloba123.github.io/
  */
 public class Hotspot extends BmobObject{
+    private boolean isFixed;
     private String ssid;
+    private String bssid;
     private String password;
     private User user;
     private String location;
     private BmobGeoPoint point;
     private String lastUpdate;
+    private Integer useCount;
     private static final String TAG = "Hotspot";
     private static final String HOTSPOT_ID = "HOTSPOT_ID";
     public static final double MAX_DISTANCE = 2;
@@ -46,6 +47,14 @@ public class Hotspot extends BmobObject{
 
     public void setSsid(String ssid) {
         this.ssid = ssid;
+    }
+
+    public String getBssid() {
+        return bssid;
+    }
+
+    public void setBssid(String bssid) {
+        this.bssid = bssid;
     }
 
     public String getPassword() {
@@ -92,12 +101,39 @@ public class Hotspot extends BmobObject{
         this.lastUpdate = lastUpdate;
     }
 
-    public static void postHotspot(String ssid, String  pwd,
+    public boolean isFixed() {
+        return isFixed;
+    }
+
+    public void setFixed(boolean fixed) {
+        isFixed = fixed;
+    }
+
+    public Integer getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(Integer useCount) {
+        this.useCount = useCount;
+    }
+
+    /**
+     * 上传热点
+     * @param bssid
+     * @param ssid
+     * @param pwd
+     * @param amapLocation
+     * @param listener
+     */
+    public static void postHotspot(boolean isFixed, String bssid, String ssid, String  pwd,
                                    AMapLocation amapLocation, SaveListener<String> listener){
         Hotspot hotspot=new Hotspot();
         hotspot.setUser();
+        hotspot.setFixed(isFixed);
+        hotspot.setBssid(bssid);
         hotspot.setSsid(ssid);
         hotspot.setPassword(pwd);
+        hotspot.setUseCount(0);
         hotspot.setLocation(getLocation(amapLocation));
         hotspot.setLastUpdate(getUpdateTime(amapLocation));
         hotspot.setPoint(new BmobGeoPoint(amapLocation.getLongitude(),amapLocation.getLatitude()));
@@ -106,6 +142,11 @@ public class Hotspot extends BmobObject{
 
     }
 
+    /**
+     * 更新热点位置
+     * @param amapLocation
+     * @param hotspotId
+     */
     public static void updateHotspot(AMapLocation amapLocation,String hotspotId){
         Hotspot hotspot=new Hotspot();
         hotspot.setLocation(getLocation(amapLocation));
@@ -123,11 +164,20 @@ public class Hotspot extends BmobObject{
         });
     }
 
+    /**
+     * 将objectId存放到本地，以便清除无效分享·
+     * @param context
+     * @param hotspotId
+     */
     public static void saveIdToPrefence(Context context,String hotspotId){
         MyPrefence.getInstance(context)
                 .saveString(HOTSPOT_ID,hotspotId);
     }
 
+    /**
+     * 删除无效分享
+     * @param context
+     */
     public static void deleteHotspot(Context context){
         final MyPrefence mp=MyPrefence.getInstance(context);
         String hotspotId=mp.getString(HOTSPOT_ID);
@@ -162,6 +212,11 @@ public class Hotspot extends BmobObject{
                 +  amapLocation.getStreetNum();
     }
 
+    /**
+     * 获取周围热点
+     * @param userLoc
+     * @param lis
+     */
     public static void getNearHotspot(BmobGeoPoint userLoc,FindListener<Hotspot> lis){
         BmobQuery<Hotspot> query = new BmobQuery<>();
                 query.setLimit(500)

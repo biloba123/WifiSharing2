@@ -23,6 +23,7 @@ import com.lvqingyang.wifisharing.R;
 public class CardItem extends FrameLayout {
 
 
+    private final View mLl;
     private android.widget.ImageView ivicon;
     private android.widget.TextView tvname;
     private android.widget.ImageView ivarrow;
@@ -33,6 +34,7 @@ public class CardItem extends FrameLayout {
         super(context, attrs);
         View v= LayoutInflater.from(context)
                 .inflate(R.layout.item_card,this);
+        mLl = findViewById(R.id.ll);
         this.tvcontent = (TextView) findViewById(R.id.tv_content);
         this.tvhint = (TextView) findViewById(R.id.tv_hint);
         this.ivarrow = (ImageView) findViewById(R.id.iv_arrow);
@@ -73,5 +75,9 @@ public class CardItem extends FrameLayout {
 
     public void setHint(String hint){
         tvhint.setText(hint);
+    }
+
+    public void setClickListener(OnClickListener listener){
+        mLl.setOnClickListener(listener);
     }
 }

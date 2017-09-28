@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.lvqingyang.wifisharing.R;
 import com.skyfishjy.library.RippleBackground;
 
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 
 public class SignActivity extends BaseActivity {
 

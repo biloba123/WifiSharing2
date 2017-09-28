@@ -11,7 +11,7 @@ import com.lvqingyang.wifisharing.view.CardItem;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import de.hdodenhof.circleimageview.CircleImageView;
-import frame.base.BaseActivity;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 
 public class EditPersonalInfoActivity extends BaseActivity {
 

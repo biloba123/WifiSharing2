@@ -27,11 +27,11 @@ public class MyDialog extends DialogFragment {
     private Context mContext;
     private String mTitle;
     private View mRootView;
-    private View mView;
+    private View mView;//dialog 内容
     private String mPosBtnName,mNegBtnName;
     private View.OnClickListener mPosLis,mNegLis;
-    private int mDialogWidth=920;
-    private TextView tvpos,tvneg;
+    private int mDialogWidth=920;//默认dialog宽度pix
+    private TextView tvpos,tvneg;//确认取消
     private TextView tvtitle;
     private FrameLayout container;
     private LinearLayout llbtn;
