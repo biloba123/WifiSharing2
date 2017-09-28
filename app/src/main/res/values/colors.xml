@@ -8,6 +8,7 @@
     <color name="et_text">#279dfd</color>
     <color name="bg_login">#279dfd</color>
     <color name="icon">#abb4bf</color>
+    <color name="icon_darker">#979797</color>
     <color name="icon_wifi">#2196f3</color>
     <color name="bg_win">#f2f4f7</color>
     <color name="sub_text_color_light">#d6ffffff</color>

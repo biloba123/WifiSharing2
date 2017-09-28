@@ -504,7 +504,8 @@ public class ConnectHotspotFragment extends BaseFragment {
                                                                     @Override
                                                                     public void done(String s, BmobException e) {
                                                                         if (e == null) {
-
+                                                                            if (BuildConfig.DEBUG)
+                                                                                Log.d(TAG, "done: record created");
                                                                         }else {
                                                                             MyToast.error(getActivity(), R.string.load_error);
                                                                             //忘记网络...
@@ -779,17 +780,20 @@ public class ConnectHotspotFragment extends BaseFragment {
                     new FindListener<Hotspot>() {
                         @Override
                         public void done(List<Hotspot> list, BmobException e) {
-                            for (MyScanResult myScanResult : mMyScanResults) {
-                                for (Hotspot hotspot : list) {
-                                    if (TextUtils.equals(myScanResult.getScanResult().BSSID,
-                                            hotspot.getBssid())) {
-                                        myScanResult.setHotspot(hotspot);
-                                        if (BuildConfig.DEBUG) Log.d(TAG, "done: "+myScanResult.getScanResult().SSID);
+                            if (list != null) {
+                                for (MyScanResult myScanResult : mMyScanResults) {
+                                    for (Hotspot hotspot : list) {
+                                        if (TextUtils.equals(myScanResult.getScanResult().BSSID,
+                                                hotspot.getBssid())) {
+                                            myScanResult.setHotspot(hotspot);
+                                            if (BuildConfig.DEBUG) Log.d(TAG, "done: "+myScanResult.getScanResult().SSID);
+                                        }
                                     }
                                 }
+
+                                mAdapter.notifyDataSetChanged();
                             }
 
-                            mAdapter.notifyDataSetChanged();
                         }
                     }
             );

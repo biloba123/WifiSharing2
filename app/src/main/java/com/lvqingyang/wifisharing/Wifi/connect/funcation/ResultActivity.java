@@ -50,7 +50,21 @@ public class ResultActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
+        llsecurity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SecurityActivity.start(ResultActivity.this);
+                finish();
+            }
+        });
 
+        llsign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SignActivity.start(ResultActivity.this);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -76,19 +90,19 @@ public class ResultActivity extends BaseActivity {
             }
             case RESULT_SIGNAL:{
                 llsign.setVisibility(View.GONE);
-                actionTitle=R.string.check_security;
-                title=R.string.security_ok;
-                info=R.string.just_use;
-                img=R.drawable.security_result_ok;
+                actionTitle=R.string.enhance_sign;
+                title=R.string.sign_99;
+                info=R.string.sign_enhanced;
+                img=R.drawable.activity_signal_enhance_logo_done;
                 break;
             }
         }
 
-        initeActionbar(data.getIntExtra(KEY_ACTIONBAR, R.string.app_name), true);
-        tvtitle.setText(data.getIntExtra(KEY_TITLE, R.string.app_name));
-        tvinfo.setText(data.getIntExtra(KEY_INFO, R.string.app_name));
+        initeActionbar(actionTitle, true);
+        tvtitle.setText(title);
+        tvinfo.setText(info);
         Glide.with(this)
-                .load(data.getIntExtra(KEY_IMG, R.mipmap.ic_launcher))
+                .load(img)
                 .into(ivdone);
     }
 

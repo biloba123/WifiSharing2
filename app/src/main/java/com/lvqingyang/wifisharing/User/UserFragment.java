@@ -3,6 +3,7 @@ package com.lvqingyang.wifisharing.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -21,12 +22,15 @@ import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationMode;
 import com.lvqingyang.wifisharing.Login.LoginActivity;
 import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.User;
 import com.lvqingyang.wifisharing.view.CardItem;
 
 import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
+import frame.tool.MyToast;
+import frame.tool.NetWorkUtils;
 
 /**
  * Author：LvQingYang
@@ -72,6 +76,10 @@ public class UserFragment extends BaseFragment {
     private static final int REQUEST_SETTING = 578;
     private static final int REQUEST_EDIT_INFO = 62;
     private static final String TAG = "UserFragment";
+    private CardItem mCiMessage;
+    private CardItem mCiMyShare;
+    private CardItem mCiWallet;
+    private CardItem mCiCredit;
 
     public static UserFragment newInstance() {
 
@@ -110,6 +118,10 @@ public class UserFragment extends BaseFragment {
         this.ciservicecenter = (CardItem) view.findViewById(R.id.ci_service_center);
         mIvWifiSign = (ImageView) view.findViewById(R.id.iv_wifi_sign);
         mTvDay = (TextView) view.findViewById(R.id.tv_day);
+        mCiMessage = (CardItem) view.findViewById(R.id.ci_message);
+        mCiMyShare = (CardItem) view.findViewById(R.id.ci_my_share);
+        mCiWallet = (CardItem) view.findViewById(R.id.ci_my_wallet);
+        mCiCredit = (CardItem) view.findViewById(R.id.ci_credit);
     }
 
     @Override
@@ -126,6 +138,34 @@ public class UserFragment extends BaseFragment {
             }
         });
 
+        mCiWallet.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WalletActivity.start(getActivity());
+            }
+        });
+
+        mCiMessage.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageActivity.start(getActivity());
+            }
+        });
+
+        mCiMyShare.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyShareActivity.start(getActivity());
+            }
+        });
+
+        mCiCredit.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreditActivity.start(getActivity());
+            }
+        });
+
         ciservicecenter.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +177,53 @@ public class UserFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 Instabug.invoke(InstabugInvocationMode.NEW_CHAT);
+            }
+        });
+
+        ciupdate.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (NetWorkUtils.isNetworkConnected(getActivity())) {
+                    MyToast.loading(getActivity(), R.string.checking);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }finally {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        MyToast.cancel();
+                                        MyToast.success(getActivity(), R.string.no_new);
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
+                }else {
+                    MyToast.info(getActivity(), R.string.no_internet);
+                }
+            }
+        });
+
+        ciscore.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AppContact.hasAnyMarketInstalled(getActivity())) {
+                    scoreForMyApp();
+                }else {
+                    MyToast.warning(getActivity(), R.string.no_market);
+                }
+            }
+        });
+
+        sisharefriend.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareWithFirend();
             }
         });
     }
@@ -205,5 +292,23 @@ public class UserFragment extends BaseFragment {
                 break;
         }
 
+    }
+
+    private void scoreForMyApp(){
+        Uri uri = Uri.parse("market://details?id="+ getActivity().getPackageName());
+
+        Intent intent =new Intent(Intent.ACTION_VIEW,uri);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startActivity(intent);
+    }
+
+    private void shareWithFirend(){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_with_firend));
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

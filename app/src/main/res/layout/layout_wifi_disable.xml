@@ -23,7 +23,7 @@
         android:id="@+id/btn_open_wifi"
         android:layout_width="160dp"
         android:layout_height="36dp"
-        android:background="@drawable/btn_blue_oval"
+        android:background="@drawable/btn_blue"
         android:layout_marginTop="@dimen/big_spacing"
         android:text="@string/open_soon"
         android:textSize="@dimen/medium_text"

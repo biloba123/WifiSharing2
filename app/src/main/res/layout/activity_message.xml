@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lvqingyang.wifisharing.User.MessageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/card_spacing">
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/small_spacing"
+            android:background="@drawable/bg_circle"
+            app:srcCompat="@drawable/ic_notifications"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/medium_text"
+        android:layout_toRightOf="@id/iv_icon"
+        android:layout_marginLeft="@dimen/small_spacing"
+        android:text="@string/notification"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sub_text_color"
+            android:textSize="@dimen/sub_medium_text"
+            android:layout_toRightOf="@id/iv_icon"
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="@dimen/sub_small_spacing"
+            android:layout_marginLeft="@dimen/small_spacing"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="欢迎使用iWiFi，iWiFi是一个WiFi热点共享平台..."/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sub_text_color"
+            android:textSize="@dimen/small_text"
+            android:layout_alignParentEnd="true"
+            android:text="9月28日 20:36"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/card_spacing"
+        android:layout_marginRight="@dimen/card_spacing"
+        android:background="@color/div_darker"/>
+
+</LinearLayout>

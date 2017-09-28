@@ -21,6 +21,7 @@
     <color name="text_color">#212121</color>
     <color name="sub_text_color">#757575</color>
     <color name="div">#eeeeee</color>
+    <color name="div_darker">#dfdfdf</color>
 
     <color name="border">#649f9f9f</color>
     <color name="toast_bg">#80000000</color>

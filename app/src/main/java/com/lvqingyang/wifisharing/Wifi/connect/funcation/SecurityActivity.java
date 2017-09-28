@@ -95,9 +95,8 @@ public class SecurityActivity extends BaseActivity {
                         @Override
                         public void onCompleted() {
                             checkDone();
-                            ResultActivity.start(SecurityActivity.this, R.string.check_security,
-                                    R.drawable.security_result_ok, R.string.security_ok,
-                                    R.string.just_use);
+                            ResultActivity.start(SecurityActivity.this, ResultActivity.RESULT_SECURITY);
+                            finish();
                         }
 
                         @Override
@@ -107,7 +106,7 @@ public class SecurityActivity extends BaseActivity {
 
                         @Override
                         public void onNext(Integer i) {
-                            if (i+1==MAX_COUNT) {
+                            if (i==MAX_COUNT) {
                                 mLlCheck.removeViewAt(0);
                             }
 

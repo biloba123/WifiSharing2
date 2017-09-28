@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context="com.lvqingyang.wifisharing.Wifi.connect.funcation.ResultActivity">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_spacing"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,19 +40,27 @@
             android:textSize="@dimen/sub_medium_text"
             android:textColor="@color/sub_text_color_light"/>
     </LinearLayout>
+    </android.support.v7.widget.CardView>
 
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_spacing"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/accent_white"
-        android:layout_marginTop="@dimen/small_spacing"
-        android:padding="@dimen/card_spacing">
+        android:background="@color/accent_white">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/sub_text_color"
             android:textSize="@dimen/sub_medium_text"
+            android:layout_marginTop="@dimen/card_spacing"
+            android:layout_marginLeft="@dimen/card_spacing"
             android:text="@string/suggest_to"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +74,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:clickable="true"
                     android:background="@drawable/bg_item"
                     android:padding="@dimen/medium_spacing">
                     <ImageView
@@ -81,6 +96,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:clickable="true"
                 android:background="@drawable/bg_item"
                 android:padding="@dimen/medium_spacing">
                 <ImageView
@@ -102,6 +118,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:clickable="true"
                 android:background="@drawable/bg_item"
                 android:padding="@dimen/medium_spacing">
                 <ImageView
@@ -119,4 +136,5 @@
 
         </LinearLayout>
     </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

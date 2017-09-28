@@ -141,4 +141,21 @@
     <string name="just_use">请放心使用</string>
     <string name="suggest_to">建议您继续完成以下操作</string>
     <string name="security">安全</string>
+    <string name="sign_99">99%</string>
+    <string name="sign_enhanced">信号已增强</string>
+    <string name="no_new">当前为最新版</string>
+    <string name="no_market">未安装应用市场</string>
+    <string name="share_with_firend">我在使用iWiFi，这是一个WiFi共享平台，你可以将自己闲置热点、剩余流量共享出来赚取收益，也可以低价享受共享热点。iWiFi，让WiFi陪伴你身边~</string>
+    <string name="checking">检查中...</string>
+    <string name="my_message">我的消息</string>
+    <string name="notification">通知</string>
+    <string name="my_balance">我的余额</string>
+    <string name="recharge">充值</string>
+    <string name="withdraw">提现</string>
+    <string name="normal_question">常见问题</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="credit_record">信用记录</string>
+    <string name="rule_info">规则解读</string>
+    <string name="bad_record">负面记录</string>
+    <string name="last_mon_credit">上月信用变化</string>
 </resources>

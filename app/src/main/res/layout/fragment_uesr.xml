@@ -104,6 +104,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_my_wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_wallet"
@@ -112,6 +113,7 @@
                         app:info="@string/point_center_info"/>
 
                     <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_message"
@@ -120,6 +122,7 @@
                         app:info="@string/message_info"/>
 
                     <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_my_share"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_share"
@@ -128,6 +131,7 @@
                         app:info="@string/my_share_"/>
 
                     <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_credit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_credit_"

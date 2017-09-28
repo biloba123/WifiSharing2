@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lvqingyang.wifisharing.User.WalletActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size_big"
+            android:layout_height="@dimen/icon_size_big"
+            android:src="@mipmap/wallet"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sub_text_color"
+            android:text="@string/my_balance"
+            android:layout_marginTop="@dimen/medium_spacing"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/big_text"
+            android:textColor="@color/text_color"
+            android:text="￥0.00"
+            android:layout_marginTop="@dimen/small_spacing"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/huge_spacing"
+            android:layout_marginLeft="@dimen/medium_spacing"
+            android:layout_marginRight="@dimen/medium_spacing"
+            android:background="@drawable/btn_blue_oval"
+            android:text="@string/recharge"
+            android:textColor="@color/accent_white"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_margin="@dimen/medium_spacing"
+            android:background="@drawable/btn_white_border"
+            android:text="@string/withdraw"
+            android:textColor="@color/accent_blue"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sub_medium_text"
+        android:textColor="@color/sub_text_color"
+        android:text="@string/normal_question"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/sub_medium_spacing"/>
+
+</RelativeLayout>
