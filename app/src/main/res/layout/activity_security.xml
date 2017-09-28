@@ -21,4 +21,14 @@
         android:scaleType="fitEnd"
         android:layout_alignParentBottom="true"
         android:src="@drawable/activity_signal_enhance_bg"/>
+
+    <LinearLayout
+        android:id="@+id/ll_check"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_below="@id/iv_anim"
+        android:layout_marginTop="100dp">
+    </LinearLayout>
 </RelativeLayout>

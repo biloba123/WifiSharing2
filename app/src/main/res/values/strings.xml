@@ -137,4 +137,8 @@
     <string name="hotspot">手机便携热点</string>
     <string name="network_disable">请连接网络获取数据</string>
     <string name="load_error">加载出错</string>
+    <string name="security_ok">已通过安全检测</string>
+    <string name="just_use">请放心使用</string>
+    <string name="suggest_to">建议您继续完成以下操作</string>
+    <string name="security">安全</string>
 </resources>

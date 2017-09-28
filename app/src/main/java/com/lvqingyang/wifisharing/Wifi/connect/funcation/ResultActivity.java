@@ -1,0 +1,104 @@
+package com.lvqingyang.wifisharing.Wifi.connect.funcation;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.base.BaseActivity;
+
+public class ResultActivity extends BaseActivity {
+
+    private android.widget.ImageView ivdone;
+    private android.widget.TextView tvtitle;
+    private android.widget.TextView tvinfo;
+    private android.widget.LinearLayout llsecurity;
+    private android.widget.LinearLayout llsign;
+    private android.widget.LinearLayout llspeed;
+    public static final int RESULT_SECURITY = 341;
+    public static final int RESULT_SIGNAL = 886;
+    private static final String KEY_WHICH = "WHICH";
+
+
+
+    public static void start(Context context, int which) {
+        Intent starter = new Intent(context, ResultActivity.class);
+        starter.putExtra(KEY_WHICH, which);
+
+        context.startActivity(starter);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_result;
+    }
+
+    @Override
+    protected void initView() {
+        this.llspeed = (LinearLayout) findViewById(R.id.ll_speed);
+        this.llsign = (LinearLayout) findViewById(R.id.ll_sign);
+        this.llsecurity = (LinearLayout) findViewById(R.id.ll_security);
+        this.tvinfo = (TextView) findViewById(R.id.tv_info);
+        this.tvtitle = (TextView) findViewById(R.id.tv_title);
+        this.ivdone = (ImageView) findViewById(R.id.iv_done);
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void setData() {
+        Intent data=getIntent();
+        int actionTitle, title, info, img;
+        actionTitle=title=info=R.string.app_name;
+        img=R.mipmap.ic_launcher;
+
+        switch (data.getIntExtra(KEY_WHICH, -1)) {
+            case RESULT_SECURITY:{
+                llsecurity.setVisibility(View.GONE);
+                actionTitle=R.string.check_security;
+                title=R.string.security_ok;
+                info=R.string.just_use;
+                img=R.drawable.security_result_ok;
+                break;
+            }
+            case RESULT_SIGNAL:{
+                llsign.setVisibility(View.GONE);
+                actionTitle=R.string.check_security;
+                title=R.string.security_ok;
+                info=R.string.just_use;
+                img=R.drawable.security_result_ok;
+                break;
+            }
+        }
+
+        initeActionbar(data.getIntExtra(KEY_ACTIONBAR, R.string.app_name), true);
+        tvtitle.setText(data.getIntExtra(KEY_TITLE, R.string.app_name));
+        tvinfo.setText(data.getIntExtra(KEY_INFO, R.string.app_name));
+        Glide.with(this)
+                .load(data.getIntExtra(KEY_IMG, R.mipmap.ic_launcher))
+                .into(ivdone);
+    }
+
+    @Override
+    protected void getBundleExtras(Bundle bundle) {
+
+    }
+
+    @Override
+    protected String[] getNeedPermissions() {
+        return new String[0];
+    }
+}

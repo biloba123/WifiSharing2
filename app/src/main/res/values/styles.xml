@@ -16,6 +16,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ResultOkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/result_ok</item>
+        <item name="colorPrimaryDark">@color/result_ok</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.NoActionbar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
