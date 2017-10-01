@@ -8,10 +8,24 @@
     android:orientation="vertical"
     tools:context="com.lvqingyang.wifisharing.User.CreditActivity">
 
-    <RelativeLayout
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/view_root">
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/colorPrimary">
 
         <ImageView
@@ -60,6 +74,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 
 
@@ -107,7 +122,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/medium_spacing"
             android:text="信用分+0"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/medium_text"/>
     </RelativeLayout>
 
@@ -179,6 +194,7 @@
             </LinearLayout>
 
         </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

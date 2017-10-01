@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_share"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.lvqingyang.wifisharing.User.MyShareActivity">
+</android.support.v7.widget.RecyclerView>
 
-</android.support.constraint.ConstraintLayout>
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/fab_add"-->
+        <!--app:fabSize="normal"-->
+        <!--app:srcCompat="@drawable/ic_add"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_margin="@dimen/medium_spacing"/>-->
+
+
+</RelativeLayout>

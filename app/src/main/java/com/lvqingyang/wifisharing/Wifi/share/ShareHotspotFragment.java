@@ -67,6 +67,7 @@ public class ShareHotspotFragment extends BaseFragment {
     private LinearLayout mLlNoDevice;
     private RecyclerView mRvDevice;
     private RelativeLayout mLlShare;
+    private TextView mTvConnectCount;
 
      /**
      * fragment
@@ -283,6 +284,7 @@ public class ShareHotspotFragment extends BaseFragment {
         mLlNoDevice = (LinearLayout) view.findViewById(R.id.ll_no_device);
         mRvDevice = (RecyclerView) view.findViewById(R.id.rv_device);
         mLlShare=view.findViewById(R.id.ll_share);
+        mTvConnectCount=view.findViewById(R.id.tv_connect_count);
     }
 
     @Override
@@ -475,9 +477,11 @@ public class ShareHotspotFragment extends BaseFragment {
         if (mConnectDeviceList.size()>0) {
             mLlNoDevice.setVisibility(View.GONE);
             mRvDevice.setVisibility(View.VISIBLE);
+            mTvConnectCount.setText(mConnectDeviceList.size()+"台");
         }else {
             mRvDevice.setVisibility(View.GONE);
             mLlNoDevice.setVisibility(View.VISIBLE);
+            mTvConnectCount.setText("0台");
         }
 
         mSwipeRefreshLayout.setRefreshing(false);

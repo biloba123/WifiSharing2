@@ -114,7 +114,7 @@
                                     android:gravity="center"
                                     android:clickable="true"
                                     android:background="@drawable/bg_circle_blue"
-                                    android:text="24.3M"
+                                    android:text="0M"
                                     android:textSize="@dimen/medium_text"
                                     android:textColor="@color/accent_white"/>
                                 <TextView
@@ -139,7 +139,7 @@
                                     android:gravity="center"
                                     android:clickable="true"
                                     android:background="@drawable/bg_circle_orange"
-                                    android:text="3.2元"
+                                    android:text="0元"
                                     android:textSize="@dimen/medium_text"
                                     android:textColor="@color/accent_white"/>
                                 <TextView

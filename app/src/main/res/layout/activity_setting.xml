@@ -79,11 +79,11 @@
                 android:layout_height="wrap_content"
                 app:type="@string/about"
                 app:title="@string/help"/>
-            <frame.view.SettingItem
-                android:id="@+id/si_about_us"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="@string/about_us"/>
+            <!--<frame.view.SettingItem-->
+                <!--android:id="@+id/si_about_us"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:title="@string/about_us"/>-->
             <TextView
                 android:id="@+id/tv_logout"
                 android:layout_width="match_parent"

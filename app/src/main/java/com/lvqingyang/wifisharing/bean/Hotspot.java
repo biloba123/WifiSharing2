@@ -13,6 +13,7 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -37,6 +38,7 @@ public class Hotspot extends BmobObject{
     private BmobGeoPoint point;
     private String lastUpdate;
     private Integer useCount;
+    private float income;
     private static final String TAG = "Hotspot";
     private static final String HOTSPOT_ID = "HOTSPOT_ID";
     public static final double MAX_DISTANCE = 2;
@@ -115,6 +117,14 @@ public class Hotspot extends BmobObject{
 
     public void setUseCount(Integer useCount) {
         this.useCount = useCount;
+    }
+
+    public float getIncome() {
+        return income;
+    }
+
+    public void setIncome(float income) {
+        this.income = income;
     }
 
     /**
@@ -217,11 +227,20 @@ public class Hotspot extends BmobObject{
      * @param userLoc
      * @param lis
      */
-    public static void getNearHotspot(BmobGeoPoint userLoc,FindListener<Hotspot> lis){
+    public static void getNearHotspot(BmobGeoPoint userLoc, FindListener<Hotspot> lis){
         BmobQuery<Hotspot> query = new BmobQuery<>();
                 query.setLimit(500)
                         .addWhereWithinKilometers("point",userLoc,MAX_DISTANCE)
                         .findObjects(lis);
+    }
+
+    public static void getUserShareHotspot(FindListener<Hotspot> lis){
+        BmobQuery<Hotspot> query = new BmobQuery<>();
+        User user=BmobUser.getCurrentUser(User.class);
+        query.addWhereEqualTo("isFixed", true);
+        query.addWhereEqualTo("user", new BmobPointer(user));
+        query//.setLimit().setSkip()//.order("-createdAt")
+                .findObjects(lis);
     }
 }
 

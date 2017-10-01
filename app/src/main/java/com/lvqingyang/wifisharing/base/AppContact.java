@@ -18,8 +18,8 @@ import java.util.List;
  * @blog https://biloba123.github.io/
  */
 public class AppContact {
-    public static final float HOTSPOT_PRICE = 0.1f;
-    public static final float HOTSPOT_FIXED_PRICE = 0.01f;
+    public static final float HOTSPOT_PRICE = 0.05f;
+    public static final float HOTSPOT_FIXED_PRICE = 0.005f;
 
     public static boolean hasAnyMarketInstalled(Context context) {
         Intent intent =new Intent();

@@ -22,7 +22,7 @@ public class CreditActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initeActionbar(R.string.my_credit, true);
+        initToolbar(getString(R.string.my_credit), true);
     }
 
     @Override

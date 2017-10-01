@@ -22,7 +22,6 @@ import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationMode;
 import com.lvqingyang.wifisharing.Login.LoginActivity;
 import com.lvqingyang.wifisharing.R;
-import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.User;
 import com.lvqingyang.wifisharing.view.CardItem;
@@ -141,35 +140,43 @@ public class UserFragment extends BaseFragment {
         mCiWallet.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WalletActivity.start(getActivity());
+                if (isLogined()) {
+                    WalletActivity.start(getActivity());
+                }
             }
         });
 
         mCiMessage.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MessageActivity.start(getActivity());
+                if (isLogined()) {
+                    MessageActivity.start(getActivity());
+                }
             }
         });
 
         mCiMyShare.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyShareActivity.start(getActivity());
+                if (isLogined()) {
+                    MyShareActivity.start(getActivity());
+                }
             }
         });
 
         mCiCredit.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreditActivity.start(getActivity());
+                if (isLogined()) {
+                    CreditActivity.start(getActivity());
+                }
             }
         });
 
         ciservicecenter.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Instabug.invoke(InstabugInvocationMode.CHATS_LIST);
+                    Instabug.invoke(InstabugInvocationMode.CHATS_LIST);
             }
         });
 
@@ -212,11 +219,12 @@ public class UserFragment extends BaseFragment {
         ciscore.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (AppContact.hasAnyMarketInstalled(getActivity())) {
-                    scoreForMyApp();
-                }else {
-                    MyToast.warning(getActivity(), R.string.no_market);
-                }
+//                if (AppContact.hasAnyMarketInstalled(getActivity())) {
+//                    scoreForMyApp();
+//                }else {
+//                    MyToast.warning(getActivity(), R.string.no_market);
+//                }
+                AboutUsActivity.start(getActivity());
             }
         });
 
@@ -280,18 +288,29 @@ public class UserFragment extends BaseFragment {
         switch (requestCode) {
             case REQUEST_LOGIN://登录成功
                 if (resultCode== Activity.RESULT_OK) {
-                    mUser=BmobUser.getCurrentUser(User.class);
-                    showUserInfo();
+                    reloadUser();
                 }
                 break;
             case REQUEST_SETTING://退出登录
                 if (resultCode== Activity.RESULT_OK) {
-                    mUser=BmobUser.getCurrentUser(User.class);
-                    showUserInfo();
+                    reloadUser();
                 }
                 break;
         }
 
+    }
+
+    private void reloadUser(){
+        mUser=BmobUser.getCurrentUser(User.class);
+        showUserInfo();
+    }
+
+    private boolean isLogined(){
+        if (mUser == null) {
+            MyToast.info(getActivity(), R.string.login_first);
+            return false;
+        }
+        return true;
     }
 
     private void scoreForMyApp(){

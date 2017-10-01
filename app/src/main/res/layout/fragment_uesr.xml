@@ -193,7 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_thumb_up"
-                        app:name="@string/score"/>
+                        app:name="@string/about_us"/>
 
 
                     <com.lvqingyang.wifisharing.view.CardItem

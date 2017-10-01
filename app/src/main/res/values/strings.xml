@@ -20,7 +20,7 @@
     <string name="error">出错</string>
     <string name="registered">该邮箱已被注册</string>
     <string name="error_info">邮箱或密码错误</string>
-    <string name="unlogin">登录畅销Wifi</string>
+    <string name="unlogin">登录iWiFi</string>
     <string name="wrong_email">输入正确邮箱</string>
     <string name="email">邮箱</string>
     <string name="nick">昵称</string>
@@ -132,7 +132,7 @@
     <string name="unlogin_can_not_use">未登录，无法使用共享WiFi</string>
     <string name="shared_wifi_info">该WiFi是其他用户分享的，是否连接，享受低价流量资费？</string>
     <string name="hotspot_type">热点类型：</string>
-    <string name="pice">资费标准：</string>
+    <string name="price">资费标准：</string>
     <string name="fixed_hotspot">固定宽带热点</string>
     <string name="hotspot">手机便携热点</string>
     <string name="network_disable">请连接网络获取数据</string>
@@ -158,4 +158,13 @@
     <string name="rule_info">规则解读</string>
     <string name="bad_record">负面记录</string>
     <string name="last_mon_credit">上月信用变化</string>
+    <string name="login_first">请先登录</string>
+    <string name="sum_income">累计收益</string>
+    <string name="mac">MAC地址：</string>
+    <string name="location">所处位置：</string>
+    <string name="sum_income_">累计收益：</string>
+    <string name="use_count">使用人次：</string>
+    <string name="cancel_share">取消分享</string>
+    <string name="income">收益标准：</string>
+    <string name="share">分享</string>
 </resources>

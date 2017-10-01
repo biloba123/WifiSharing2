@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,12 @@ public class MyDialog extends DialogFragment {
     private View mView;//dialog 内容
     private String mPosBtnName,mNegBtnName;
     private View.OnClickListener mPosLis,mNegLis;
-    private int mDialogWidth=920;//默认dialog宽度pix
+    private int mDialogWidth=320;//默认dialog宽度dp
     private TextView tvpos,tvneg;//确认取消
     private TextView tvtitle;
     private FrameLayout container;
     private LinearLayout llbtn;
+
 
     public MyDialog(Context context) {
         mContext = context;
@@ -104,8 +106,12 @@ public class MyDialog extends DialogFragment {
         super.onStart();
         Dialog dialog=getDialog();
         if (dialog != null) {
+            int width= (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, mDialogWidth,
+                    getResources().getDisplayMetrics()
+            );
             dialog.getWindow()
-                    .setLayout(mDialogWidth,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    .setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.getWindow().setBackgroundDrawable(null);
         }
     }

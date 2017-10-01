@@ -33,7 +33,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -97,7 +96,11 @@
         </activity>
         <activity android:name=".User.WalletActivity">
         </activity>
-        <activity android:name=".User.CreditActivity">
+        <activity
+            android:name=".User.CreditActivity"
+            android:theme="@style/AppTheme.NoActionbar">
+        </activity>
+        <activity android:name=".User.AboutUsActivity">
         </activity>
     </application>
 

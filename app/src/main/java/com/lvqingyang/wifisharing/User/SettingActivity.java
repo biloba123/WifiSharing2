@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 import com.lvqingyang.wifisharing.base.MyDialog;
 
 import cn.bmob.v3.BmobUser;
-import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.MyToast;
 import frame.view.SettingItem;
 
@@ -48,7 +48,7 @@ public class SettingActivity extends BaseActivity {
     protected void initView() {
         initeActionbar(R.string.setting,true);
         this.tvlogout = (TextView) findViewById(R.id.tv_logout);
-        this.siaboutus = (SettingItem) findViewById(R.id.si_about_us);
+//        this.siaboutus = (SettingItem) findViewById(R.id.si_about_us);
         this.sihelp = (SettingItem) findViewById(R.id.si_help);
         this.simessageremindhotspot = (SettingItem) findViewById(R.id.si_message_remind_hotspot);
         this.simessageremindnight = (SettingItem) findViewById(R.id.si_message_remind_night);

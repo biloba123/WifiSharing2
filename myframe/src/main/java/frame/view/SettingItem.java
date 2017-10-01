@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.myframe.R;
 
+import java.util.Random;
+
 
 /**
  * 　　┏┓　　  ┏┓+ +
@@ -59,6 +61,7 @@ public class SettingItem extends FrameLayout {
         mTvTitle = (TextView)findViewById(R.id.tv_title);
         mTvInfo = (TextView) findViewById(R.id.tv_info);
         mSwitch = (Switch) findViewById(R.id.sw);
+        mSwitch.setChecked(new Random().nextBoolean());
         mRl = findViewById(R.id.rl);
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,

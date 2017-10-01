@@ -107,9 +107,13 @@ public class ConnectHotspotFragment extends BaseFragment {
     private TextView tvsign;
     private TextView tvspeed;
     private LinearLayout llconnected;
+    private ImageView mIvShare;
 
     //是否开启测速
     private boolean mIsOnSpeeding;
+
+    //onScanResultAvailable会被多次调用
+    private boolean mIsFirstAvailable=false;
 
     private List<MyScanResult> mMyScanResults=new ArrayList<>();
 
@@ -172,20 +176,24 @@ public class ConnectHotspotFragment extends BaseFragment {
         @Override
         public void onScanResultAvailable() {
             if (BuildConfig.DEBUG) Log.d(TAG, "onScanResultAvailable: ");
-            srl.setRefreshing(false);
-            mAdapter.clearAllItems();
-            mAdapter.addItems(MyScanResult.transToMyScanResults(mWifiAdmin.getScanResultList()));
-            mAdapter.notifyDataSetChanged();
-            if (mAdapter.getItemCount()==0) {
-                rvwifi.setVisibility(View.GONE);
-                llnowifi.setVisibility(View.VISIBLE);
-                //再进行一次扫描
-                mWifiAdmin.scan();
-            }else {
-                findShareWifi();
-                llnowifi.setVisibility(View.GONE);
-                rvwifi.setVisibility(View.VISIBLE);
+            if (mIsFirstAvailable) {
+                mIsFirstAvailable=false;
+                srl.setRefreshing(false);
+                mAdapter.clearAllItems();
+                mAdapter.addItems(MyScanResult.transToMyScanResults(mWifiAdmin.getScanResultList()));
+                mAdapter.notifyDataSetChanged();
+                if (mAdapter.getItemCount()==0) {
+                    rvwifi.setVisibility(View.GONE);
+                    llnowifi.setVisibility(View.VISIBLE);
+                    //再进行一次扫描
+                    mWifiAdmin.scan();
+                }else {
+                    findShareWifi();
+                    llnowifi.setVisibility(View.GONE);
+                    rvwifi.setVisibility(View.VISIBLE);
+                }
             }
+
         }
 
         @Override
@@ -275,6 +283,7 @@ public class ConnectHotspotFragment extends BaseFragment {
      */
     public void wifiConnecting(String ssid){
         llconnected.setVisibility(View.GONE);
+        mIvShare.setVisibility(View.GONE);
 
         mCvSate.setVisibility(View.VISIBLE);
         mRippleBackground.setVisibility(View.VISIBLE);
@@ -302,6 +311,7 @@ public class ConnectHotspotFragment extends BaseFragment {
             mCvSate.setVisibility(View.VISIBLE);
         }
         llconnected.setVisibility(View.VISIBLE);
+        mIvShare.setVisibility(View.VISIBLE);
         if (wifiInfo != null) {
             updateConnectedWifi();
         }else {
@@ -330,7 +340,8 @@ public class ConnectHotspotFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (mWifiAdmin.isNetCardFriendly()) {
-            mWifiAdmin.scan();
+//            srl.setRefreshing(true);
+            mIsFirstAvailable=true;
             if (mWifiAdmin.isConnected()) {
                 wifiConnected(false);
             }
@@ -376,6 +387,7 @@ public class ConnectHotspotFragment extends BaseFragment {
         this.tvupload = (TextView) view.findViewById(R.id.tv_upload);
         this.tvwifiname = (TextView) view.findViewById(R.id.tv_wifi_name);
         this.ivwifisign = (ImageView) view.findViewById(R.id.iv_wifi_sign);
+        mIvShare=view.findViewById(R.id.iv_share);
     }
 
     @Override
@@ -386,6 +398,7 @@ public class ConnectHotspotFragment extends BaseFragment {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mIsFirstAvailable=true;
                 updateConnectedWifi();
                 mWifiAdmin.scan();
             }
@@ -410,6 +423,13 @@ public class ConnectHotspotFragment extends BaseFragment {
             public void onClick(View view) {
                 mWifiAdmin.openNetCard();
                 wifiOpening();
+            }
+        });
+
+        mIvShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showShareDialog();
             }
         });
     }
@@ -485,38 +505,40 @@ public class ConnectHotspotFragment extends BaseFragment {
                                             Record.getUserRecord(new FindListener<Record>() {
                                                 @Override
                                                 public void done(List<Record> list, BmobException e) {
-                                                    if (e == null) {
-                                                        if (list.size()>0) {//有未支付记录
+//                                                    if (e == null) {
+//                                                        if (list.size()>0) {//有未支付记录
+//
+//                                                        }else {
+//
+//
+//                                                        }
+//                                                    }else {
+//                                                        MyToast.error(getActivity(), R.string.load_error);
+//                                                    }
 
-                                                        }else {
-                                                            ScanResult result = myScanResult.getScanResult();
-                                                            String pwd=myScanResult.getHotspot().getPassword();
-                                                            boolean isConnectSucc=false;
-                                                            if (result.capabilities.contains("WEP")) {
-                                                                isConnectSucc=connecting(result, pwd, 2);
-                                                            }else {
-                                                                isConnectSucc=connecting(result, pwd, 3);
-                                                            }
-
-                                                            if (isConnectSucc) {
-                                                                //连接成功则创建记录
-                                                                Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
-                                                                    @Override
-                                                                    public void done(String s, BmobException e) {
-                                                                        if (e == null) {
-                                                                            if (BuildConfig.DEBUG)
-                                                                                Log.d(TAG, "done: record created");
-                                                                        }else {
-                                                                            MyToast.error(getActivity(), R.string.load_error);
-                                                                            //忘记网络...
-                                                                        }
-                                                                    }
-                                                                });
-                                                            }
-
-                                                        }
+                                                    ScanResult result = myScanResult.getScanResult();
+                                                    String pwd=myScanResult.getHotspot().getPassword();
+                                                    boolean isConnectSucc=false;
+                                                    if (result.capabilities.contains("WEP")) {
+                                                        isConnectSucc=connecting(result, pwd, 2);
                                                     }else {
-                                                        MyToast.error(getActivity(), R.string.load_error);
+                                                        isConnectSucc=connecting(result, pwd, 3);
+                                                    }
+
+                                                    if (isConnectSucc) {
+                                                        //连接成功则创建记录
+                                                        Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
+                                                            @Override
+                                                            public void done(String s, BmobException e) {
+                                                                if (e == null) {
+                                                                    if (BuildConfig.DEBUG)
+                                                                        Log.d(TAG, "done: record created");
+                                                                }else {
+//                                                                    MyToast.error(getActivity(), R.string.load_error);
+                                                                    //忘记网络...
+                                                                }
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             });
@@ -821,4 +843,56 @@ public class ConnectHotspotFragment extends BaseFragment {
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
     }
+
+    /**
+     * 分享当前WiFi
+     */
+    private void showShareDialog(){
+        View view=LayoutInflater.from(getActivity())
+                .inflate(R.layout.dialog_share_wifi, null);
+        EditText etpassword = (EditText) view.findViewById(R.id.et_password);
+        TextView tvmac = (TextView) view.findViewById(R.id.tv_mac);
+
+        tvmac.setText(mWifiAdmin.getBSSID());
+
+        MyDialog dialog = new MyDialog(getActivity())
+            .setTitle("是否分享“" + mWifiAdmin.getSSID() + "”？")
+            .setView(view)
+            .setPosBtn(R.string.share, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            }).setNegBtn(android.R.string.cancel, null);
+
+        dialog.show(getFragmentManager());
+
+        final TextView tvPos=dialog.getTvpos();
+        tvPos.setEnabled(false);
+        tvPos.setTextColor(getResources().getColor(R.color.accent_grey));
+
+        etpassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length()<8) {
+                    tvPos.setEnabled(false);
+                    tvPos.setTextColor(getResources().getColor(R.color.accent_grey));
+                }else {
+                    tvPos.setEnabled(false);
+                    tvPos.setTextColor(getResources().getColor(R.color.text_color));
+                }
+            }
+        });
+    }
+
 }
