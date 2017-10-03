@@ -1,8 +1,15 @@
 package com.lvqingyang.wifisharing.bean;
 
+import android.util.Log;
+
+import com.lvqingyang.wifisharing.BuildConfig;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.helper.ErrorCode;
+import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -19,6 +26,7 @@ public class User extends BmobUser {
     private BmobFile avater;//头像
     private BmobDate birthday;
     private Integer credit;//信用分
+    private Float balance;//余额
     private static final String TAG = "User";
 
     public User() {
@@ -65,12 +73,21 @@ public class User extends BmobUser {
         this.credit = credit;
     }
 
+    public Float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Float balance) {
+        this.balance = balance;
+    }
+
     public static void register(final String tel, final String smsCode, final String password,
                                 final SaveListener<User> lis){
         User user = new User();
         user.setMobilePhoneNumber(tel);//设置手机号码（必填）
         user.setPassword(password);                  //设置用户密码
         user.setNick(tel);
+        user.setBalance(0.0f);
         user.signOrLogin(smsCode, lis);
     }
 
@@ -90,6 +107,27 @@ public class User extends BmobUser {
     public static void logout(){
         BmobUser.logOut();   //清除缓存用户对象
     }
+
+
+        /**
+         * 更新本地用户信息
+         * 适用场景:登录后若web端的用户信息有更新 可以通过该方法拉取最新的用户信息并写到本地缓存(SharedPreferences)中<p>
+         * 注意：需要先登录，否则会报9024错误
+         *
+         * @see ErrorCode E9024S
+         */
+        public static void syscUserInfo(FetchUserInfoListener lis) {
+            BmobUser.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e == null) {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "done: "+s);
+                    }else {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "done: "+e.toString());
+                    }
+                }
+            });
+        }
 
 
 }

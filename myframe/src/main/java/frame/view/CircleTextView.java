@@ -45,7 +45,6 @@ public class CircleTextView extends View {
             R.color.accent_amber,
             R.color.accent_orange,
             R.color.accent_brown,
-            R.color.accent_white,
             R.color.accent_grey,
             R.color.accent_black,
     };

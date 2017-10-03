@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.base;
+package com.lvqingyang.wifisharing.tools;
 
 import android.app.Dialog;
 import android.content.Context;

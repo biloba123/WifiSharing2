@@ -16,10 +16,10 @@ import com.lvqingyang.wifisharing.User.UserFragment;
 import com.lvqingyang.wifisharing.Wifi.WifiFragment;
 import com.lvqingyang.wifisharing.Wifi.connect.WiFiConnectService;
 import com.lvqingyang.wifisharing.Wifi.share.WiFiAPService;
-import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.base.BaseActivity;
+import com.lvqingyang.wifisharing.tools.MyDialog;
 import com.lvqingyang.wifisharing.bean.Hotspot;
 
-import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.NetWorkUtils;
 
 public class MainActivity extends BaseActivity {

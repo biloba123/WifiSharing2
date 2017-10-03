@@ -30,7 +30,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseFragment;
-import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.tools.MyDialog;
 import com.lvqingyang.wifisharing.bean.ConnectDevice;
 import com.lvqingyang.wifisharing.bean.Hotspot;
 import com.skyfishjy.library.RippleBackground;

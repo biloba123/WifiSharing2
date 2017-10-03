@@ -13,12 +13,11 @@ import com.google.gson.Gson;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseActivity;
-import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.tools.MyDialog;
 import com.lvqingyang.wifisharing.bean.Hotspot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -58,7 +57,6 @@ public class MyShareActivity extends BaseActivity {
         mAdapter=new SolidRVBaseAdapter<Hotspot>(this, mShareHotspots) {
             @Override
             protected void onBindDataToView(SolidCommonViewHolder holder, Hotspot bean) {
-                bean.setIncome(new Random().nextInt(100)/10f);
                 holder.setText(R.id.tv_ssid, bean.getSsid());
                 holder.setText(R.id.tv_bssid, bean.getBssid());
                 holder.setText(R.id.tv_income, bean.getIncome()+"");

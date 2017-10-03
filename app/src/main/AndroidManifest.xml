@@ -59,7 +59,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionbar.Trans.TranBg">
         </activity>
-        <activity android:name=".User.SettingActivity">
+        <activity android:name=".User.Setting.SettingActivity">
         </activity>
         <activity android:name=".User.EditPersonalInfoActivity">
         </activity>
@@ -90,18 +90,25 @@
             android:name=".Wifi.connect.funcation.ResultActivity"
             android:theme="@style/ResultOkTheme">
         </activity>
-        <activity android:name=".User.MessageActivity">
+        <activity android:name=".User.Message.MessageActivity">
         </activity>
         <activity android:name=".User.MyShareActivity">
         </activity>
         <activity android:name=".User.WalletActivity">
         </activity>
         <activity
-            android:name=".User.CreditActivity"
+            android:name=".User.Credit.CreditActivity"
             android:theme="@style/AppTheme.NoActionbar">
         </activity>
-        <activity android:name=".User.AboutUsActivity">
+        <activity android:name=".User.Setting.AboutUsActivity">
         </activity>
+        <activity android:name=".User.Message.MessageDetailActivity">
+        </activity>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionbar"/>
     </application>
 
 </manifest>

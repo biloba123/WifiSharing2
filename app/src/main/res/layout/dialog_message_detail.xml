@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+<LinearLayout android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/card_spacing">
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sub_big_text"
+        android:textColor="@color/text_color"
+        android:layout_gravity="center_horizontal"
+        tools:text="@string/app_name"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:overScrollMode="never"
+        android:layout_marginTop="@dimen/small_spacing"
+        android:scrollbars="vertical">
+        <TextView
+            android:id="@+id/tv_content"
+            android:paddingTop="@dimen/small_spacing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sub_text_color"
+            android:textSize="@dimen/medium_text"
+            android:lineSpacingMultiplier="1.1"
+            android:letterSpacing="0.1"
+            tools:text="@string/app_name"/>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
+</android.support.v7.widget.CardView>

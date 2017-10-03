@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.User;
+package com.lvqingyang.wifisharing.User.Credit;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,15 @@ import android.os.Bundle;
 
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseActivity;
+import com.lvqingyang.wifisharing.bean.User;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FetchUserInfoListener;
 
 public class CreditActivity extends BaseActivity {
+
+    private CreditSesameView mCreditSesameView;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, CreditActivity.class);
@@ -23,6 +30,7 @@ public class CreditActivity extends BaseActivity {
     @Override
     protected void initView() {
         initToolbar(getString(R.string.my_credit), true);
+        mCreditSesameView = (CreditSesameView) findViewById(R.id.sesame_view);
     }
 
     @Override
@@ -43,24 +51,7 @@ public class CreditActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loading();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }finally {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadComplete();
-                        }
-                    });
-                }
-            }
-        }).start();
+        onRetryClick();
     }
 
     @Override
@@ -71,5 +62,26 @@ public class CreditActivity extends BaseActivity {
     @Override
     protected String[] getNeedPermissions() {
         return new String[0];
+    }
+
+    @Override
+    protected void onRetryClick() {
+        super.onRetryClick();
+        User.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    loadComplete();
+                    showUserInfo();
+                }else {
+                    loadFail();
+                }
+            }
+        });
+    }
+
+    private void showUserInfo(){
+        User user= BmobUser.getCurrentUser(User.class);
+        mCreditSesameView.setSesameValues(user.getCredit());
     }
 }

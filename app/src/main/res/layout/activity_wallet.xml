@@ -25,6 +25,7 @@
             android:text="@string/my_balance"
             android:layout_marginTop="@dimen/medium_spacing"/>
         <TextView
+            android:id="@+id/tv_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/big_text"

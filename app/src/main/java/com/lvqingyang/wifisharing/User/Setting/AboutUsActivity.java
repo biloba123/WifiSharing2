@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.User;
+package com.lvqingyang.wifisharing.User.Setting;
 
 import android.content.Context;
 import android.content.Intent;

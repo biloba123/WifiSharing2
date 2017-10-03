@@ -37,7 +37,7 @@ import com.lvqingyang.wifisharing.Wifi.connect.funcation.SecurityActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SignActivity;
 import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
-import com.lvqingyang.wifisharing.base.MyDialog;
+import com.lvqingyang.wifisharing.tools.MyDialog;
 import com.lvqingyang.wifisharing.bean.Hotspot;
 import com.lvqingyang.wifisharing.bean.MyScanResult;
 import com.lvqingyang.wifisharing.bean.Record;
@@ -505,41 +505,45 @@ public class ConnectHotspotFragment extends BaseFragment {
                                             Record.getUserRecord(new FindListener<Record>() {
                                                 @Override
                                                 public void done(List<Record> list, BmobException e) {
-//                                                    if (e == null) {
-//                                                        if (list.size()>0) {//有未支付记录
-//
-//                                                        }else {
-//
-//
-//                                                        }
-//                                                    }else {
-//                                                        MyToast.error(getActivity(), R.string.load_error);
-//                                                    }
-
-                                                    ScanResult result = myScanResult.getScanResult();
-                                                    String pwd=myScanResult.getHotspot().getPassword();
-                                                    boolean isConnectSucc=false;
-                                                    if (result.capabilities.contains("WEP")) {
-                                                        isConnectSucc=connecting(result, pwd, 2);
-                                                    }else {
-                                                        isConnectSucc=connecting(result, pwd, 3);
-                                                    }
-
-                                                    if (isConnectSucc) {
-                                                        //连接成功则创建记录
-                                                        Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
-                                                            @Override
-                                                            public void done(String s, BmobException e) {
-                                                                if (e == null) {
-                                                                    if (BuildConfig.DEBUG)
-                                                                        Log.d(TAG, "done: record created");
-                                                                }else {
-//                                                                    MyToast.error(getActivity(), R.string.load_error);
-                                                                    //忘记网络...
-                                                                }
+                                                    if (e == null) {
+                                                        if (list.size()>0) {//有未支付记录
+                                                            if (BuildConfig.DEBUG)
+                                                                Log.d(TAG, "done: 有未支付记录");
+                                                        }else {
+                                                            ScanResult result = myScanResult.getScanResult();
+                                                            String pwd=myScanResult.getHotspot().getPassword();
+                                                            boolean isConnectSucc=false;
+                                                            if (result.capabilities.contains("WEP")) {
+                                                                isConnectSucc=connecting(result, pwd, 2);
+                                                            }else {
+                                                                isConnectSucc=connecting(result, pwd, 3);
                                                             }
-                                                        });
+
+                                                            if (isConnectSucc) {
+                                                                //连接成功则创建记录
+                                                                Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
+                                                                    @Override
+                                                                    public void done(String s, BmobException e) {
+                                                                        if (e == null) {
+                                                                            if (BuildConfig.DEBUG)
+                                                                                Log.d(TAG, "done: record created");
+                                                                        }else {
+                                                                            if (BuildConfig.DEBUG)
+                                                                                Log.d(TAG, "done: create record: "+e.toString());
+                                                                            MyToast.error(getActivity(), R.string.load_error);
+                                                                            //忘记网络...
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+
+                                                        }
+                                                    }else {
+                                                        if (BuildConfig.DEBUG)
+                                                            Log.d(TAG, "done: record: "+e.toString());
+                                                        MyToast.error(getActivity(), R.string.load_error);
                                                     }
+
                                                 }
                                             });
                                         }else {

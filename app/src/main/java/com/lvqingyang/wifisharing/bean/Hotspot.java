@@ -144,6 +144,7 @@ public class Hotspot extends BmobObject{
         hotspot.setSsid(ssid);
         hotspot.setPassword(pwd);
         hotspot.setUseCount(0);
+        hotspot.setIncome(0.0f);
         hotspot.setLocation(getLocation(amapLocation));
         hotspot.setLastUpdate(getUpdateTime(amapLocation));
         hotspot.setPoint(new BmobGeoPoint(amapLocation.getLongitude(),amapLocation.getLatitude()));

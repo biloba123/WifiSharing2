@@ -22,6 +22,10 @@ import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationMode;
 import com.lvqingyang.wifisharing.Login.LoginActivity;
 import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.User.Credit.CreditActivity;
+import com.lvqingyang.wifisharing.User.Message.MessageActivity;
+import com.lvqingyang.wifisharing.User.Setting.SettingActivity;
+import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.User;
 import com.lvqingyang.wifisharing.view.CardItem;
@@ -219,12 +223,11 @@ public class UserFragment extends BaseFragment {
         ciscore.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (AppContact.hasAnyMarketInstalled(getActivity())) {
-//                    scoreForMyApp();
-//                }else {
-//                    MyToast.warning(getActivity(), R.string.no_market);
-//                }
-                AboutUsActivity.start(getActivity());
+                if (AppContact.hasAnyMarketInstalled(getActivity())) {
+                    scoreForMyApp();
+                }else {
+                    MyToast.warning(getActivity(), R.string.no_market);
+                }
             }
         });
 
