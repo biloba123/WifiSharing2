@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationMode;
 import com.lvqingyang.wifisharing.Login.LoginActivity;
@@ -134,7 +135,7 @@ public class UserFragment extends BaseFragment {
             public void onClick(View view) {
                 if (mUser != null) {
                     //修改信息页面
-                    startActivityForResult(EditPersonalInfoActivity.newIntent(getContext()),REQUEST_EDIT_INFO);
+                    startActivityForResult(EditPersonalInfoActivity.newIntent(getContext()), REQUEST_EDIT_INFO);
                 }else {
                     startActivityForResult(LoginActivity.newIntent(getContext()),REQUEST_LOGIN);
                 }
@@ -276,9 +277,14 @@ public class UserFragment extends BaseFragment {
      */
     private void showUserInfo(){
         if (mUser != null) {
-            tvusername.setText(mUser.getUsername());
+            tvusername.setText(mUser.getNick());
             llemail.setVisibility(View.VISIBLE);
             tvcredit.setText(getString(R.string.credit_points)+" "+mUser.getCredit());
+            if (mUser.getAvater()!=null) {
+                Glide.with(this)
+                        .load(mUser.getAvaterUrl())
+                        .into(civhead);
+            }
         }else {
             llemail.setVisibility(View.GONE);
             tvusername.setText(R.string.unlogin);
@@ -295,6 +301,11 @@ public class UserFragment extends BaseFragment {
                 }
                 break;
             case REQUEST_SETTING://退出登录
+                if (resultCode== Activity.RESULT_OK) {
+                    reloadUser();
+                }
+                break;
+            case REQUEST_EDIT_INFO://修改个人信息
                 if (resultCode== Activity.RESULT_OK) {
                     reloadUser();
                 }
@@ -333,4 +344,5 @@ public class UserFragment extends BaseFragment {
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
+
 }

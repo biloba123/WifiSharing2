@@ -168,4 +168,18 @@
     <string name="income">收益标准：</string>
     <string name="share">分享</string>
     <string name="msg_detail">消息详情</string>
+    <string name="post_fail">上传失败</string>
+    <string name="posting">上传中...</string>
+    <string name="edit_nick">输入昵称</string>
+    <string name="reset_nick">修改昵称</string>
+    <string name="reset_succ">修改成功</string>
+    <string name="reset_fail">修改失败</string>
+    <string name="post_succ">上传成功</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="tel_can_not_reset">手机号暂不提供修改</string>
+    <string name="current_pwd">原密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="reset_sex">设置性别</string>
+    <string name="set_birthday">设置生日</string>
 </resources>

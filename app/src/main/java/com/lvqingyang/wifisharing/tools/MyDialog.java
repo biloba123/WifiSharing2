@@ -95,6 +95,15 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
+    public void setPosBtnEnable(boolean isEnable){
+        tvpos.setEnabled(isEnable);
+        if (isEnable) {
+            tvpos.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+        }else {
+            tvpos.setTextColor(mContext.getResources().getColor(R.color.sub_text_color));
+        }
+    }
+
 
     public MyDialog setDialogWidth(int dialogWidth) {
         mDialogWidth = dialogWidth;

@@ -23,7 +23,7 @@
     <color name="div">#eeeeee</color>
     <color name="div_darker">#dfdfdf</color>
 
-    <color name="border">#649f9f9f</color>
+    <color name="border">#78ffffff</color>
     <color name="toast_bg">#80000000</color>
     <color name="toast_bg_loading">#50000000</color>
     <color name="toast_text">#fefefe</color>

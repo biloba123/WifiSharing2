@@ -12,6 +12,7 @@ import cn.bmob.v3.helper.ErrorCode;
 import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Author：LvQingYang
@@ -81,6 +82,10 @@ public class User extends BmobUser {
         this.balance = balance;
     }
 
+    public String getAvaterUrl(){
+        return avater.getUrl();
+    }
+
     public static void register(final String tel, final String smsCode, final String password,
                                 final SaveListener<User> lis){
         User user = new User();
@@ -116,7 +121,7 @@ public class User extends BmobUser {
          *
          * @see ErrorCode E9024S
          */
-        public static void syscUserInfo(FetchUserInfoListener lis) {
+        public static void syscUserInfo() {
             BmobUser.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
@@ -129,5 +134,24 @@ public class User extends BmobUser {
             });
         }
 
+    public static void updateUser(User newUser, UpdateListener lis){
+        BmobUser bmobUser = BmobUser.getCurrentUser(BmobUser.class);
+        newUser.update(bmobUser.getObjectId(), lis);
+    }
 
+    public static void deleteOldAvater(){
+        User user = BmobUser.getCurrentUser(User.class);
+        if (user.getAvater()!=null) {
+            user.getAvater().delete(new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "done: delete succ");
+                    }else {
+                        if (BuildConfig.DEBUG) Log.d(TAG, "done: delete fail");
+                    }
+                }
+            });
+        }
+    }
 }

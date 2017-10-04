@@ -65,6 +65,11 @@ dependencies {
     compile 'com.amap.api:3dmap:latest.integration'
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
-    compile 'com.github.yalantis:ucrop:2.2.1'
+    compile ('com.github.yalantis:ucrop:2.2.1'){
+        exclude module: 'rxandroid'
+        exclude module: 'rxjava'
+        exclude module: 'support-v4'
+        exclude module: 'okio'
+    }
     testCompile 'junit:junit:4.12'
 }
