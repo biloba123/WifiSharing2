@@ -7,6 +7,7 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -90,4 +91,22 @@ public class Message extends BmobObject {
         bq.order("createdAt")
                 .findObjects(lis);
     }
+
+    public static void getMessageCount(CountListener lis){
+        User user=BmobUser.getCurrentUser(User.class);
+
+        BmobQuery<Message> bq1=new BmobQuery<>();
+        bq1.addWhereEqualTo("receiver", new BmobPointer(user));
+        BmobQuery<Message> bq2=new BmobQuery<>();
+        bq2.addWhereEqualTo("type", GLOBAL);
+
+        List<BmobQuery<Message>> list=new ArrayList<>();
+        list.add(bq1);
+        list.add(bq2);
+
+        BmobQuery<Message> bq=new BmobQuery<>();
+        bq.or(list);
+        bq.count(Message.class, lis);
+    }
+
 }

@@ -35,7 +35,7 @@
             android:textColor="@color/sub_text_color"
             android:textSize="@dimen/medium_text"
             android:lineSpacingMultiplier="1.1"
-            android:letterSpacing="0.1"
+            android:letterSpacing="0.05"
             tools:text="@string/app_name"/>
     </LinearLayout>
 

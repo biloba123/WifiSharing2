@@ -51,11 +51,17 @@ dependencies {
         exclude module: 'okio'
 
     }
+    //    compile 'cn.bmob.android:http-legacy:1.0'
+    compile('com.github.yalantis:ucrop:2.2.1') {
+        exclude module: 'rxandroid'
+        exclude module: 'rxjava'
+        exclude module: 'support-v4'
+        exclude module: 'okio'
+    }
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
-//    compile 'cn.bmob.android:http-legacy:1.0'
     compile 'com.github.zagum:Android-SwitchIcon:1.3.5'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -65,11 +71,6 @@ dependencies {
     compile 'com.amap.api:3dmap:latest.integration'
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
-    compile ('com.github.yalantis:ucrop:2.2.1'){
-        exclude module: 'rxandroid'
-        exclude module: 'rxjava'
-        exclude module: 'support-v4'
-        exclude module: 'okio'
-    }
+    compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
 }

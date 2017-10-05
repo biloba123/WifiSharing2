@@ -28,10 +28,13 @@ import com.lvqingyang.wifisharing.User.Message.MessageActivity;
 import com.lvqingyang.wifisharing.User.Setting.SettingActivity;
 import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
+import com.lvqingyang.wifisharing.bean.Message;
 import com.lvqingyang.wifisharing.bean.User;
 import com.lvqingyang.wifisharing.view.CardItem;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import frame.tool.MyToast;
 import frame.tool.NetWorkUtils;
@@ -248,6 +251,18 @@ public class UserFragment extends BaseFragment {
     @Override
     protected void setData() {
         showUserInfo();
+
+        //显示消息个数
+        if (NetWorkUtils.isNetworkConnected(getActivity())) {
+            Message.getMessageCount(new CountListener() {
+                @Override
+                public void done(Integer integer, BmobException e) {
+                    if (e == null) {
+                        mCiMessage.setContent(integer+"条消息");
+                    }
+                }
+            });
+        }
     }
 
     @Override

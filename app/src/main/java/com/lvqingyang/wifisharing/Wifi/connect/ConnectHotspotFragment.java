@@ -161,6 +161,7 @@ public class ConnectHotspotFragment extends BaseFragment {
             srl.setEnabled(true);
             srl.setRefreshing(true);
             mWifiAdmin.scan();
+            mIsFirstAvailable=true;
             wifiEnable();
         }
 

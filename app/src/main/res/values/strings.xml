@@ -182,4 +182,9 @@
     <string name="new_pwd">新密码</string>
     <string name="reset_sex">设置性别</string>
     <string name="set_birthday">设置生日</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="app_slogan">让共享WiFi陪伴你身边</string>
 </resources>
