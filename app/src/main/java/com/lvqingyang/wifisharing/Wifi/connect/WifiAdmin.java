@@ -261,6 +261,10 @@ public class WifiAdmin {
     public void scan(){
         //开始扫描
         mWifiManager.startScan();
+    }
+
+    //获取扫描结果
+    public List<ScanResult> getScanResultList() {
         //获取扫描结果
         List<ScanResult> results=mWifiManager.getScanResults();
         //扫描配置列表
@@ -288,10 +292,6 @@ public class WifiAdmin {
                 }
             }
         }
-    }
-
-    //获取扫描结果
-    public List<ScanResult> getScanResultList() {
         return mScanResultList;
     }
 
@@ -469,16 +469,14 @@ public class WifiAdmin {
 
 
     //创建wifi热点的
-    public int connectWifi(String SSID, String Password, int Type)
-    {
+    public int connectWifi(String SSID, String Password, int Type) {
         Log.d(TAG, "createWifiInfo: 不存在"+SSID);
         WifiConfiguration wifiConfig = new WifiConfiguration();
         wifiConfig.status = WifiConfiguration.Status.DISABLED;
         wifiConfig.priority = 40;
         wifiConfig.SSID = "\"" + SSID + "\"";
         //无密码
-        if(Type == 1) //WIFICIPHER_NOPASS
-        {
+        if(Type == 1) {//WIFICIPHER_NOPASS
             wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
             wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
@@ -491,8 +489,7 @@ public class WifiAdmin {
             wifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         }
         //有密码
-        if(Type == 2) //WIFICIPHER_WEP
-        {
+        if(Type == 2){ //WIFICIPHER_WEP
             wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
             wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
@@ -508,8 +505,7 @@ public class WifiAdmin {
             wifiConfig.wepTxKeyIndex = 0;
 
         }
-        if(Type == 3) //WIFICIPHER_WPA
-        {
+        if(Type == 3) {//WIFICIPHER_WPA
             wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
             wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
             wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
@@ -532,6 +528,10 @@ public class WifiAdmin {
         return wcgID;
     }
 
+    public void forgetWifi(int netId){
+        mWifiManager.removeNetwork(netId);
+        mWifiManager.saveConfiguration();
+    }
 
     public WifiConfiguration isExsits(String SSID)
     {

@@ -39,7 +39,7 @@ import static com.lvqingyang.wifisharing.Wifi.share.WifiHotUtil.WIFI_AP_STATE_EN
  */
 public class WifiFragment extends BaseFragment {
     /**
-     *   View
+     * View
      */
     private com.github.zagum.switchicon.SwitchIconView wifiswitch;
     private com.github.zagum.switchicon.SwitchIconView hotspotswitch;
@@ -47,17 +47,17 @@ public class WifiFragment extends BaseFragment {
     private android.support.design.widget.TabLayout tablayout;
     private android.support.v4.view.ViewPager viewpager;
     /**
-     *   Fragment
+     * Fragment
      */
     private ConnectHotspotFragment mConnectFragment;
     private ShareHotspotFragment mShareHotspotFragment;
 
 
     /**
-     *   Data
+     * Data
      */
     private WifiManager mWifiManager;//wifi开关
-    private WifiConnectListener mWifiConnectListener=new WifiConnectListener() {
+    private WifiConnectListener mWifiConnectListener = new WifiConnectListener() {
         @Override
         public void onWifiEnable() {
 //            MyToast.info(getActivity(), R.string.wifi_open);
@@ -91,7 +91,7 @@ public class WifiFragment extends BaseFragment {
         }
     };
     private WifiHotUtil mWifiHotUtil;
-    private  List<Fragment> mFragmentList=new ArrayList<>();
+    private List<Fragment> mFragmentList = new ArrayList<>();
 //    //定位需要的声明
 //    private LocationListener mLocationListener;
 //
@@ -99,7 +99,7 @@ public class WifiFragment extends BaseFragment {
 //    private String mObjectId=null;
 //    private boolean mIsPostHotspot;
     /**
-     *   Tag
+     * Tag
      */
     private static final String TAG = "WifiFragment";
 
@@ -125,7 +125,7 @@ public class WifiFragment extends BaseFragment {
 
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_wifi,container,false);
+        return inflater.inflate(R.layout.fragment_wifi, container, false);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class WifiFragment extends BaseFragment {
         this.tablayout = (TabLayout) view.findViewById(R.id.tab_layout);
         this.toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         this.wifiswitch = (SwitchIconView) view.findViewById(R.id.siv_wifi);
-        this.hotspotswitch=(SwitchIconView) view.findViewById(R.id.siv_hotspot);
+        this.hotspotswitch = (SwitchIconView) view.findViewById(R.id.siv_hotspot);
     }
 
     @Override
@@ -147,10 +147,10 @@ public class WifiFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                if (position==0) {
+                if (position == 0) {
                     wifiswitch.setVisibility(View.VISIBLE);
                     hotspotswitch.setVisibility(View.GONE);
-                }else {
+                } else {
                     wifiswitch.setVisibility(View.GONE);
                     hotspotswitch.setVisibility(View.VISIBLE);
                 }
@@ -171,10 +171,10 @@ public class WifiFragment extends BaseFragment {
             public void onClick(View v) {
                 if (wifiswitch.isIconEnabled()) {
                     mWifiManager.setWifiEnabled(false);
-                    ((ConnectHotspotFragment)mFragmentList.get(0)).wifiDisable();
-                }else {
+                    ((ConnectHotspotFragment) mFragmentList.get(0)).wifiDisable();
+                } else {
                     mWifiManager.setWifiEnabled(true);
-                    ((ConnectHotspotFragment)mFragmentList.get(0)).wifiOpening();
+                    ((ConnectHotspotFragment) mFragmentList.get(0)).wifiOpening();
                 }
                 wifiswitch.setIconEnabled(!wifiswitch.isIconEnabled());
             }
@@ -224,15 +224,15 @@ public class WifiFragment extends BaseFragment {
     @Override
     protected void initData() {
         //注意使用ApplicationContext
-        mWifiManager= (WifiManager) getActivity().getApplicationContext()
+        mWifiManager = (WifiManager) getActivity().getApplicationContext()
                 .getSystemService(Context.WIFI_SERVICE);
-        mWifiHotUtil=WifiHotUtil.getInstance(getActivity());
+        mWifiHotUtil = WifiHotUtil.getInstance(getActivity());
     }
 
     @Override
     protected void setData() {
         wifiswitch.setIconEnabled(mWifiManager.isWifiEnabled());
-        hotspotswitch.setIconEnabled(mWifiHotUtil.getWifiAPState()== WIFI_AP_STATE_ENABLED);
+        hotspotswitch.setIconEnabled(mWifiHotUtil.getWifiAPState() == WIFI_AP_STATE_ENABLED);
 
 
         viewpager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager()));
@@ -264,7 +264,7 @@ public class WifiFragment extends BaseFragment {
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
-            addTabs(mFragmentList,mFragmentTitleList);
+            addTabs(mFragmentList, mFragmentTitleList);
         }
 
 
@@ -286,11 +286,11 @@ public class WifiFragment extends BaseFragment {
     }
 
     //添加tab
-    private void addTabs(List<Fragment> fragments, List<String> titles){
-        String stringArray[]=getResources().getStringArray(R.array.wifi_tabs);
-        fragments.add(mConnectFragment= ConnectHotspotFragment.newInstance());
+    private void addTabs(List<Fragment> fragments, List<String> titles) {
+        String stringArray[] = getResources().getStringArray(R.array.wifi_tabs);
+        fragments.add(mConnectFragment = ConnectHotspotFragment.newInstance());
         titles.add(stringArray[0]);
-        fragments.add(mShareHotspotFragment=ShareHotspotFragment.newInstance());
+        fragments.add(mShareHotspotFragment = ShareHotspotFragment.newInstance());
         titles.add(stringArray[1]);
     }
 
@@ -299,179 +299,4 @@ public class WifiFragment extends BaseFragment {
         super.onDestroyView();
         WiFiConnectService.removeWiFiConnectListener(mWifiConnectListener);
     }
-
-    //    //创建热点
-//    private void showCreateApDialog(){
-//        mIsPostHotspot=false;
-//
-//        View v=LayoutInflater.from(getActivity())
-//                .inflate(R.layout.dialog_edit_ap,null);
-//        final EditText editText = (EditText) v.findViewById(R.id.pass);
-//
-//        final TextInputLayout tl= (TextInputLayout) v.findViewById(R.id.tl);
-//        final Switch sw=(Switch)v.findViewById(R.id.post_switch);
-//
-//
-//        final EditText nameEt=(EditText) v.findViewById(R.id.name);
-//        String ssid=mWifiHotUtil.getValidApSsid(),
-//                special=getString(R.string.wifi_special);
-//        nameEt.setText(ssid.endsWith(special)?ssid.replace(special,""):ssid);
-//
-//        AlertDialog dialog=new AlertDialog.Builder(getActivity())
-//                .setView(v)
-//                .setNegativeButton(android.R.string.cancel,null)
-//                .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        mIsShowError=true;
-//                        String psd=editText.getText().toString();
-//                        String name=nameEt.getText().toString();
-//                        if (!name.isEmpty()) {
-//                            if (tl.getVisibility()== View.VISIBLE) {
-//                                //有密码
-//                                if (mIsPostHotspot=sw.isChecked()) {
-//                                    Log.d(TAG, "onClick: 发布热点");
-//                                    name+=getString(R.string.wifi_special);
-//                                }
-//                                mWifiHotUtil.turnOnWifiAp(name,psd, WifiHotUtil.WifiSecurityType.WIFICIPHER_WPA2);
-//                            }else{
-//                                mWifiHotUtil.turnOnWifiAp(name,null, WifiHotUtil.WifiSecurityType.WIFICIPHER_NOPASS);
-//                            }
-//                        }
-//                    }
-//                }).create();
-//        dialog.show();
-//
-//        final Button posiBtn=dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-//        ((Switch) v.findViewById(R.id.pass_switch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                tl.setVisibility(isChecked?View.VISIBLE:View.GONE);
-//                sw.setVisibility(isChecked?View.VISIBLE:View.GONE);
-//                posiBtn.setEnabled(!isChecked);
-//            }
-//        });
-//
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-////                if (s.length()<8) {
-////                    editText.setError(getString(R.string.password_not_enough));
-////                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if (s.length()<8) {
-//                    posiBtn.setEnabled(false);
-//                }else {
-//                    posiBtn.setEnabled(true);
-//                }
-//            }
-//        });
-//    }
-//
-//
-//
-//    public void locationChanged(AMapLocation amapLocation) {
-//        Log.d(TAG, "locationChanged: 定位");
-//        if (mWifiHotUtil.getWifiAPState()==WIFI_AP_STATE_ENABLED&&mIsPostHotspot) {
-//            if (amapLocation != null) {
-//                if (amapLocation.getErrorCode() == 0) {
-//                    //定位成功回调信息，设置相关消息
-//                    Log.d(TAG, "onLocationChanged: "+amapLocation.getLatitude()+"  "+amapLocation.getLongitude());
-//                    if (mObjectId == null) {
-//                        postHotspot(amapLocation);
-//                    }else {
-//                        updateHotspot(amapLocation);
-//                    }
-//                } else {
-//                    //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-//                    Log.e("AmapError", "location Error, ErrCode:"
-//                            + amapLocation.getErrorCode() + ", errInfo:"
-//                            + amapLocation.getErrorInfo());
-//                }
-//            }
-//        }
-//    }
-//
-//
-//
-//    //发布wifi信息到服务器
-//    private void postHotspot(AMapLocation amapLocation){
-//        Log.d(TAG, "postHotspot: ");
-//        //热点是否开启
-//        if (mWifiHotUtil.getWifiAPState()==WIFI_AP_STATE_ENABLED) {
-//            Hotspot hotspot=new Hotspot();
-//            hotspot.setSsid(mWifiHotUtil.getValidApSsid());
-//            hotspot.setPassword(mWifiHotUtil.getValidPassword());
-//
-//            String loc=amapLocation.getCity()+amapLocation.getDistrict()+
-//                    amapLocation.getStreet()+amapLocation.getStreetNum();
-//            hotspot.setLocation(loc);
-//
-//            hotspot.setUserId((String) BmobUser.getObjectByKey("objectId"));
-//            hotspot.setPoint(new BmobGeoPoint(amapLocation.getLongitude(),amapLocation.getLatitude()));
-//
-//            hotspot.save(new SaveListener<String>() {
-//                @Override
-//                public void done(String s, BmobException e) {
-//                    if(e==null){
-//                        mObjectId=s;
-//                        showSuccToast(R.string.post_succ);
-//                    }else{
-//                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-//                        if (mIsShowError) {
-//                            mIsShowError=false;
-//                            showErrorToast(R.string.post_error);
-//                        }
-//                    }
-//                }
-//            });
-//        }
-//    }
-//
-//    //更新服务器热点信息
-//    private void updateHotspot(AMapLocation amapLocation){
-//        Log.d(TAG, "updateHotspot: ");
-//        Hotspot hotspot=new Hotspot();
-//        hotspot.setSsid(mWifiHotUtil.getValidApSsid());
-//        hotspot.setPassword(mWifiHotUtil.getValidPassword());
-//
-//        String loc=amapLocation.getCity()+amapLocation.getDistrict()+
-//                amapLocation.getStreet()+amapLocation.getStreetNum();
-//        hotspot.setLocation(loc);
-//
-//        hotspot.setPoint(new BmobGeoPoint(amapLocation.getLongitude(),amapLocation.getLatitude()));
-//
-//        hotspot.update(mObjectId, new UpdateListener() {
-//            @Override
-//            public void done(BmobException e) {
-//                Log.d(TAG, "done: 更新");
-//            }
-//        });
-//    }
-//
-//    //删除热点信息
-//    private void deleteHotspot(){
-//        Log.d(TAG, "deleteHotspot: ");
-//        if (mObjectId != null) {
-//            Hotspot hotspot=new Hotspot();
-//            hotspot.setObjectId(mObjectId);
-//            hotspot.delete(new UpdateListener() {
-//                @Override
-//                public void done(BmobException e) {
-//                    if (e==null) {
-//                        mObjectId=null;
-//                        Log.d(TAG, "done: 删除");
-//                    }
-//                }
-//            });
-//        }
-//    }
 }

@@ -253,15 +253,8 @@ public class UserFragment extends BaseFragment {
         showUserInfo();
 
         //显示消息个数
-        if (NetWorkUtils.isNetworkConnected(getActivity())) {
-            Message.getMessageCount(new CountListener() {
-                @Override
-                public void done(Integer integer, BmobException e) {
-                    if (e == null) {
-                        mCiMessage.setContent(integer+"条消息");
-                    }
-                }
-            });
+        if (mUser != null) {
+            showMessageCount();
         }
     }
 
@@ -313,6 +306,7 @@ public class UserFragment extends BaseFragment {
             case REQUEST_LOGIN://登录成功
                 if (resultCode== Activity.RESULT_OK) {
                     reloadUser();
+                    showUserInfo();
                 }
                 break;
             case REQUEST_SETTING://退出登录
@@ -358,6 +352,17 @@ public class UserFragment extends BaseFragment {
         sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_with_firend));
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+
+    private void showMessageCount(){
+        Message.getMessageCount(new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                if (e == null) {
+                    mCiMessage.setContent(integer+"条消息");
+                }
+            }
+        });
     }
 
 }

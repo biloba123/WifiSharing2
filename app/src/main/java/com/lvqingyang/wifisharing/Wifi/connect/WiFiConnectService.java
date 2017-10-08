@@ -96,6 +96,7 @@ public class WiFiConnectService extends Service {
         //注册接收器
         IntentFilter filter = new IntentFilter(
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        filter.addAction(WifiManager.EXTRA_RESULTS_UPDATED);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -160,16 +161,20 @@ public class WiFiConnectService extends Service {
             }
 
             //扫描结果出来
-            if (intent.getAction()== WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) {
+            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
                 if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: 扫描结果");
                 for (WifiConnectListener wifiConnectListener : sWifiConnectListener) {
                     wifiConnectListener.onScanResultAvailable();
                 }
 
             }
+            
+            if (action.equals(WifiManager.EXTRA_RESULTS_UPDATED)){
+                if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: EXTRA_RESULTS_UPDATED");
+            }
 
             //连接上WIFI
-            if(intent.getAction()==WifiManager.NETWORK_STATE_CHANGED_ACTION){
+            if(action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)){
                 Parcelable parcelable=intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (parcelable != null) {
                     NetworkInfo networkInfo= (NetworkInfo) parcelable;

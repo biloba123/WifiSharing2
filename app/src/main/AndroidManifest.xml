@@ -95,7 +95,7 @@
             android:name=".User.Credit.CreditActivity"
             android:theme="@style/AppTheme.NoActionbar">
         </activity>
-        <activity android:name=".User.Setting.AboutUsActivity">
+        <activity android:name=".User.Setting.WebViewActivity">
         </activity>
         <activity android:name=".User.Message.MessageDetailActivity">
         </activity>

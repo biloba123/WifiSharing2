@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.User.Setting.WebViewActivity;
 import com.lvqingyang.wifisharing.base.BaseActivity;
 import com.lvqingyang.wifisharing.bean.Message;
 import com.lvqingyang.wifisharing.tools.BottomDialog;
@@ -91,7 +92,12 @@ public class MessageActivity extends BaseActivity {
             @Override
             protected void onItemClick(int position, Message bean) {
                 super.onItemClick(position, bean);
-                MessageDetailActivity.start(MessageActivity.this, bean);
+                if (bean.getWebPage()) {
+                    WebViewActivity.start(MessageActivity.this,
+                            bean.getTitle(), bean.getUrl());
+                }else {
+                    MessageDetailActivity.start(MessageActivity.this, bean);
+                }
             }
         };
     }

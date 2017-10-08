@@ -76,7 +76,8 @@ public class SettingActivity extends BaseActivity {
         siaboutus.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AboutUsActivity.start(SettingActivity.this);
+                WebViewActivity.start(SettingActivity.this,
+                        getString(R.string.about_us), getString(R.string.app_site));
             }
         });
     }

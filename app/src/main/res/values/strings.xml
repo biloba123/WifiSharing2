@@ -187,4 +187,5 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="app_slogan">让共享WiFi陪伴你身边</string>
+    <string name="app_site">http://iwifi.zeblog.cn/</string>
 </resources>

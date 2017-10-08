@@ -24,6 +24,8 @@ import cn.bmob.v3.listener.SaveListener;
 public class Message extends BmobObject {
     private Integer type;//消息类型
     private String title;
+    private Boolean isWebPage;
+    private String url;
     private String content;
     private User receiver;
 
@@ -31,9 +33,26 @@ public class Message extends BmobObject {
 
     public Message(int type, String title, String content, User receiver) {
         this.type = type;
+        this.isWebPage=false;
         this.title = title;
         this.content = content;
         this.receiver = receiver;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Boolean getWebPage() {
+        return isWebPage;
+    }
+
+    public void setWebPage(Boolean webPage) {
+        isWebPage = webPage;
     }
 
     public Integer getType() {
@@ -68,6 +87,14 @@ public class Message extends BmobObject {
         this.receiver = receiver;
     }
 
+    /**
+     * 发布消息
+     * @param type 类型
+     * @param title 标题
+     * @param content 内容或url
+     * @param receiver 接受者
+     * @param lis
+     */
     public static void postMessage(int type, String title, String content, User receiver,
                                    SaveListener<String> lis){
         Message m=new Message(type, title, content, receiver);
@@ -88,7 +115,7 @@ public class Message extends BmobObject {
 
         BmobQuery<Message> bq=new BmobQuery<>();
         bq.or(list);
-        bq.order("createdAt")
+        bq.order("-createdAt")
                 .findObjects(lis);
     }
 
