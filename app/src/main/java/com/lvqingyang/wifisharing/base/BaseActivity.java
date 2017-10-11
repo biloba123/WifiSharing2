@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myframe.R;
 import com.instabug.library.InstabugTrackingDelegate;
+import com.lvqingyang.wifisharing.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.Random;
@@ -95,6 +95,7 @@ public abstract class BaseActivity extends CheckPermissionsActivity
         {
             localActionBar.setTitle(title);
             localActionBar.setDisplayHomeAsUpEnabled(isDisplayHome);
+            localActionBar.setIcon(R.drawable.ic_add);
         }
     }
 

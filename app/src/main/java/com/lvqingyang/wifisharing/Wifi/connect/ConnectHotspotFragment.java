@@ -795,6 +795,8 @@ public class ConnectHotspotFragment extends BaseFragment {
             .setPosBtn(R.string.share, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //密码不能直接获取，要重新连接确认密码
+
 
                 }
             }).setNegBtn(android.R.string.cancel, null);
@@ -879,7 +881,7 @@ public class ConnectHotspotFragment extends BaseFragment {
                                                 Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
                                                     @Override
                                                     public void done(String s, BmobException e) {
-                                                        if (e == null) {//记录创建成功开始计费
+                                                        if (e == null) {
                                                             if (BuildConfig.DEBUG)
                                                                 Log.d(TAG, "done: record created");
 

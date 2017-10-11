@@ -292,10 +292,18 @@ public class UserFragment extends BaseFragment {
                 Glide.with(this)
                         .load(mUser.getAvaterUrl())
                         .into(civhead);
+            }else {
+                Glide.with(this)
+                        .load(R.drawable.head_default)
+                        .into(civhead);
             }
         }else {
             llemail.setVisibility(View.GONE);
             tvusername.setText(R.string.unlogin);
+            Glide.with(this)
+                    .load(R.drawable.head_default)
+                    .into(civhead);
+            mCiMessage.setContent(getString(R.string.message_info));
         }
     }
 
@@ -306,7 +314,6 @@ public class UserFragment extends BaseFragment {
             case REQUEST_LOGIN://登录成功
                 if (resultCode== Activity.RESULT_OK) {
                     reloadUser();
-                    showUserInfo();
                 }
                 break;
             case REQUEST_SETTING://退出登录

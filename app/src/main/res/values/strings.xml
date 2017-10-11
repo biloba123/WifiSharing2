@@ -188,4 +188,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="app_slogan">让共享WiFi陪伴你身边</string>
     <string name="app_site">http://iwifi.zeblog.cn/</string>
+    <string name="unpay">有未支付记录，需先进行支付才能继续连接共享WIFI？</string>
+    <string name="hotspot_name_">热点名称：</string>
+    <string name="traffic">使用量：</string>
 </resources>
