@@ -35,11 +35,12 @@
                 </android.support.v7.widget.Toolbar>
                 <RelativeLayout
                     android:id="@+id/rl_user_info"
-                    android:layout_below="@id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:padding="@dimen/big_spacing">
+                    android:padding="@dimen/big_spacing"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/civ_head"
                         android:layout_width="@dimen/head_size"
