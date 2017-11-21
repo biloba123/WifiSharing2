@@ -231,9 +231,9 @@ public class ConnectHotspotFragment extends BaseFragment {
      private static final String TAG = "ConnectHotspotFragment";
 
     public static ConnectHotspotFragment newInstance() {
-         
+
          Bundle args = new Bundle();
-         
+
          ConnectHotspotFragment fragment = new ConnectHotspotFragment();
          fragment.setArguments(args);
          return fragment;
@@ -336,7 +336,7 @@ public class ConnectHotspotFragment extends BaseFragment {
         ad.stop();
         mIsOnSpeeding=false;
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();

@@ -10,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lvqingyang.wifisharing.Map.MapFragment;
 import com.lvqingyang.wifisharing.User.UserFragment;
@@ -17,8 +18,8 @@ import com.lvqingyang.wifisharing.Wifi.WifiFragment;
 import com.lvqingyang.wifisharing.Wifi.connect.WiFiConnectService;
 import com.lvqingyang.wifisharing.Wifi.share.WiFiAPService;
 import com.lvqingyang.wifisharing.base.BaseActivity;
-import com.lvqingyang.wifisharing.tools.MyDialog;
 import com.lvqingyang.wifisharing.bean.Hotspot;
+import com.lvqingyang.wifisharing.tools.MyDialog;
 
 import frame.tool.NetWorkUtils;
 
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
      * data
      */
      private FragmentManager mFragmentManager;
+     private Toast mToast;
 
 
      /**
@@ -146,7 +148,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        mToast=Toast.makeText(this, getString(R.string.sure_quit), Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -214,4 +216,14 @@ public class MainActivity extends BaseActivity {
         WiFiConnectService.stopService(this);
         WiFiAPService.stopService(this);
     }
+
+
+//    @Override
+//    public void onBackPressed() {
+//        if (!mToast.getView().isShown()) {
+//            mToast.show();
+//        }else {
+//            finish();
+//        }
+//    }
 }

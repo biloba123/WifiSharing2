@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.base.BaseActivity;
 import com.lvqingyang.wifisharing.bean.User;
 
 import java.util.List;
@@ -33,7 +34,6 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
-import com.lvqingyang.wifisharing.base.BaseActivity;
 import frame.tool.MyToast;
 
 /**
@@ -106,6 +106,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
+//        ettel.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

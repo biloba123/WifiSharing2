@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -100,6 +101,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
+        //手机号空格隔开
+//        etusername.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         //跳转注册页面
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
