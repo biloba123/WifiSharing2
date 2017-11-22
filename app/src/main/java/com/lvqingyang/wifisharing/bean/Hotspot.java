@@ -1,6 +1,8 @@
 package com.lvqingyang.wifisharing.bean;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -28,7 +30,7 @@ import frame.tool.MyPrefence;
  * @github https://github.com/biloba123
  * @blog https://biloba123.github.io/
  */
-public class Hotspot extends BmobObject{
+public class Hotspot extends BmobObject implements Parcelable {
     private boolean isFixed;
     private String ssid;
     private String bssid;
@@ -243,5 +245,53 @@ public class Hotspot extends BmobObject{
         query//.setLimit().setSkip()//.order("-createdAt")
                 .findObjects(lis);
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.isFixed ? (byte) 1 : (byte) 0);
+        dest.writeString(this.ssid);
+        dest.writeString(this.bssid);
+        dest.writeString(this.password);
+        dest.writeParcelable(this.user, flags);
+        dest.writeString(this.location);
+        dest.writeSerializable(this.point);
+        dest.writeString(this.lastUpdate);
+        dest.writeValue(this.useCount);
+        dest.writeFloat(this.income);
+    }
+
+    public Hotspot() {
+    }
+
+    protected Hotspot(Parcel in) {
+        this.isFixed = in.readByte() != 0;
+        this.ssid = in.readString();
+        this.bssid = in.readString();
+        this.password = in.readString();
+        this.user = in.readParcelable(User.class.getClassLoader());
+        this.location = in.readString();
+        this.point = (BmobGeoPoint) in.readSerializable();
+        this.lastUpdate = in.readString();
+        this.useCount = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.income = in.readFloat();
+    }
+
+    public static final Parcelable.Creator<Hotspot> CREATOR = new Parcelable.Creator<Hotspot>() {
+        @Override
+        public Hotspot createFromParcel(Parcel source) {
+            return new Hotspot(source);
+        }
+
+        @Override
+        public Hotspot[] newArray(int size) {
+            return new Hotspot[size];
+        }
+    };
 }
 

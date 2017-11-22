@@ -192,4 +192,8 @@
     <string name="hotspot_name_">热点名称：</string>
     <string name="traffic">使用量：</string>
     <string name="sure_quit">确认退出？</string>
+    <string name="load_data">加载数据中...</string>
+    <string name="traffic_">流量使用量</string>
+    <string name="price_">资费标准</string>
+    <string name="pay">支付金额</string>
 </resources>

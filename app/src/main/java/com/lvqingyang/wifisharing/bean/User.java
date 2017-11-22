@@ -1,5 +1,7 @@
 package com.lvqingyang.wifisharing.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.lvqingyang.wifisharing.BuildConfig;
@@ -21,7 +23,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Github：https://github.com/biloba123
  * Info：
  */
-public class User extends BmobUser {
+public class User extends BmobUser implements Parcelable {
     private String nick;
     private Boolean sex; //性别（未设置：null ; 男：true）
     private BmobFile avater;//头像
@@ -154,4 +156,41 @@ public class User extends BmobUser {
             });
         }
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.nick);
+        dest.writeValue(this.sex);
+        dest.writeSerializable(this.avater);
+        dest.writeSerializable(this.birthday);
+        dest.writeValue(this.credit);
+        dest.writeValue(this.balance);
+    }
+
+    protected User(Parcel in) {
+        this.nick = in.readString();
+        this.sex = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.avater = (BmobFile) in.readSerializable();
+        this.birthday = (BmobDate) in.readSerializable();
+        this.credit = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.balance = (Float) in.readValue(Float.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

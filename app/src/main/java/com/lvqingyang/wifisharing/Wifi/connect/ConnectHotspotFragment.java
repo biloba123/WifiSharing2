@@ -33,6 +33,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
+import com.lvqingyang.wifisharing.User.Wallet.OrderActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SecurityActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SignActivity;
 import com.lvqingyang.wifisharing.base.AppContact;
@@ -401,6 +402,8 @@ public class ConnectHotspotFragment extends BaseFragment {
                 mIsFirstAvailable=true;
                 updateConnectedWifi();
                 mWifiAdmin.scan();
+
+                OrderActivity.start(getContext(), null);
             }
         });
 
@@ -854,10 +857,12 @@ public class ConnectHotspotFragment extends BaseFragment {
                     @Override
                     public void onClick(View view) {
                         if (NetWorkUtils.isNetworkConnected(getActivity())) {
+                            MyToast.loading(getContext(), R.string.load_data);
                             //先判断用户是否有未支付记录
                             Record.getUserRecord(new FindListener<Record>() {
                                 @Override
                                 public void done(List<Record> list, BmobException e) {
+                                    MyToast.cancel();
                                     if (e == null) {
                                         if (list.size()>0) {//有未支付记录
                                             if (BuildConfig.DEBUG)

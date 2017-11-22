@@ -1,4 +1,4 @@
-package com.lvqingyang.wifisharing.User;
+package com.lvqingyang.wifisharing.User.Wallet;
 
 import android.content.Context;
 import android.content.Intent;

@@ -26,6 +26,7 @@ import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.User.Credit.CreditActivity;
 import com.lvqingyang.wifisharing.User.Message.MessageActivity;
 import com.lvqingyang.wifisharing.User.Setting.SettingActivity;
+import com.lvqingyang.wifisharing.User.Wallet.WalletActivity;
 import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.Message;

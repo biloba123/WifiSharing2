@@ -89,7 +89,7 @@
         </activity>
         <activity android:name=".User.MyShareActivity">
         </activity>
-        <activity android:name=".User.WalletActivity">
+        <activity android:name=".User.Wallet.WalletActivity">
         </activity>
         <activity
             android:name=".User.Credit.CreditActivity"
@@ -108,10 +108,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN"/>
 
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".User.Wallet.OrderActivity">
         </activity>
     </application>
 

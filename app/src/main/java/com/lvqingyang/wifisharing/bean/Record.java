@@ -1,5 +1,7 @@
 package com.lvqingyang.wifisharing.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import cn.bmob.v3.BmobObject;
@@ -21,7 +23,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * @github https://github.com/biloba123
  * @blog https://biloba123.github.io/
  */
-public class Record extends BmobObject{
+public class Record extends BmobObject implements Parcelable {
     private User user;
     private Hotspot hotspot;
     private Float traffic;
@@ -122,4 +124,38 @@ public class Record extends BmobObject{
          query//.setLimit().setSkip()//.order("-createdAt")
                  .findObjects(lis);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.user, flags);
+        dest.writeParcelable(this.hotspot, flags);
+        dest.writeValue(this.traffic);
+        dest.writeValue(this.cost);
+        dest.writeValue(this.isPay);
+    }
+
+    protected Record(Parcel in) {
+        this.user = in.readParcelable(User.class.getClassLoader());
+        this.hotspot = in.readParcelable(Hotspot.class.getClassLoader());
+        this.traffic = (Float) in.readValue(Float.class.getClassLoader());
+        this.cost = (Float) in.readValue(Float.class.getClassLoader());
+        this.isPay = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Record> CREATOR = new Parcelable.Creator<Record>() {
+        @Override
+        public Record createFromParcel(Parcel source) {
+            return new Record(source);
+        }
+
+        @Override
+        public Record[] newArray(int size) {
+            return new Record[size];
+        }
+    };
 }
