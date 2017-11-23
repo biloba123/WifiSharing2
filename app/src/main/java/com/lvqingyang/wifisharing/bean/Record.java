@@ -122,6 +122,7 @@ public class Record extends BmobObject implements Parcelable {
         User userInfo = BmobUser.getCurrentUser(User.class);
         query.addWhereEqualTo("user", new BmobPointer(userInfo));
          query//.setLimit().setSkip()//.order("-createdAt")
+                 .include("hotspot")
                  .findObjects(lis);
     }
 

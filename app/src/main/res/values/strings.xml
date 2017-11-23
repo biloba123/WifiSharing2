@@ -196,4 +196,8 @@
     <string name="traffic_">流量使用量</string>
     <string name="price_">资费标准</string>
     <string name="pay">支付金额</string>
+    <string name="order_detail">订单详情</string>
+    <string name="sure_pay">确认支付</string>
+    <string name="pay_way">支付方式</string>
+    <string name="alipay">支付宝</string>
 </resources>

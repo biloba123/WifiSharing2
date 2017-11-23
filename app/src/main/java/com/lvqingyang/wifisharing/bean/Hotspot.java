@@ -293,5 +293,21 @@ public class Hotspot extends BmobObject implements Parcelable {
             return new Hotspot[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Hotspot{" +
+                "isFixed=" + isFixed +
+                ", ssid='" + ssid + '\'' +
+                ", bssid='" + bssid + '\'' +
+                ", password='" + password + '\'' +
+                ", user=" + user +
+                ", location='" + location + '\'' +
+                ", point=" + point +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                ", useCount=" + useCount +
+                ", income=" + income +
+                '}';
+    }
 }
 

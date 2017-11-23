@@ -402,8 +402,6 @@ public class ConnectHotspotFragment extends BaseFragment {
                 mIsFirstAvailable=true;
                 updateConnectedWifi();
                 mWifiAdmin.scan();
-
-                OrderActivity.start(getContext(), null);
             }
         });
 
@@ -868,8 +866,7 @@ public class ConnectHotspotFragment extends BaseFragment {
                                             if (BuildConfig.DEBUG)
                                                 Log.d(TAG, "done: 有未支付记录");
                                             //必须先支付之前记录才能连接
-                                            //...
-
+                                            OrderActivity.start(getContext(), list.get(0));
                                         }else {
                                             ScanResult result = myScanResult.getScanResult();
                                             String pwd=myScanResult.getHotspot().getPassword();

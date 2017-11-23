@@ -22,7 +22,7 @@ import android.view.View;
 public class SawView extends View {
     private Paint mPaint;
     private Path mSawPath;
-    private final static int SAW_RADIOUS=10;
+    private final static int SAW_RADIOUS=7;
     private final static int TOP_SPACING=2;
 
     public SawView(Context context, @Nullable AttributeSet attrs) {

@@ -198,7 +198,6 @@ public abstract class SolidRVBaseAdapter<T> extends RecyclerView.Adapter<SolidRV
             Glide.with(mContext)
                     .load(resId)
                     .into(iv);
-            iv.setImageResource(resId);
         }
 
         public void setImage(int viewId, Drawable drawable) {
