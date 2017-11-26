@@ -17,7 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/toast_text"
-        android:maxEms="12"
+        android:maxEms="8"
+        android:gravity="center"
         android:layout_marginTop="@dimen/s_small_spacing"
         android:textSize="@dimen/sub_medium_text"/>
 </LinearLayout>

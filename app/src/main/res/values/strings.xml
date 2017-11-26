@@ -200,4 +200,9 @@
     <string name="sure_pay">确认支付</string>
     <string name="pay_way">支付方式</string>
     <string name="alipay">支付宝</string>
+    <string name="connect_succ">连接成功</string>
+    <string name="testing">测试中...</string>
+    <string name="download_speed">下载速度</string>
+    <string name="upload_speed">上传速度</string>
+    <string name="speed_test">网速测试</string>
 </resources>

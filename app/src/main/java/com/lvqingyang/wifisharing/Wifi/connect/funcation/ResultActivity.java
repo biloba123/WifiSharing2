@@ -79,6 +79,7 @@ public class ResultActivity extends BaseActivity {
         actionTitle=title=info=R.string.app_name;
         img=R.mipmap.ic_launcher;
 
+
         switch (data.getIntExtra(KEY_WHICH, -1)) {
             case RESULT_SECURITY:{
                 llsecurity.setVisibility(View.GONE);

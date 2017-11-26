@@ -1,1 +1,1 @@
-include ':app', ':myframe'
+include ':app', ':myframe', ':speedlib'

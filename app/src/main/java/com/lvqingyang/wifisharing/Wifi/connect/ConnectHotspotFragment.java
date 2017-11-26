@@ -36,6 +36,7 @@ import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.User.Wallet.OrderActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SecurityActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SignActivity;
+import com.lvqingyang.wifisharing.Wifi.connect.funcation.SpeedActivity;
 import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.Hotspot;
@@ -416,6 +417,13 @@ public class ConnectHotspotFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startActivityWithCircularAnim(view, SignActivity.class);
+            }
+        });
+
+        tvspeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityWithCircularAnim(v, SpeedActivity.class);
             }
         });
 
@@ -860,9 +868,9 @@ public class ConnectHotspotFragment extends BaseFragment {
                             Record.getUserRecord(new FindListener<Record>() {
                                 @Override
                                 public void done(List<Record> list, BmobException e) {
-                                    MyToast.cancel();
                                     if (e == null) {
                                         if (list.size()>0) {//有未支付记录
+                                            MyToast.cancel();
                                             if (BuildConfig.DEBUG)
                                                 Log.d(TAG, "done: 有未支付记录");
                                             //必须先支付之前记录才能连接
@@ -883,9 +891,11 @@ public class ConnectHotspotFragment extends BaseFragment {
                                                 Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
                                                     @Override
                                                     public void done(String s, BmobException e) {
+                                                        MyToast.cancel();
                                                         if (e == null) {
                                                             if (BuildConfig.DEBUG)
                                                                 Log.d(TAG, "done: record created");
+                                                            MyToast.success(getContext(), R.string.connect_succ);
 
                                                         }else {
                                                             if (BuildConfig.DEBUG)
@@ -896,6 +906,9 @@ public class ConnectHotspotFragment extends BaseFragment {
                                                         }
                                                     }
                                                 });
+                                            }else{
+                                                MyToast.cancel();
+                                                MyToast.error(getActivity(), R.string.connect_error);
                                             }
 
                                         }

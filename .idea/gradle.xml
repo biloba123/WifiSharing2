@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/myframe" />
+            <option value="$PROJECT_DIR$/speedlib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

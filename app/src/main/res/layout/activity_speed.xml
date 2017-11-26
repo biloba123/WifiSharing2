@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_funcation"
+    android:paddingTop="@dimen/big_spacing"
+    tools:context="com.lvqingyang.wifisharing.Wifi.connect.funcation.SpeedActivity">
+
+    <com.tools.speedlib.views.PointerSpeedView
+        android:id="@+id/speedometer"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:sv_endDegree="405" />
+
+    <TextView
+        android:id="@+id/tv_testing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent_white"
+        android:textSize="@dimen/medium_text"
+        android:text="@string/testing"
+        android:layout_below="@id/speedometer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/medium_spacing"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_testing"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/big_spacing">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tv_download_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent_white"
+                android:textSize="@dimen/sub_big_text"
+                android:text="-"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:textColor="@color/sub_text_color_light"
+                android:text="@string/download_speed"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="56dp"
+            android:background="@color/sub_text_color_light"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tv_upload_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent_white"
+                android:textSize="@dimen/sub_big_text"
+                android:text="-"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:textColor="@color/sub_text_color_light"
+                android:text="@string/upload_speed"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitEnd"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/activity_signal_enhance_bg"/>
+
+</RelativeLayout>

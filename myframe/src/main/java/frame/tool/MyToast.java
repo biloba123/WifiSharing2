@@ -136,7 +136,6 @@ public class MyToast {
         ivIcon.setImageResource(iconId);
         TextView tv=v.findViewById(R.id.tv);
         tv.setText(text);
-
         toast.setView(v);
         toast.show();
     }
