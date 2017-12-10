@@ -22,13 +22,16 @@ public class ResultActivity extends BaseActivity {
     private android.widget.LinearLayout llspeed;
     public static final int RESULT_SECURITY = 341;
     public static final int RESULT_SIGNAL = 886;
+    public static final int RESULT_SPEED = 916;
     private static final String KEY_WHICH = "WHICH";
+    private static final String KEY_INFO = "INFO";
 
 
 
-    public static void start(Context context, int which) {
+    public static void start(Context context, int which, String info) {
         Intent starter = new Intent(context, ResultActivity.class);
         starter.putExtra(KEY_WHICH, which);
+        starter.putExtra(KEY_INFO, info);
 
         context.startActivity(starter);
     }
@@ -97,11 +100,25 @@ public class ResultActivity extends BaseActivity {
                 img=R.drawable.activity_signal_enhance_logo_done;
                 break;
             }
+            case RESULT_SPEED:{
+                llspeed.setVisibility(View.GONE);
+                actionTitle=R.string.enhance_sign;
+                title=R.string.test_speed_finish;
+                img=R.drawable.speed_test_result_finish;
+                break;
+            }
+            default:{
+                break;
+            }
         }
 
         initeActionbar(actionTitle, true);
         tvtitle.setText(title);
-        tvinfo.setText(info);
+        if (R.string.app_name==info) {
+            tvinfo.setText(getIntent().getStringExtra(KEY_INFO));
+        }else {
+            tvinfo.setText(info);
+        }
         Glide.with(this)
                 .load(img)
                 .into(ivdone);

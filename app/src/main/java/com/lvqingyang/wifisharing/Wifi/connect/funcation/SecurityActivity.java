@@ -99,7 +99,7 @@ public class SecurityActivity extends BaseActivity {
                     public void onCompleted() {
                         checkDone();
                         if (mIsGoResult) {
-                            ResultActivity.start(SecurityActivity.this, ResultActivity.RESULT_SECURITY);
+                            ResultActivity.start(SecurityActivity.this, ResultActivity.RESULT_SECURITY, null);
                         }
                         finish();
                     }

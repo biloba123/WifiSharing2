@@ -7,14 +7,16 @@ import android.widget.TextView;
 
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.BaseActivity;
-import com.tools.speedlib.SpeedManager;
-import com.tools.speedlib.listener.SpeedListener;
-import com.tools.speedlib.utils.ConverUtil;
-import com.tools.speedlib.views.PointerSpeedView;
+
+import frame.SpeedManager;
+import frame.listener.SpeedListener;
+import frame.utils.ConverUtil;
+import frame.views.PointerSpeedView;
+
 
 public class SpeedActivity extends BaseActivity {
 
-    private com.tools.speedlib.views.PointerSpeedView speedometer;
+    private PointerSpeedView speedometer;
     private android.widget.TextView tvdownloadspeed;
     private android.widget.TextView tvuploadspeed;
 
@@ -70,6 +72,9 @@ public class SpeedActivity extends BaseActivity {
 
                         String[] upResult = ConverUtil.fomartSpeed(finalUpSpeed);
                         tvuploadspeed.setText(upResult[0] + upResult[1]);
+
+                        ResultActivity.start(SpeedActivity.this, ResultActivity.RESULT_SPEED, downResult[0] + downResult[1]);
+                        finish();
                     }
                 })
 //                .setPindCmd("59.61.92.196")

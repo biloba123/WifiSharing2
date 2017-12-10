@@ -136,14 +136,8 @@ public class WifiHotUtil {
                     wcfg.getClass());
             Boolean rt = (Boolean)method.invoke(mWifiManager, wcfg);
             if(DEBUG) Log.d(TAG, " rt = " + rt);
-        } catch (NoSuchMethodException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (InvocationTargetException e) {
-            Log.e(TAG, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return setWifiApEnabled();
     }
@@ -251,7 +245,7 @@ public class WifiHotUtil {
             WifiConfiguration configuration = (WifiConfiguration)method.invoke(mWifiManager);
             return configuration.preSharedKey;
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
             return null;
         }
 

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/myframe/myframe.iml" filepath="$PROJECT_DIR$/myframe/myframe.iml" />
       <module fileurl="file://$PROJECT_DIR$/speedlib/speedlib.iml" filepath="$PROJECT_DIR$/speedlib/speedlib.iml" />
+      <module fileurl="file://C:\android_projects\WifiSharing2\speedlib\speedlib.iml" filepath="C:\android_projects\WifiSharing2\speedlib\speedlib.iml" />
     </modules>
   </component>
 </project>

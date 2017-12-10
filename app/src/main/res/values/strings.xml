@@ -205,4 +205,5 @@
     <string name="download_speed">下载速度</string>
     <string name="upload_speed">上传速度</string>
     <string name="speed_test">网速测试</string>
+    <string name="test_speed_finish">测速完成</string>
 </resources>

@@ -102,7 +102,7 @@ public class SignActivity extends BaseActivity {
                     public void onCompleted() {
                         checkDone();
                         if (mIsGoResult) {
-                            ResultActivity.start(SignActivity.this, ResultActivity.RESULT_SIGNAL);
+                            ResultActivity.start(SignActivity.this, ResultActivity.RESULT_SIGNAL, null);
                         }
                         finish();
                     }

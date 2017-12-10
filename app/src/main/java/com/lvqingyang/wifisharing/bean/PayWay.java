@@ -52,7 +52,7 @@ public class PayWay {
 
     public static List<PayWay> getPayWays(){
         List<PayWay> list=new ArrayList<>();
-        list.add(new PayWay(R.drawable.ic_wallet_, "个人钱包", "- 推荐使用"));
+        list.add(new PayWay(R.drawable.ic_wallet_pay, "个人钱包", "- 推荐使用"));
         list.add(new PayWay(R.mipmap.alipay, "支付宝", "- 推荐支付宝用户使用"));
         list.add(new PayWay(R.mipmap.wechat_pay, "微信支付", "- 推荐微信用户使用"));
 
