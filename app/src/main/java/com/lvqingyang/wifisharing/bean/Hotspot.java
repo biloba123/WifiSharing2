@@ -78,7 +78,7 @@ public class Hotspot extends BmobObject implements Parcelable {
     }
 
     public void setUser() {
-        this.user =BmobUser.getCurrentUser(User.class);;
+        this.user =BmobUser.getCurrentUser(User.class);
     }
 
     public String getLocation() {

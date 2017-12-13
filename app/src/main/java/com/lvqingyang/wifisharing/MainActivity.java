@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
     }
 
     @Override

@@ -8,7 +8,8 @@
     android:orientation="vertical"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    tools:context="com.lvqingyang.wifisharing.User.Message.MessageActivity">
+    tools:context="com.lvqingyang.wifisharing.User.Message.MessageActivity"
+    android:focusable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

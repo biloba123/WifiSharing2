@@ -130,11 +130,11 @@ public class WifiFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        this.viewpager = (ViewPager) view.findViewById(R.id.view_pager);
-        this.tablayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        this.toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        this.wifiswitch = (SwitchIconView) view.findViewById(R.id.siv_wifi);
-        this.hotspotswitch = (SwitchIconView) view.findViewById(R.id.siv_hotspot);
+        this.viewpager = view.findViewById(R.id.view_pager);
+        this.tablayout = view.findViewById(R.id.tab_layout);
+        this.toolbar = view.findViewById(R.id.toolbar);
+        this.wifiswitch = view.findViewById(R.id.siv_wifi);
+        this.hotspotswitch = view.findViewById(R.id.siv_hotspot);
     }
 
     @Override

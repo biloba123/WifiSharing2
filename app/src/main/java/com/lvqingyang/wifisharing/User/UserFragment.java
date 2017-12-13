@@ -14,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -36,7 +34,6 @@ import com.lvqingyang.wifisharing.view.CardItem;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
-import de.hdodenhof.circleimageview.CircleImageView;
 import frame.tool.MyToast;
 import frame.tool.NetWorkUtils;
 
@@ -112,24 +109,24 @@ public class UserFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        mToolbar = view.findViewById(R.id.toolbar);
         initToolbar(mToolbar,getString(R.string.title_my),false);
-        this.sisharefriend = (CardItem) view.findViewById(R.id.si_share_friend);
-        this.ciscore = (CardItem) view.findViewById(R.id.ci_score);
-        this.ciupdate = (CardItem) view.findViewById(R.id.ci_update);
-        this.cifeedback = (CardItem) view.findViewById(R.id.ci_feedback);
-        this.rluserinfo = (RelativeLayout) view.findViewById(R.id.rl_user_info);
-        this.llemail = (LinearLayout) view.findViewById(R.id.ll_email);
-        this.tvcredit = (TextView) view.findViewById(R.id.tv_credit);
-        this.tvusername = (TextView) view.findViewById(R.id.tv_username);
-        this.civhead = (CircleImageView) view.findViewById(R.id.civ_head);
-        this.ciservicecenter = (CardItem) view.findViewById(R.id.ci_service_center);
-        mIvWifiSign = (ImageView) view.findViewById(R.id.iv_wifi_sign);
-        mTvDay = (TextView) view.findViewById(R.id.tv_day);
-        mCiMessage = (CardItem) view.findViewById(R.id.ci_message);
-        mCiMyShare = (CardItem) view.findViewById(R.id.ci_my_share);
-        mCiWallet = (CardItem) view.findViewById(R.id.ci_my_wallet);
-        mCiCredit = (CardItem) view.findViewById(R.id.ci_credit);
+        this.sisharefriend = view.findViewById(R.id.si_share_friend);
+        this.ciscore = view.findViewById(R.id.ci_score);
+        this.ciupdate = view.findViewById(R.id.ci_update);
+        this.cifeedback = view.findViewById(R.id.ci_feedback);
+        this.rluserinfo = view.findViewById(R.id.rl_user_info);
+        this.llemail = view.findViewById(R.id.ll_email);
+        this.tvcredit = view.findViewById(R.id.tv_credit);
+        this.tvusername = view.findViewById(R.id.tv_username);
+        this.civhead = view.findViewById(R.id.civ_head);
+        this.ciservicecenter = view.findViewById(R.id.ci_service_center);
+        mIvWifiSign = view.findViewById(R.id.iv_wifi_sign);
+        mTvDay = view.findViewById(R.id.tv_day);
+        mCiMessage = view.findViewById(R.id.ci_message);
+        mCiMyShare = view.findViewById(R.id.ci_my_share);
+        mCiWallet = view.findViewById(R.id.ci_my_wallet);
+        mCiCredit = view.findViewById(R.id.ci_credit);
     }
 
     @Override

@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.User.Setting.WebViewActivity;
 import com.lvqingyang.wifisharing.base.BaseActivity;
 import com.lvqingyang.wifisharing.bean.Message;
-import com.lvqingyang.wifisharing.tools.BottomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class MessageActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.my_message, true);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_msg);
+        mRecyclerView = findViewById(R.id.rv_msg);
     }
 
     @Override
@@ -140,18 +137,4 @@ public class MessageActivity extends BaseActivity {
         });
     }
 
-    private void showMessageDetailDialog(Message message){
-        View view=getLayoutInflater()
-                .inflate(R.layout.dialog_message_detail, null);
-        TextView tvcontent = (TextView) view.findViewById(R.id.tv_content);
-        TextView tvtitle = (TextView) view.findViewById(R.id.tv_title);
-
-        tvtitle.setText(message.getTitle());
-        tvcontent.setText(message.getContent());
-
-        new BottomDialog(this)
-                .setView(view)
-                .show(getSupportFragmentManager());
-
-    }
 }

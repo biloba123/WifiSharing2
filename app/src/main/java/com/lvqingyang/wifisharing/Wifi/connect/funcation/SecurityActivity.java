@@ -57,8 +57,8 @@ public class SecurityActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.check_security,true);
-        this.ivanim = (ImageView) findViewById(R.id.iv_anim);
-        mLlCheck = (LinearLayout) findViewById(R.id.ll_check);
+        this.ivanim = findViewById(R.id.iv_anim);
+        mLlCheck = findViewById(R.id.ll_check);
     }
 
     @Override

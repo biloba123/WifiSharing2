@@ -7,15 +7,15 @@
               android:id="@+id/ll"
               android:clickable="true"
               android:background="@drawable/bg_item"
-              android:paddingTop="@dimen/small_spacing"
               android:paddingRight="@dimen/card_spacing"
               android:paddingLeft="@dimen/card_spacing"
-              xmlns:tools="http://schemas.android.com/tools">
+              android:paddingTop="@dimen/card_spacing"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:focusable="true">
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/small_spacing">
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/iv_level"
         android:layout_width="26dp"
@@ -51,6 +51,7 @@
         app:srcCompat="@drawable/ic_info_"/>
 </RelativeLayout>
     <View
+        android:layout_marginTop="@dimen/card_spacing"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/div"/>

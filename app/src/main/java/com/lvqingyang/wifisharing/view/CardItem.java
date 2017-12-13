@@ -35,11 +35,11 @@ public class CardItem extends FrameLayout {
         View v= LayoutInflater.from(context)
                 .inflate(R.layout.item_card,this);
         mLl = findViewById(R.id.ll);
-        this.tvcontent = (TextView) findViewById(R.id.tv_content);
-        this.tvhint = (TextView) findViewById(R.id.tv_hint);
-        this.ivarrow = (ImageView) findViewById(R.id.iv_arrow);
-        this.tvname = (TextView) findViewById(R.id.tv_name);
-        this.ivicon = (ImageView) findViewById(R.id.iv_icon);
+        this.tvcontent = findViewById(R.id.tv_content);
+        this.tvhint = findViewById(R.id.tv_hint);
+        this.ivarrow = findViewById(R.id.iv_arrow);
+        this.tvname = findViewById(R.id.tv_name);
+        this.ivicon = findViewById(R.id.iv_icon);
 
 
         TypedArray a = context.getTheme().obtainStyledAttributes(

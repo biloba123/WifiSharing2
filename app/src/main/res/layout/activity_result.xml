@@ -68,15 +68,16 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                    android:id="@+id/ll_security"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:background="@drawable/bg_item"
-                    android:padding="@dimen/medium_spacing">
+                android:id="@+id/ll_security"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:background="@drawable/bg_item"
+                android:padding="@dimen/medium_spacing"
+                android:focusable="true">
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -98,7 +99,8 @@
                 android:gravity="center"
                 android:clickable="true"
                 android:background="@drawable/bg_item"
-                android:padding="@dimen/medium_spacing">
+                android:padding="@dimen/medium_spacing"
+                android:focusable="true">
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
@@ -120,7 +122,8 @@
                 android:gravity="center"
                 android:clickable="true"
                 android:background="@drawable/bg_item"
-                android:padding="@dimen/medium_spacing">
+                android:padding="@dimen/medium_spacing"
+                android:focusable="true">
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"

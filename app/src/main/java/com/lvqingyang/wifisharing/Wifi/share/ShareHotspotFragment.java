@@ -153,11 +153,11 @@ public class ShareHotspotFragment extends BaseFragment {
         BmobUser bmobUser = BmobUser.getCurrentUser();
         View view = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_config_hotspot, null);
-        final LinearLayout llpwd = (LinearLayout) view.findViewById(R.id.ll_pwd);
-        final Switch swshare = (Switch) view.findViewById(R.id.sw_share);
-        final EditText etpwd = (EditText) view.findViewById(R.id.et_pwd);
-        final Switch swpwd = (Switch) view.findViewById(R.id.sw_pwd);
-        final EditText etname = (EditText) view.findViewById(R.id.et_name);
+        final LinearLayout llpwd = view.findViewById(R.id.ll_pwd);
+        final Switch swshare = view.findViewById(R.id.sw_share);
+        final EditText etpwd = view.findViewById(R.id.et_pwd);
+        final Switch swpwd = view.findViewById(R.id.sw_pwd);
+        final EditText etname = view.findViewById(R.id.et_name);
         llpwd.setVisibility(View.GONE);
 
         if(bmobUser == null){
@@ -274,15 +274,15 @@ public class ShareHotspotFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        mLlClosed = (LinearLayout) view.findViewById(R.id.ll_closed);
-        mBtnOpenHotspot = (Button) view.findViewById(R.id.btn_open_hotspot);
-        mLlOpening = (RelativeLayout) view.findViewById(R.id.ll_opening);
-        mRbLeft = (RippleBackground) view.findViewById(R.id.rb_left);
-        mRbRight = (RippleBackground) view.findViewById(R.id.rb_right);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+        mLlClosed = view.findViewById(R.id.ll_closed);
+        mBtnOpenHotspot = view.findViewById(R.id.btn_open_hotspot);
+        mLlOpening = view.findViewById(R.id.ll_opening);
+        mRbLeft = view.findViewById(R.id.rb_left);
+        mRbRight = view.findViewById(R.id.rb_right);
+        mSwipeRefreshLayout = view.findViewById(R.id.srl);
         mTvName=view.findViewById(R.id.tv_name);
-        mLlNoDevice = (LinearLayout) view.findViewById(R.id.ll_no_device);
-        mRvDevice = (RecyclerView) view.findViewById(R.id.rv_device);
+        mLlNoDevice = view.findViewById(R.id.ll_no_device);
+        mRvDevice = view.findViewById(R.id.rv_device);
         mLlShare=view.findViewById(R.id.ll_share);
         mTvConnectCount=view.findViewById(R.id.tv_connect_count);
     }

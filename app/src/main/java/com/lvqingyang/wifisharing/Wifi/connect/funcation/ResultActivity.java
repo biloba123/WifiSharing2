@@ -43,12 +43,12 @@ public class ResultActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        this.llspeed = (LinearLayout) findViewById(R.id.ll_speed);
-        this.llsign = (LinearLayout) findViewById(R.id.ll_sign);
-        this.llsecurity = (LinearLayout) findViewById(R.id.ll_security);
-        this.tvinfo = (TextView) findViewById(R.id.tv_info);
-        this.tvtitle = (TextView) findViewById(R.id.tv_title);
-        this.ivdone = (ImageView) findViewById(R.id.iv_done);
+        this.llspeed = findViewById(R.id.ll_speed);
+        this.llsign = findViewById(R.id.ll_sign);
+        this.llsecurity = findViewById(R.id.ll_security);
+        this.tvinfo = findViewById(R.id.tv_info);
+        this.tvtitle = findViewById(R.id.tv_title);
+        this.ivdone = findViewById(R.id.iv_done);
     }
 
     @Override

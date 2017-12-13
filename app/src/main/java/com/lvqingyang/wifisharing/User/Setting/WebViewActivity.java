@@ -31,7 +31,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(getIntent().getStringExtra(KEY_TITLE), true);
-        mWebView = (WebView) findViewById(R.id.web_view);
+        mWebView = findViewById(R.id.web_view);
         WebSettings webSettings =   mWebView .getSettings();
         webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放
         webSettings.setLoadWithOverviewMode(true);

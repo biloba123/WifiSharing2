@@ -92,7 +92,8 @@
                                     android:background="@drawable/bg_circle_red"
                                     android:text="0台"
                                     android:textSize="@dimen/sub_big_text"
-                                    android:textColor="@color/accent_white"/>
+                                    android:textColor="@color/accent_white"
+                                    android:focusable="true"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -117,7 +118,8 @@
                                     android:background="@drawable/bg_circle_blue"
                                     android:text="0M"
                                     android:textSize="@dimen/medium_text"
-                                    android:textColor="@color/accent_white"/>
+                                    android:textColor="@color/accent_white"
+                                    android:focusable="true"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -142,7 +144,8 @@
                                     android:background="@drawable/bg_circle_orange"
                                     android:text="0元"
                                     android:textSize="@dimen/medium_text"
-                                    android:textColor="@color/accent_white"/>
+                                    android:textColor="@color/accent_white"
+                                    android:focusable="true"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -184,7 +187,8 @@
                             android:background="@drawable/bg_item"
                             android:clickable="true"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:focusable="true">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="96dp"

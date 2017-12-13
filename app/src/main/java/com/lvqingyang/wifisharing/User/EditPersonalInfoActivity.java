@@ -90,14 +90,14 @@ public class EditPersonalInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.edit_personal_info,true);
-        this.cibirthday = (CardItem) findViewById(R.id.ci_birthday);
-        this.cinick = (CardItem) findViewById(R.id.ci_nick);
-        this.ciaccount = (CardItem) findViewById(R.id.ci_account);
-        this.cipwd = (CardItem) findViewById(R.id.ci_pwd);
-        this.cisex = (CardItem) findViewById(R.id.ci_sex);
-        this.civhead = (CircleImageView) findViewById(R.id.civ_head);
-        mRlAvater = (RelativeLayout) findViewById(R.id.ll_avater);
-        mCivHead = (CircleImageView) findViewById(R.id.civ_head);
+        this.cibirthday = findViewById(R.id.ci_birthday);
+        this.cinick = findViewById(R.id.ci_nick);
+        this.ciaccount = findViewById(R.id.ci_account);
+        this.cipwd = findViewById(R.id.ci_pwd);
+        this.cisex = findViewById(R.id.ci_sex);
+        this.civhead = findViewById(R.id.civ_head);
+        mRlAvater = findViewById(R.id.ll_avater);
+        mCivHead = findViewById(R.id.civ_head);
     }
 
     @Override
@@ -324,7 +324,7 @@ public class EditPersonalInfoActivity extends BaseActivity {
     private void showEditNickDialog(){
         View v=getLayoutInflater()
                 .inflate(R.layout.dialog_reset_nick, null);
-        final EditText et = (EditText) v.findViewById(R.id.et);
+        final EditText et = v.findViewById(R.id.et);
         et.setText(mUser.getNick());
 
         final MyDialog dialog=new MyDialog(this)
@@ -381,7 +381,7 @@ public class EditPersonalInfoActivity extends BaseActivity {
     private void showResetSexDialog(){
         View v=getLayoutInflater()
                 .inflate(R.layout.dialog_reset_sex, null);
-        final RadioGroup rg = (RadioGroup) v.findViewById(R.id.rg);
+        final RadioGroup rg = v.findViewById(R.id.rg);
 
         int oldCheckedId=-1;
         if (mUser.getSex()!=null) {
@@ -427,8 +427,8 @@ public class EditPersonalInfoActivity extends BaseActivity {
         View v=getLayoutInflater()
                 .inflate(R.layout.dialog_reset_password, null);
 
-        final EditText etnewpwd = (EditText) v.findViewById(R.id.et_new_pwd);
-        final EditText etcurrentpwd = (EditText) v.findViewById(R.id.et_current_pwd);
+        final EditText etnewpwd = v.findViewById(R.id.et_new_pwd);
+        final EditText etcurrentpwd = v.findViewById(R.id.et_current_pwd);
 
         final MyDialog dialog=new MyDialog(this)
                 .setTitle(R.string.reset_pwd)
@@ -489,7 +489,7 @@ public class EditPersonalInfoActivity extends BaseActivity {
     private void showResetBirthdayDialog(){
         View view=getLayoutInflater()
                 .inflate(R.layout.dialog_reset_birthday, null);
-        final DatePicker dp = (DatePicker) view.findViewById(R.id.dp);
+        final DatePicker dp = view.findViewById(R.id.dp);
 
         dp.setMaxDate(new Date().getTime());
 

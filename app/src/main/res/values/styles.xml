@@ -43,6 +43,7 @@
     <style name="AppTheme.NoActionbar.Trans">
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorAccent">@color/accent_green</item>
     </style>
 
     <style name="AppTheme.NoActionbar.Trans.TranBg">

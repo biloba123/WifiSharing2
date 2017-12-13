@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/ll"
               android:clickable="true"
               android:background="@drawable/bg_item"
               android:orientation="vertical"
               android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+              android:layout_width="match_parent"
+              android:focusable="true">
 <RelativeLayout
     android:layout_width="match_parent"
               android:layout_height="wrap_content"

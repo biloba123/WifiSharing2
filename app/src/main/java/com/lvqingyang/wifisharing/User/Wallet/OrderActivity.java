@@ -51,12 +51,12 @@ public class OrderActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.order_detail, true);
-        this.btnsurepay = (Button) findViewById(R.id.btn_sure_pay);
-        this.rvpay = (RecyclerView) findViewById(R.id.rv_pay);
-        this.tvpay = (TextView) findViewById(R.id.tv_pay);
-        this.tvprice = (TextView) findViewById(R.id.tv_price);
-        this.tvtraffic = (TextView) findViewById(R.id.tv_traffic);
-        this.tvhotspotname = (TextView) findViewById(R.id.tv_hotspot_name);
+        this.btnsurepay = findViewById(R.id.btn_sure_pay);
+        this.rvpay = findViewById(R.id.rv_pay);
+        this.tvpay = findViewById(R.id.tv_pay);
+        this.tvprice = findViewById(R.id.tv_price);
+        this.tvtraffic = findViewById(R.id.tv_traffic);
+        this.tvhotspotname = findViewById(R.id.tv_hotspot_name);
 
     }
 

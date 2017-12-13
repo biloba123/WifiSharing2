@@ -34,9 +34,9 @@ public class SpeedActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.speed_test, true);
-        this.tvuploadspeed = (TextView) findViewById(R.id.tv_upload_speed);
-        this.tvdownloadspeed = (TextView) findViewById(R.id.tv_download_speed);
-        this.speedometer = (PointerSpeedView) findViewById(R.id.speedometer);
+        this.tvuploadspeed = findViewById(R.id.tv_upload_speed);
+        this.tvdownloadspeed = findViewById(R.id.tv_download_speed);
+        this.speedometer = findViewById(R.id.speedometer);
     }
 
     @Override

@@ -57,10 +57,10 @@ public class SettingItem extends FrameLayout {
     public SettingItem(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.item_setting,this);
-        mTvType = (TextView) findViewById(R.id.tv_type);
-        mTvTitle = (TextView)findViewById(R.id.tv_title);
-        mTvInfo = (TextView) findViewById(R.id.tv_info);
-        mSwitch = (Switch) findViewById(R.id.sw);
+        mTvType = findViewById(R.id.tv_type);
+        mTvTitle = findViewById(R.id.tv_title);
+        mTvInfo = findViewById(R.id.tv_info);
+        mSwitch = findViewById(R.id.sw);
         mSwitch.setChecked(new Random().nextBoolean());
         mRl = findViewById(R.id.rl);
         TypedArray a = context.getTheme().obtainStyledAttributes(

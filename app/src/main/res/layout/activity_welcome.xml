@@ -51,11 +51,11 @@
         android:text="@string/app_slogan"/>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitEnd"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/activity_signal_enhance_bg"/>
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="fitEnd"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:src="@drawable/activity_signal_enhance_bg"/>-->
 
 </RelativeLayout>

@@ -88,10 +88,10 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
 
     @Override
     protected void initView(View view) {
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        mToolbar = view.findViewById(R.id.toolbar);
         initToolbar(mToolbar,getString(R.string.title_map),false);
-        mFabMyLoc = (FloatingActionButton) view.findViewById(R.id.fab_my_location);
-        mFabReload = (FloatingActionButton) view.findViewById(R.id.fab_reload);
+        mFabMyLoc = view.findViewById(R.id.fab_my_location);
+        mFabReload = view.findViewById(R.id.fab_reload);
         mFabReload.setTag(R.drawable.ic_autorenew);
     }
 

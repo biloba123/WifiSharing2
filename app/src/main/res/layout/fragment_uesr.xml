@@ -20,9 +20,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="197dp"
+                android:layout_height="200dp"
                 android:paddingTop="@dimen/status_height"
-                android:background="@drawable/foto_head_bg">
+                android:background="@mipmap/bg_user_head">
                 <android.support.v7.widget.Toolbar
                     xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/toolbar"
@@ -99,8 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation"
-                android:layout_marginBottom="@dimen/small_spacing">
+                app:cardElevation="@dimen/card_elevation">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,15 +114,6 @@
                         app:info="@string/point_center_info"/>
 
                     <com.lvqingyang.wifisharing.view.CardItem
-                        android:id="@+id/ci_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:icon="@drawable/ic_message"
-                        app:name="@string/message"
-                        app:showInfo="true"
-                        app:info="@string/message_info"/>
-
-                    <com.lvqingyang.wifisharing.view.CardItem
                         android:id="@+id/ci_my_share"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -131,6 +121,15 @@
                         app:name="@string/my_share"
                         app:showInfo="true"
                         app:info="@string/my_share_"/>
+
+                    <com.lvqingyang.wifisharing.view.CardItem
+                        android:id="@+id/ci_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_message"
+                        app:name="@string/message"
+                        app:showInfo="true"
+                        app:info="@string/message_info"/>
 
                     <com.lvqingyang.wifisharing.view.CardItem
                         android:id="@+id/ci_credit"
@@ -149,7 +148,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="@dimen/card_elevation"
-            android:layout_marginBottom="@dimen/small_spacing">
+            android:layout_marginTop="@dimen/sub_small_spacing">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,6 +174,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
+                android:layout_marginTop="@dimen/sub_small_spacing"
                 android:layout_marginBottom="@dimen/small_spacing">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -202,11 +202,14 @@
                         android:id="@+id/si_share_friend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:icon="@drawable/ic_share_firend"
+                        app:icon="@drawable/ic_share_friend"
                         app:name="@string/share_firend"/>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <!--<include layout="@layout/footer_user"/>-->
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

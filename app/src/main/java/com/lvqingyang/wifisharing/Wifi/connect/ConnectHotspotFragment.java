@@ -1,5 +1,8 @@
 package com.lvqingyang.wifisharing.Wifi.connect;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,7 +16,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -21,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,7 +36,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
-import com.lvqingyang.wifisharing.User.Wallet.OrderActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SecurityActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SignActivity;
 import com.lvqingyang.wifisharing.Wifi.connect.funcation.SpeedActivity;
@@ -41,7 +43,6 @@ import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseFragment;
 import com.lvqingyang.wifisharing.bean.Hotspot;
 import com.lvqingyang.wifisharing.bean.MyScanResult;
-import com.lvqingyang.wifisharing.bean.Record;
 import com.lvqingyang.wifisharing.tools.MyDialog;
 import com.skyfishjy.library.RippleBackground;
 
@@ -52,7 +53,6 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
 import frame.tool.MyToast;
 import frame.tool.NetWorkUtils;
 import frame.tool.SolidRVBaseAdapter;
@@ -106,10 +106,12 @@ public class ConnectHotspotFragment extends BaseFragment {
     private TextView tvconnectcount;
     private TextView tvsecuritycheck;
     private ImageView ivsafety;
-    private TextView tvsign;
-    private TextView tvspeed;
+    private ImageView ivSignal;
+    private ImageView ivSpeed;
     private LinearLayout llconnected;
     private ImageView mIvShare;
+
+    private AnimatorSet mScaleBreathe;
 
     //是否开启测速
     private boolean mIsOnSpeeding;
@@ -174,6 +176,8 @@ public class ConnectHotspotFragment extends BaseFragment {
             if (BuildConfig.DEBUG) Log.d(TAG, "onWifiDisable: ");
             srl.setEnabled(false);
             wifiDisable();
+
+            mScaleBreathe.cancel();
         }
 
         @Override
@@ -206,9 +210,13 @@ public class ConnectHotspotFragment extends BaseFragment {
                 mWifiAdmin.againGetWifiInfo();
                 wifiConnected(mIsConnectingWifi);
                 mIsConnectingWifi=false;
+
+                mScaleBreathe.start();
             }else {
                 mIsFirstReceiveConnected=false;
             }
+
+            mScaleBreathe.start();
 
         }
 
@@ -360,36 +368,38 @@ public class ConnectHotspotFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        this.srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
-        this.rvwifi = (RecyclerView) view.findViewById(R.id.rv_wifi);
-        this.llnowifi = (LinearLayout) view.findViewById(R.id.ll_no_wifi);
+        this.srl = view.findViewById(R.id.srl);
+        this.rvwifi = view.findViewById(R.id.rv_wifi);
+        this.llnowifi = view.findViewById(R.id.ll_no_wifi);
 //        this.swsharewifi = (Switch) view.findViewById(R.id.sw_share_wifi);
 
         //Wifi close
         mLayNoWifi = view.findViewById(R.id.layout_wifi_disable);
-        mIvState = (ImageView) view.findViewById(R.id.iv_state);
-        mTvState = (TextView) view.findViewById(R.id.tv_state);
-        mBtnOpenWifi = (Button) view.findViewById(R.id.btn_open_wifi);
+        mIvState = view.findViewById(R.id.iv_state);
+        mTvState = view.findViewById(R.id.tv_state);
+        mBtnOpenWifi = view.findViewById(R.id.btn_open_wifi);
 
-        mCvSate = (CardView) view.findViewById(R.id.cv_state);
+        mCvSate = view.findViewById(R.id.cv_state);
         //Wifi connecting
-        mRippleBackground = (RippleBackground) view.findViewById(R.id.rb);
-        mIvCenter = (ImageView) view.findViewById(R.id.iv_center);
-        mTvName = (TextView) view.findViewById(R.id.tv_name);
+        mRippleBackground = view.findViewById(R.id.rb);
+        mIvCenter = view.findViewById(R.id.iv_center);
+        mTvName = view.findViewById(R.id.tv_name);
 
 
         //Wifi connect
-        this.llconnected = (LinearLayout) view.findViewById(R.id.ll_connected);
-        this.tvspeed = (TextView) view.findViewById(R.id.tv_speed);
-        this.tvsign = (TextView) view.findViewById(R.id.tv_sign);
-        this.ivsafety = (ImageView) view.findViewById(R.id.iv_safety);
-        this.tvsecuritycheck = (TextView) view.findViewById(R.id.tv_security_check);
-        this.tvconnectcount = (TextView) view.findViewById(R.id.tv_connect_count);
-        this.tvdownload = (TextView) view.findViewById(R.id.tv_download);
-        this.tvupload = (TextView) view.findViewById(R.id.tv_upload);
-        this.tvwifiname = (TextView) view.findViewById(R.id.tv_wifi_name);
-        this.ivwifisign = (ImageView) view.findViewById(R.id.iv_wifi_sign);
+        this.llconnected = view.findViewById(R.id.ll_connected);
+//        this.tvspeed = view.findViewById(R.id.tv_speed);
+        this.ivsafety = view.findViewById(R.id.iv_safety);
+        this.ivSignal = view.findViewById(R.id.iv_signal);
+        this.ivSpeed = view.findViewById(R.id.iv_speed);
+        this.tvsecuritycheck = view.findViewById(R.id.tv_security_check);
+        this.tvconnectcount = view.findViewById(R.id.tv_connect_count);
+        this.tvdownload = view.findViewById(R.id.tv_download);
+        this.tvupload = view.findViewById(R.id.tv_upload);
+        this.tvwifiname = view.findViewById(R.id.tv_wifi_name);
+        this.ivwifisign = view.findViewById(R.id.iv_wifi_sign);
         mIvShare=view.findViewById(R.id.iv_share);
+
     }
 
     @Override
@@ -413,14 +423,14 @@ public class ConnectHotspotFragment extends BaseFragment {
             }
         });
 
-        tvsign.setOnClickListener(new View.OnClickListener() {
+        ivSignal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityWithCircularAnim(view, SignActivity.class);
             }
         });
 
-        tvspeed.setOnClickListener(new View.OnClickListener() {
+        ivSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityWithCircularAnim(v, SpeedActivity.class);
@@ -445,6 +455,8 @@ public class ConnectHotspotFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        initAnim();
+
         mWifiAdmin=new WifiAdmin(getActivity());
 
         mAdapter=new SolidRVBaseAdapter<MyScanResult>(getActivity(), mMyScanResults) {
@@ -536,6 +548,18 @@ public class ConnectHotspotFragment extends BaseFragment {
         initLocationClient();
     }
 
+    private void initAnim() {
+        ObjectAnimator a1 = ObjectAnimator.ofFloat(mIvShare, "scaleY", 1, 1.2f ,1f);
+        ObjectAnimator a2 = ObjectAnimator.ofFloat(mIvShare, "scaleX", 1f, 1.2f, 1f);
+        ObjectAnimator a3 = ObjectAnimator.ofFloat(mIvShare, "alpha", 1f, 0.8f, 1f);
+        a1.setRepeatCount(Animation.INFINITE);
+        a2.setRepeatCount(Animation.INFINITE);
+        a3.setRepeatCount(Animation.INFINITE);
+        mScaleBreathe = new AnimatorSet();
+        mScaleBreathe.play(a1).with(a2).with(a3);
+        mScaleBreathe.setDuration(2000);
+    }
+
     @Override
     protected void setData() {
         rvwifi.setLayoutManager(new LinearLayoutManager(getActivity()){
@@ -573,7 +597,7 @@ public class ConnectHotspotFragment extends BaseFragment {
     private void showEditPassDialog(final ScanResult result){
         View v=LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_edit_eifi_pwd,null);
-        final EditText editText = (EditText) v.findViewById(R.id.et_password);
+        final EditText editText = v.findViewById(R.id.et_password);
 
         MyDialog dialog=new MyDialog(getActivity())
                 .setTitle(result.SSID)
@@ -634,7 +658,6 @@ public class ConnectHotspotFragment extends BaseFragment {
         tvwifiname.setText(mWifiAdmin.getSSID());
         //信号强度
         ivwifisign.setImageLevel(WifiManager.calculateSignalLevel(mWifiAdmin.getRssi(),5));
-        tvsign.setText(WifiManager.calculateSignalLevel(mWifiAdmin.getRssi(),100)+1+"%");
     }
 
     /**
@@ -704,6 +727,7 @@ public class ConnectHotspotFragment extends BaseFragment {
                 .subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
                 .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
                 .subscribe(new Observer<int[]>() {
+                    @SuppressLint("DefaultLocale")
                     @Override
                     public void onNext(int[] responce) {
 //                        Log.d(TAG, "onNext: "+responce[0]+"  "+responce[1]);
@@ -793,8 +817,8 @@ public class ConnectHotspotFragment extends BaseFragment {
     private void showShareDialog(){
         View view=LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_share_wifi, null);
-        EditText etpassword = (EditText) view.findViewById(R.id.et_password);
-        TextView tvmac = (TextView) view.findViewById(R.id.tv_mac);
+        EditText etpassword = view.findViewById(R.id.et_password);
+        TextView tvmac = view.findViewById(R.id.tv_mac);
 
         tvmac.setText(mWifiAdmin.getBSSID());
 
@@ -846,8 +870,8 @@ public class ConnectHotspotFragment extends BaseFragment {
     private void showConnectSharedWifiDialog(final MyScanResult myScanResult) {
         View view=LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_connect_shared_wifi, null);
-        TextView tvprice = (TextView) view.findViewById(R.id.tv_price);
-        TextView tvhotspottype = (TextView) view.findViewById(R.id.tv_hotspot_type);
+        TextView tvprice = view.findViewById(R.id.tv_price);
+        TextView tvhotspottype = view.findViewById(R.id.tv_hotspot_type);
         if (myScanResult.getHotspot().isFixed()) {
             tvprice.setText(AppContact.HOTSPOT_FIXED_PRICE+"/M");
             tvhotspottype.setText(R.string.fixed_hotspot);
@@ -856,72 +880,111 @@ public class ConnectHotspotFragment extends BaseFragment {
             tvhotspottype.setText(R.string.hotspot);
         }
 
+        if (BuildConfig.DEBUG) Log.d(TAG, "showConnectSharedWifiDialog: "+myScanResult.getHotspot().getSsid()+" "+myScanResult.getHotspot().getPassword());
+
         new MyDialog(getActivity())
                 .setTitle(myScanResult.getScanResult().SSID)
                 .setView(view)
                 .setPosBtn(R.string.connect, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (NetWorkUtils.isNetworkConnected(getActivity())) {
-                            MyToast.loading(getContext(), R.string.load_data);
-                            //先判断用户是否有未支付记录
-                            Record.getUserRecord(new FindListener<Record>() {
-                                @Override
-                                public void done(List<Record> list, BmobException e) {
-                                    if (e == null) {
-                                        if (list.size()>0) {//有未支付记录
-                                            MyToast.cancel();
-                                            if (BuildConfig.DEBUG)
-                                                Log.d(TAG, "done: 有未支付记录");
-                                            //必须先支付之前记录才能连接
-                                            OrderActivity.start(getContext(), list.get(0));
-                                        }else {
-                                            ScanResult result = myScanResult.getScanResult();
-                                            String pwd=myScanResult.getHotspot().getPassword();
-                                            int networkId=-1;
-                                            if (result.capabilities.contains("WEP")) {
-                                                networkId=connecting(result, pwd, 2);
-                                            }else {
-                                                networkId=connecting(result, pwd, 3);
-                                            }
-
-                                            if (networkId!=-1) {
-                                                //连接成功则创建记录
-                                                final int finalNetworkId = networkId;
-                                                Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
-                                                    @Override
-                                                    public void done(String s, BmobException e) {
-                                                        MyToast.cancel();
-                                                        if (e == null) {
-                                                            if (BuildConfig.DEBUG)
-                                                                Log.d(TAG, "done: record created");
-                                                            MyToast.success(getContext(), R.string.connect_succ);
-
-                                                        }else {
-                                                            if (BuildConfig.DEBUG)
-                                                                Log.d(TAG, "done: create record: "+e.toString());
-                                                            MyToast.error(getActivity(), R.string.load_error);
-                                                            //忘记网络...
-                                                            mWifiAdmin.forgetWifi(finalNetworkId);
-                                                        }
-                                                    }
-                                                });
-                                            }else{
-                                                MyToast.cancel();
-                                                MyToast.error(getActivity(), R.string.connect_error);
-                                            }
-
-                                        }
-                                    }else {
-                                        if (BuildConfig.DEBUG)
-                                            Log.d(TAG, "done: record: "+e.toString());
-                                        MyToast.error(getActivity(), R.string.load_error);
-                                    }
-                                }
-                            });
+                        ScanResult result = myScanResult.getScanResult();
+                        String pwd=myScanResult.getHotspot().getPassword();
+                        int networkId=-1;
+                        if (result.capabilities.contains("WEP")) {
+                            networkId=connecting(result, pwd, 2);
                         }else {
-                            MyToast.error(getActivity(), R.string.network_disable);
+                            networkId=connecting(result, pwd, 3);
                         }
+
+                        if (networkId!=-1) {
+                            MyToast.success(getContext(), R.string.connect_succ);
+
+                            //连接成功则创建记录
+//                            final int finalNetworkId = networkId;
+//                            Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
+//                                @Override
+//                                public void done(String s, BmobException e) {
+//                                    MyToast.cancel();
+//                                    if (e == null) {
+//                                        if (BuildConfig.DEBUG)
+//                                            Log.d(TAG, "done: record created");
+//                                        MyToast.success(getContext(), R.string.connect_succ);
+//
+//                                    }else {
+//                                        if (BuildConfig.DEBUG)
+//                                            Log.d(TAG, "done: create record: "+e.toString());
+//                                        MyToast.error(getActivity(), R.string.load_error);
+//                                        //忘记网络...
+//                                        mWifiAdmin.forgetWifi(finalNetworkId);
+//                                    }
+//                                }
+//                            });
+                        }else{
+                            MyToast.cancel();
+                            MyToast.error(getActivity(), R.string.connect_error);
+                        }
+
+//                        if (NetWorkUtils.isNetworkConnected(getActivity())) {
+//                            MyToast.loading(getContext(), R.string.load_data);
+//                            //先判断用户是否有未支付记录
+//                            Record.getUserRecord(new FindListener<Record>() {
+//                                @Override
+//                                public void done(List<Record> list, BmobException e) {
+//                                    if (e == null) {
+//                                        if (list.size()>0) {//有未支付记录
+//                                            MyToast.cancel();
+//                                            if (BuildConfig.DEBUG)
+//                                                Log.d(TAG, "done: 有未支付记录"+ list.get(0).getHotspot());
+//                                            //必须先支付之前记录才能连接
+//                                            OrderActivity.start(getContext(), list.get(0));
+//                                        }else {
+//                                            ScanResult result = myScanResult.getScanResult();
+//                                            String pwd=myScanResult.getHotspot().getPassword();
+//                                            int networkId=-1;
+//                                            if (result.capabilities.contains("WEP")) {
+//                                                networkId=connecting(result, pwd, 2);
+//                                            }else {
+//                                                networkId=connecting(result, pwd, 3);
+//                                            }
+//
+//                                            if (networkId!=-1) {
+//                                                //连接成功则创建记录，这里有错！！！！
+//                                                final int finalNetworkId = networkId;
+//                                                Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
+//                                                    @Override
+//                                                    public void done(String s, BmobException e) {
+//                                                        MyToast.cancel();
+//                                                        if (e == null) {
+//                                                            if (BuildConfig.DEBUG)
+//                                                                Log.d(TAG, "done: record created");
+//                                                            MyToast.success(getContext(), R.string.connect_succ);
+//
+//                                                        }else {
+//                                                            if (BuildConfig.DEBUG)
+//                                                                Log.d(TAG, "done: create record: "+e.toString());
+//                                                            MyToast.error(getActivity(), R.string.load_error);
+//                                                            //忘记网络...
+//                                                            mWifiAdmin.forgetWifi(finalNetworkId);
+//                                                        }
+//                                                    }
+//                                                });
+//                                            }else{
+//                                                MyToast.cancel();
+//                                                MyToast.error(getActivity(), R.string.connect_error);
+//                                            }
+//
+//                                        }
+//                                    }else {
+//                                        if (BuildConfig.DEBUG)
+//                                            Log.d(TAG, "done: record: "+e.toString());
+//                                        MyToast.error(getActivity(), R.string.load_error);
+//                                    }
+//                                }
+//                            });
+//                        }else {
+//                            MyToast.error(getActivity(), R.string.network_disable);
+//                        }
                     }
                 })
                 .setNegBtn(android.R.string.cancel, null)

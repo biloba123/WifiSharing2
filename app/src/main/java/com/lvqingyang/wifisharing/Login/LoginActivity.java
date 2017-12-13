@@ -92,11 +92,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        this.fab = (FloatingActionButton) findViewById(R.id.fab);
-        this.forgetpwd = (TextView) findViewById(R.id.forget_pwd);
-        this.btgo = (Button) findViewById(R.id.bt_go);
-        this.etpassword = (EditText) findViewById(R.id.et_password);
-        this.etusername = (EditText) findViewById(R.id.et_username);
+        this.fab = findViewById(R.id.fab);
+        this.forgetpwd = findViewById(R.id.forget_pwd);
+        this.btgo = findViewById(R.id.bt_go);
+        this.etpassword = findViewById(R.id.et_password);
+        this.etusername = findViewById(R.id.et_username);
     }
 
     @Override

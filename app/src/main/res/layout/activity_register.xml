@@ -139,7 +139,7 @@
                     android:layout_height="50dp"
                     android:text="@string/register"
                     android:textColor="#d3d3d3"
-                    >
+                    tools:targetApi="lollipop">
                 </Button>
 
             </LinearLayout>
@@ -151,7 +151,8 @@
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_close"
             android:transitionName="loginFab"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_gravity="center_horizontal|top"
+            tools:targetApi="lollipop"/>
     </FrameLayout>
 
 

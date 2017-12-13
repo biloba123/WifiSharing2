@@ -31,7 +31,7 @@ public class WalletActivity extends BaseActivity{
     @Override
     protected void initView() {
         initeActionbar(R.string.my_wallet, true);
-        mTvBalance = (TextView) findViewById(R.id.tv_balance);
+        mTvBalance = findViewById(R.id.tv_balance);
     }
 
     @Override

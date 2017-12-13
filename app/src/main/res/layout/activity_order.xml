@@ -146,6 +146,6 @@
         android:layout_alignParentBottom="true"
         android:text="@string/sure_pay"
         android:textColor="@color/accent_white"
-        android:background="@drawable/btn_blue"/>
+        android:background="?colorAccent"/>
 
 </RelativeLayout>

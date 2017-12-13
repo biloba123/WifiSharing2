@@ -44,7 +44,7 @@ public class MyShareActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.my_share, true);
-        mRvShare = (RecyclerView) findViewById(R.id.rv_share);
+        mRvShare = findViewById(R.id.rv_share);
     }
 
     @Override
@@ -126,10 +126,10 @@ public class MyShareActivity extends BaseActivity {
 
     private void shareHotspotInfo(Hotspot h){
         View v=getLayoutInflater().inflate(R.layout.dialog_my_share_wifi, null);
-        TextView tvincome = (TextView) v.findViewById(R.id.tv_income);
-        TextView tvusecount = (TextView) v.findViewById(R.id.tv_use_count);
-        TextView location = (TextView) v.findViewById(R.id.location);
-        TextView tvmac = (TextView) v.findViewById(R.id.tv_mac);
+        TextView tvincome = v.findViewById(R.id.tv_income);
+        TextView tvusecount = v.findViewById(R.id.tv_use_count);
+        TextView location = v.findViewById(R.id.location);
+        TextView tvmac = v.findViewById(R.id.tv_mac);
 
         tvmac.setText(h.getBssid());
         location.setText(h.getLocation());

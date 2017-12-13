@@ -63,8 +63,8 @@ public class SignActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.enhance_sign, true);
-        this.rb = (RippleBackground) findViewById(R.id.rb);
-        mLlCheck = (LinearLayout) findViewById(R.id.ll_check);
+        this.rb = findViewById(R.id.rb);
+        mLlCheck = findViewById(R.id.ll_check);
 
     }
 

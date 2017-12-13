@@ -127,9 +127,8 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:clickable="true"
-                android:background="@drawable/bg_circle_red"
-                android:padding="@dimen/sub_medium_spacing"
-                android:src="@drawable/wifilist_header_safety_uncomplete"/>
+                android:background="@drawable/discover_security"
+                android:focusable="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,16 +144,13 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
-            <TextView
-                android:id="@+id/tv_sign"
+            <ImageView
+                android:id="@+id/iv_signal"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:gravity="center"
                 android:clickable="true"
-                android:background="@drawable/bg_circle_blue"
-                android:text="0%"
-                android:textSize="@dimen/sub_big_text"
-                android:textColor="@color/accent_white"/>
+                android:background="@drawable/discover_signal"
+                android:focusable="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -170,16 +166,13 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
-            <TextView
-                android:id="@+id/tv_speed"
+            <ImageView
+                android:id="@+id/iv_speed"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:gravity="center"
                 android:clickable="true"
-                android:background="@drawable/bg_circle_blue"
-                android:text="N/A"
-                android:textSize="@dimen/sub_big_text"
-                android:textColor="@color/accent_white"/>
+                android:background="@drawable/discover_speed"
+                android:focusable="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

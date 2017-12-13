@@ -44,10 +44,10 @@ public abstract class BaseActivity extends CheckPermissionsActivity
         if (localBundle != null)
             getBundleExtras(localBundle);
         setContentView(R.layout.layout_base);
-        this.mContentFl = ((FrameLayout)findViewById(R.id.fl));
-        this.mEmptyLl = ((LinearLayout)findViewById(R.id.layout_empty));
-        this.mLoadFailLl = ((LinearLayout)findViewById(R.id.layout_load_fail));
-        this.mRetryTv = ((TextView)findViewById(R.id.tv_retry));
+        this.mContentFl = findViewById(R.id.fl);
+        this.mEmptyLl = findViewById(R.id.layout_empty);
+        this.mLoadFailLl = findViewById(R.id.layout_load_fail);
+        this.mRetryTv = findViewById(R.id.tv_retry);
         this.mRetryTv.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View paramAnonymousView)
@@ -55,8 +55,8 @@ public abstract class BaseActivity extends CheckPermissionsActivity
                 BaseActivity.this.onRetryClick();
             }
         });
-        this.mLoadingLl = ((LinearLayout)findViewById(R.id.layout_loading));
-        this.mLoadingIndicatorView = ((AVLoadingIndicatorView)findViewById(R.id.avl));
+        this.mLoadingLl = findViewById(R.id.layout_loading);
+        this.mLoadingIndicatorView = findViewById(R.id.avl);
         setIndicator();
         View localView = getLayoutInflater().inflate(getLayoutId(), null);
         if (localView.findViewById(R.id.toolbar) == null){

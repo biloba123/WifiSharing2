@@ -95,13 +95,13 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        this.btnrequestcode = (Button) findViewById(R.id.btn_request_code);
-        this.etsmscode = (EditText) findViewById(R.id.et_sms_code);
-        this.ettel = (EditText) findViewById(R.id.et_tel);
-        this.fab = (FloatingActionButton) findViewById(R.id.fab);
-        this.cvadd = (CardView) findViewById(R.id.cv_add);
-        this.btgo = (Button) findViewById(R.id.bt_go);
-        this.etpassword = (EditText) findViewById(R.id.et_password);
+        this.btnrequestcode = findViewById(R.id.btn_request_code);
+        this.etsmscode = findViewById(R.id.et_sms_code);
+        this.ettel = findViewById(R.id.et_tel);
+        this.fab = findViewById(R.id.fab);
+        this.cvadd = findViewById(R.id.cv_add);
+        this.btgo = findViewById(R.id.bt_go);
+        this.etpassword = findViewById(R.id.et_password);
     }
 
     @Override

@@ -47,17 +47,17 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.setting,true);
-        this.tvlogout = (TextView) findViewById(R.id.tv_logout);
-        this.siaboutus = (SettingItem) findViewById(R.id.si_about_us);
-        this.sihelp = (SettingItem) findViewById(R.id.si_help);
-        this.simessageremindhotspot = (SettingItem) findViewById(R.id.si_message_remind_hotspot);
-        this.simessageremindnight = (SettingItem) findViewById(R.id.si_message_remind_night);
-        this.simessageremind = (SettingItem) findViewById(R.id.si_message_remind);
-        this.siupdateremind = (SettingItem) findViewById(R.id.si_update_remind);
-        this.siwifiblacklist = (SettingItem) findViewById(R.id.si_wifi_blacklist);
-        this.siautoturnonmobile = (SettingItem) findViewById(R.id.si_auto_turn_on_mobile);
-        this.sinotificationbar = (SettingItem) findViewById(R.id.si_notification_bar);
-        this.sidefaultwifitool = (SettingItem) findViewById(R.id.si_default_wifi_tool);
+        this.tvlogout = findViewById(R.id.tv_logout);
+        this.siaboutus = findViewById(R.id.si_about_us);
+        this.sihelp = findViewById(R.id.si_help);
+        this.simessageremindhotspot = findViewById(R.id.si_message_remind_hotspot);
+        this.simessageremindnight = findViewById(R.id.si_message_remind_night);
+        this.simessageremind = findViewById(R.id.si_message_remind);
+        this.siupdateremind = findViewById(R.id.si_update_remind);
+        this.siwifiblacklist = findViewById(R.id.si_wifi_blacklist);
+        this.siautoturnonmobile = findViewById(R.id.si_auto_turn_on_mobile);
+        this.sinotificationbar = findViewById(R.id.si_notification_bar);
+        this.sidefaultwifitool = findViewById(R.id.si_default_wifi_tool);
 
         if(BmobUser.getCurrentUser() == null){
             tvlogout.setVisibility(View.GONE);

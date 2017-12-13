@@ -166,11 +166,7 @@ public class WifiAdmin {
     public boolean isConnecting(){
         mState = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                 .getState();
-        if (NetworkInfo.State.CONNECTING==mState) {
-            return true;
-        }else {
-            return false;
-        }
+        return NetworkInfo.State.CONNECTING == mState;
     }
 
     /**
@@ -180,11 +176,7 @@ public class WifiAdmin {
     public boolean isConnected(){
         mState = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                 .getState();
-        if (NetworkInfo.State.CONNECTED==mState) {
-            return true;
-        }else {
-            return false;
-        }
+        return NetworkInfo.State.CONNECTED == mState;
     }
 
     /**

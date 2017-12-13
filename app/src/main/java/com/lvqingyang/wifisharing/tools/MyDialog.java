@@ -41,11 +41,11 @@ public class MyDialog extends DialogFragment {
     public MyDialog(Context context) {
         mContext = context;
         mRootView= LayoutInflater.from(mContext).inflate(R.layout.dialog_base,null);
-        this.llbtn = (LinearLayout) mRootView.findViewById(R.id.ll_btn);
-        this.tvpos = (TextView) mRootView.findViewById(R.id.tv_pos);
-        this.tvneg = (TextView) mRootView.findViewById(R.id.tv_neg);
-        this.container = (FrameLayout) mRootView.findViewById(R.id.container);
-        this.tvtitle = (TextView) mRootView.findViewById(R.id.tv_title);
+        this.llbtn = mRootView.findViewById(R.id.ll_btn);
+        this.tvpos = mRootView.findViewById(R.id.tv_pos);
+        this.tvneg = mRootView.findViewById(R.id.tv_neg);
+        this.container = mRootView.findViewById(R.id.container);
+        this.tvtitle = mRootView.findViewById(R.id.tv_title);
 
     }
 

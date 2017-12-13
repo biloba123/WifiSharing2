@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/big_spacing"
     tools:context="com.lvqingyang.wifisharing.Wifi.connect.funcation.SpeedActivity">
 
-    <com.tools.speedlib.views.PointerSpeedView
+    <frame.views.PointerSpeedView
         android:id="@+id/speedometer"
         android:layout_width="220dp"
         android:layout_height="wrap_content"

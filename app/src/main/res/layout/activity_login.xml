@@ -111,7 +111,7 @@
                     android:layout_height="50dp"
                     android:text="@string/login"
                     android:textColor="#d3d3d3"
-                    >
+                    tools:targetApi="lollipop">
                 </Button>
             </RelativeLayout>
             <TextView
@@ -138,6 +138,6 @@
         android:layout_marginTop="25dp"
         android:layout_alignEnd="@id/cv"
         android:layout_marginEnd="-20dp"
-        />
+        tools:targetApi="lollipop"/>
 
 </RelativeLayout>

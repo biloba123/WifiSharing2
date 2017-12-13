@@ -41,10 +41,10 @@ public class ScanResultInfoActivity extends BaseActivity {
     protected void initView() {
         mScanResult=getIntent().getParcelableExtra(KEY_SCAN_RESULT);
         initeActionbar(mScanResult.SSID,true);
-        this.tvsign = (TextView) findViewById(R.id.tv_sign);
-        this.circleprogressview = (CircleProgressView) findViewById(R.id.circle_progress_view);
-        mTvMac = (TextView) findViewById(R.id.tv_mac);
-        mTvEncrypt = (TextView) findViewById(R.id.tv_encrypt);
+        this.tvsign = findViewById(R.id.tv_sign);
+        this.circleprogressview = findViewById(R.id.circle_progress_view);
+        mTvMac = findViewById(R.id.tv_mac);
+        mTvEncrypt = findViewById(R.id.tv_encrypt);
     }
 
     @Override

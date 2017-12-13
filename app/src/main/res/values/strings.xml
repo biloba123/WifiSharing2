@@ -28,7 +28,7 @@
     <string name="request_permission_">权限申请</string>
     <string name="is_first">is_first</string>
     <string name="login_fail">登录失败</string>
-    <string name="logining">登录中...</string>
+    <string name="logining">登录中…</string>
     <string name="reset_pwd">密码重置</string>
     <string name="binded_email">账号绑定邮箱</string>
     <string name="empty_email">输入邮箱</string>

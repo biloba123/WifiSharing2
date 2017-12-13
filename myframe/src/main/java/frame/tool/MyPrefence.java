@@ -89,7 +89,7 @@ public class MyPrefence {
     }
 
     public <T> T getObject(String tag,Class<T> classOfT){
-        return (T)mGson.fromJson(getString(tag),classOfT);
+        return mGson.fromJson(getString(tag),classOfT);
     }
 
     public void clearData(String key){

@@ -31,9 +31,9 @@ public class MessageDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         initeActionbar(R.string.msg_detail, true);
-        this.tvcontent = (TextView) findViewById(R.id.tv_content);
+        this.tvcontent = findViewById(R.id.tv_content);
 //        this.tvtime = (TextView) findViewById(R.id.tv_time);
-        this.tvtitle = (TextView) findViewById(R.id.tv_title);
+        this.tvtitle = findViewById(R.id.tv_title);
     }
 
     @Override

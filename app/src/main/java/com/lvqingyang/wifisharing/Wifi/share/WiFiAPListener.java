@@ -31,14 +31,14 @@ package com.lvqingyang.wifisharing.Wifi.share;
 
 public interface WiFiAPListener {
 
-    public static final int WIFI_AP_CLOSEING 		= 10;  //wifi hot is closeing
-    public static final int WIFI_AP_CLOSE_SUCCESS 	= 11;  //wifi hot close success
-    public static final int WIFI_AP_OPENING 		= 12;  //WiFi hot is opening
-    public static final int WIFI_AP_OPEN_SUCCESS 	= 13;  //WiFi hot open success
+    int WIFI_AP_CLOSEING 		= 10;  //wifi hot is closeing
+    int WIFI_AP_CLOSE_SUCCESS 	= 11;  //wifi hot close success
+    int WIFI_AP_OPENING 		= 12;  //WiFi hot is opening
+    int WIFI_AP_OPEN_SUCCESS 	= 13;  //WiFi hot open success
 
     /**
      * 热点状态改变
      * @param state
      */
-    public void stateChanged(int state) ;
+    void stateChanged(int state) ;
 }

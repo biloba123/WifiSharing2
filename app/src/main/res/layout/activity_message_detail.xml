@@ -36,7 +36,8 @@
             android:textSize="@dimen/medium_text"
             android:lineSpacingMultiplier="1.1"
             android:letterSpacing="0.05"
-            tools:text="@string/app_name"/>
+            tools:text="@string/app_name"
+            tools:targetApi="lollipop"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

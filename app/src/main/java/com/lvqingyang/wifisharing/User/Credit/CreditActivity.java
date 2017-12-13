@@ -30,7 +30,7 @@ public class CreditActivity extends BaseActivity {
     @Override
     protected void initView() {
         initToolbar(getString(R.string.my_credit), true);
-        mCreditSesameView = (CreditSesameView) findViewById(R.id.sesame_view);
+        mCreditSesameView = findViewById(R.id.sesame_view);
     }
 
     @Override

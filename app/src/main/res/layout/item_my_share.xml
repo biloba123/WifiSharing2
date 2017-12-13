@@ -8,7 +8,8 @@
               android:paddingEnd="@dimen/card_spacing"
               android:paddingTop="@dimen/card_spacing"
               android:background="?android:attr/selectableItemBackground"
-              android:clickable="true">
+              android:clickable="true"
+              android:focusable="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
