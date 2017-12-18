@@ -5,25 +5,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
+import com.lvqingyang.wifisharing.BuildConfig;
 import com.lvqingyang.wifisharing.R;
 import com.lvqingyang.wifisharing.base.AppContact;
 import com.lvqingyang.wifisharing.base.BaseActivity;
 import com.lvqingyang.wifisharing.bean.PayWay;
 import com.lvqingyang.wifisharing.bean.Record;
+import com.lvqingyang.wifisharing.tools.MyDialog;
 
 import java.util.List;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+import frame.tool.MyToast;
 import frame.tool.SolidRVBaseAdapter;
 
 public class OrderActivity extends BaseActivity {
 
     private static final String TAG = "OrderActivity";
     private static final String KEY_RECORD = "RECORD";
+    private static final String KEY_ORDER_ID = "ORDER_ID";
+    private String mOrderId;
     private android.widget.TextView tvhotspotname;
     private android.widget.TextView tvtraffic;
     private android.widget.TextView tvprice;
@@ -37,9 +42,10 @@ public class OrderActivity extends BaseActivity {
     private SolidRVBaseAdapter mAdapter;
     private int mCheckedPos=0;
 
-    public static void start(Context context, Record record) {
+    public static void start(Context context, Record record, String orderId) {
         Intent starter = new Intent(context, OrderActivity.class);
         starter.putExtra(KEY_RECORD, (Parcelable) record);
+        starter.putExtra(KEY_ORDER_ID, orderId);
         context.startActivity(starter);
     }
 
@@ -62,7 +68,27 @@ public class OrderActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
+        btnsurepay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyToast.loading(OrderActivity.this, R.string.paying);
+                if (BuildConfig.DEBUG) Log.d(TAG, "onClick: "+mOrderId+" "+mRecord.getObjectId());
+                Record.deleteRecord(mOrderId, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            MyToast.cancel();
+                            showRateDialog();
+                        }else {
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            MyToast.cancel();
+                            MyToast.error(OrderActivity.this, R.string.pay_fail);
+                        }
 
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -91,6 +117,7 @@ public class OrderActivity extends BaseActivity {
         };
 
         mRecord=getIntent().getParcelableExtra(KEY_RECORD);
+        mOrderId=getIntent().getStringExtra(KEY_ORDER_ID);
     }
 
     private void checkPayWay(int position) {
@@ -108,9 +135,25 @@ public class OrderActivity extends BaseActivity {
 
         tvhotspotname.setText(mRecord.getHotspot().getSsid());
         tvtraffic.setText(mRecord.getTraffic()+"M");
-        tvprice.setText(mRecord.getHotspot().isFixed()?AppContact.HOTSPOT_FIXED_PRICE+"/M":
-                AppContact.HOTSPOT_PRICE+"/M");
-        tvpay.setText("0.5元");
+        float price=mRecord.getHotspot().isFixed()?AppContact.HOTSPOT_FIXED_PRICE:
+                AppContact.HOTSPOT_PRICE;
+        tvprice.setText(price+"/M");
+        tvpay.setText(price*mRecord.getTraffic()+"元");
+
+    }
+
+    private void showRateDialog() {
+        View view=getLayoutInflater().inflate(R.layout.dialog_pay_succ, null);
+        new MyDialog(this)
+                .setTitle(R.string.pay_succ)
+                .setView(view)
+                .setPosBtn(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                })
+                .show(getSupportFragmentManager());
     }
 
     @Override

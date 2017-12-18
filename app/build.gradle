@@ -72,5 +72,6 @@ dependencies {
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
     compile 'com.android.support:support-v4:26.+'
+    compile 'me.zhanghai.android.materialratingbar:library:1.2.0'
     testCompile 'junit:junit:4.12'
 }

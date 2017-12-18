@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sub_medium_text"
+        android:textColor="@color/text_color"
+        android:text="WiFi评分"/>
+    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialRatingBar.RatingBar"
+        android:layout_marginTop="@dimen/small_spacing"
+        android:numStars="5"/>
+</LinearLayout>

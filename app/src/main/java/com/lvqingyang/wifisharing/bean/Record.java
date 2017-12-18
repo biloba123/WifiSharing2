@@ -126,6 +126,12 @@ public class Record extends BmobObject implements Parcelable {
                  .findObjects(lis);
     }
 
+    public static void deleteRecord(String orderId, UpdateListener listener){
+        Record record = new Record(false);
+        record.setObjectId(orderId);
+        record.delete(listener);
+    }
+
     @Override
     public int describeContents() {
         return 0;
