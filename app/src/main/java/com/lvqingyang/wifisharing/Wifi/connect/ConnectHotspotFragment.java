@@ -46,6 +46,7 @@ import com.lvqingyang.wifisharing.bean.Hotspot;
 import com.lvqingyang.wifisharing.bean.MyScanResult;
 import com.lvqingyang.wifisharing.bean.Record;
 import com.lvqingyang.wifisharing.tools.MyDialog;
+import com.lvqingyang.wifisharing.tools.NotificationUtil;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
@@ -922,8 +923,11 @@ public class ConnectHotspotFragment extends BaseFragment {
                                             //必须先支付之前记录才能连接
                                             OrderActivity.start(getContext(), list.get(0), list.get(0).getObjectId());
                                         }else {
+                                            if (BuildConfig.DEBUG) Log.d(TAG, "done: 无未支付记录");
                                             ScanResult result = myScanResult.getScanResult();
                                             String pwd=myScanResult.getHotspot().getPassword();
+                                            if (BuildConfig.DEBUG) Log.d(TAG, "done: password:"+pwd);
+
                                             int networkId=-1;
                                             if (result.capabilities.contains("WEP")) {
                                                 networkId=connecting(result, pwd, 2);
@@ -932,6 +936,7 @@ public class ConnectHotspotFragment extends BaseFragment {
                                             }
 
                                             if (networkId!=-1) {
+                                                if (BuildConfig.DEBUG) Log.d(TAG, "done: 连接成功");
                                                 //连接成功则创建记录，这里有错！！！！
                                                 final int finalNetworkId = networkId;
                                                 Record.saveRecord(myScanResult.getHotspot(), new SaveListener<String>() {
@@ -940,12 +945,12 @@ public class ConnectHotspotFragment extends BaseFragment {
                                                         MyToast.cancel();
                                                         if (e == null) {
                                                             if (BuildConfig.DEBUG)
-                                                                Log.d(TAG, "done: record created");
+                                                                Log.d(TAG, "done: record created succ");
+                                                            NotificationUtil.showChargeNotification(getActivity());
                                                             MyToast.success(getContext(), R.string.connect_succ);
-
                                                         }else {
                                                             if (BuildConfig.DEBUG)
-                                                                Log.d(TAG, "done: create record: "+e.toString());
+                                                                Log.d(TAG, "done: create record error: "+e.toString());
                                                             MyToast.error(getActivity(), R.string.load_error);
                                                             //忘记网络...
                                                             mWifiAdmin.forgetWifi(finalNetworkId);
@@ -953,6 +958,7 @@ public class ConnectHotspotFragment extends BaseFragment {
                                                     }
                                                 });
                                             }else{
+                                                if (BuildConfig.DEBUG) Log.d(TAG, "done: 连接失败");
                                                 MyToast.cancel();
                                                 MyToast.error(getActivity(), R.string.connect_error);
                                             }

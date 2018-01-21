@@ -87,8 +87,7 @@ public abstract class BaseActivity extends CheckPermissionsActivity
 
 
 
-    public void initToolbar(String title, boolean isDisplayHome)
-    {
+    public void initToolbar(String title, boolean isDisplayHome) {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar localActionBar = getSupportActionBar();
         if (localActionBar != null)

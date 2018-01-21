@@ -232,7 +232,8 @@ public class Hotspot extends BmobObject implements Parcelable {
      */
     public static void getNearHotspot(BmobGeoPoint userLoc, FindListener<Hotspot> lis){
         BmobQuery<Hotspot> query = new BmobQuery<>();
-                query.setLimit(500)
+                query
+                        .setLimit(1000)
                         .addWhereWithinKilometers("point",userLoc,MAX_DISTANCE)
                         .findObjects(lis);
     }

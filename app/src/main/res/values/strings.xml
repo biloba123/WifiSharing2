@@ -211,4 +211,6 @@
     <string name="pay_succ">支付成功</string>
     <string name="paying">支付中...</string>
     <string name="pay_fail">支付失败</string>
+    <string name="cost">支付费用</string>
+    <string name="stop_use">停止使用</string>
 </resources>

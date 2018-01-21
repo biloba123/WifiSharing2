@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        android:src="@mipmap/img_wifi_share_sucess"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_black"
+            android:text="@string/traffic_statistics"
+            tools:ignore="NewApi"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sub_small_spacing"
+            android:drawableLeft="@drawable/ic_traffic"
+            android:drawablePadding="@dimen/small_spacing"
+            android:gravity="center"
+            android:textSize="@dimen/medium_text"
+            android:textColor="@color/sub_text_color"
+            android:text="0.0M"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_black"
+            android:text="@string/cost"
+            tools:ignore="NewApi"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_cost"
+            android:layout_marginTop="@dimen/sub_small_spacing"
+            android:drawablePadding="@dimen/small_spacing"
+            android:gravity="center"
+            android:textSize="@dimen/medium_text"
+            android:textColor="@color/sub_text_color"
+            android:text="0.0元"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/medium_spacing"
+        android:text="@string/stop_use"
+        android:gravity="center"
+        android:textColor="@color/accent_red"
+        android:background="?android:attr/selectableItemBackground"
+        tools:ignore="NewApi"/>
+
+</LinearLayout>
