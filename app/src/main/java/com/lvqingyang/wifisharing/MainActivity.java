@@ -62,11 +62,6 @@ public class MainActivity extends BaseActivity {
         if (isNeedPermission()) {
             showRequestPermissionDialog();
         }
-
-        Intent intent=new Intent(this, AnotherActivity.class);
-        intent.putExtra("msg", "Hello");
-        intent.putExtra("num", 110);
-        startActivity(intent);
     }
 
 

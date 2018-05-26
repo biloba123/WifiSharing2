@@ -130,7 +130,6 @@ public class WiFiConnectService extends Service {
     private BroadcastReceiver mReceiver=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-//            if (BuildConfig.DEBUG) Log.d(TAG, "onReceive: "+intent.getAction());
             String action=intent.getAction();
 
             if (action.equals(WifiManager.RSSI_CHANGED_ACTION)) {
@@ -157,6 +156,8 @@ public class WiFiConnectService extends Service {
                         }
                         break;
                     }
+                    default:
+                        break;
                 }
             }
 
